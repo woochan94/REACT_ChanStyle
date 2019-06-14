@@ -1,0 +1,17 @@
+type Query {
+    test( 
+        test: String!
+    ): Boolean!
+}
+
+type Mutation {
+    createAccount(
+        name: String! 
+        email: String!
+        password: String! 
+        zipCode: String! 
+        address: String!
+        addressDetail: String!
+        phone: String!
+    ): Boolean!
+}

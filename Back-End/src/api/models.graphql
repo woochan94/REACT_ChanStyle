@@ -1,12 +1,14 @@
+scalar DateTime
+
 type User {
-  id: ID! @id
+  id: ID! 
   name: String!
-  email: String! @unique
+  email: String! 
   password: String! 
   zipCode: String! 
   address: String! 
   addressDetail: String!
   phone: String! 
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! 
+  updatedAt: DateTime! 
 }
