@@ -1,4 +1,7 @@
 import { prisma } from "../../../../generated/prisma-client"; 
+import pbkdf2 from "pbkdf2-password"; 
+
+const hasher = pbkdf2(); 
 
 export default {
     Mutation: {
@@ -12,15 +15,19 @@ export default {
             if (exists) {
                 throw Error("This email is already taken"); 
             } else {
-                await prisma.createUser({
-                    name, 
-                    email,
-                    password,
-                    zipCode,
-                    address,
-                    addressDetail,
-                    phone
-                });
+                // 비밀번호 암호화 
+                hasher({ password }, async (_, __, salt, hasher) => {
+                    await prisma.createUser({
+                        name, 
+                        email,
+                        salt, 
+                        password: hasher,
+                        zipCode,
+                        address,
+                        addressDetail,
+                        phone
+                    });
+                })
                 return true;
             }
         }

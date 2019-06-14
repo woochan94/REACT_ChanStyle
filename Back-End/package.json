@@ -17,6 +17,7 @@
     "graphql-yoga": "^1.17.4",
     "merge-graphql-schemas": "^1.5.8",
     "morgan": "^1.9.1",
+    "pbkdf2-password": "^1.2.1",
     "prisma-client-lib": "^1.34.0"
   },
   "scripts": {
