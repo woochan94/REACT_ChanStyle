@@ -9,6 +9,6 @@ type Mutation {
         productSizeFiles: [String!]!
         sizes: [String!]! 
         colors: [String!]! 
-        stocks: [String!]!
+        stocks: [Int!]!
     ): Product!
 }

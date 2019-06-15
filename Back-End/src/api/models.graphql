@@ -63,6 +63,6 @@ type Color {
 
 type Stock {
   id: ID! 
-  stock: String! 
+  stock: Int! 
   product: Product!
 }

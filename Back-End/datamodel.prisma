@@ -61,7 +61,7 @@ type Color {
 
 type Stock {
   id: ID! @id 
-  stock: String! 
+  stock: Int! 
   product: Product! @relation(name: "ProductOfStock")
 }
 
