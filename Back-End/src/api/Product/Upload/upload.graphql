@@ -1,0 +1,14 @@
+type Mutation {
+    upload(
+        name: String!
+        price: String! 
+        mainCategory: String! 
+        subCategory: String!
+        files: [String!]!
+        productDetailFiles: [String!]!
+        productSizeFiles: [String!]!
+        sizes: [String!]! 
+        colors: [String!]! 
+        stocks: [String!]!
+    ): Product!
+}

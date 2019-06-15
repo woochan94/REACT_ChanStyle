@@ -13,3 +13,53 @@ type User {
   createdAt: DateTime! 
   updatedAt: DateTime! 
 }
+
+type Product {
+  id: ID!
+  name: String! 
+  price: String! 
+  mainCategory: String! 
+  subCategory: String!
+  files: [File!]!
+  colors: [Color!]!
+  sizes: [Size!]!
+  stocks: [Stock!]!
+  createdAt: DateTime! 
+  updatedAt: DateTime! 
+}
+
+type File {
+  id: ID! 
+  url: String! 
+  product: Product! 
+}
+
+type ProductDetailFile {
+  id: ID! 
+  productDetailFile: String! 
+  product: Product! 
+}
+
+type ProductSizeFile {
+  id: ID! 
+  productSizeFile: String! 
+  product: Product! 
+}
+
+type Size {
+  id: ID! 
+  size: String! 
+  product: Product!
+}
+
+type Color {
+  id: ID! 
+  color: String! 
+  product: Product!
+}
+
+type Stock {
+  id: ID! 
+  stock: String! 
+  product: Product!
+}

@@ -11,3 +11,56 @@ type User {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
+type Product {
+  id: ID! @id 
+  name: String! 
+  price: String! 
+  mainCategory: String! 
+  subCategory: String! 
+  files: [File!]! @relation(name: "FileofProduct", onDelete: CASCADE)
+  colors: [Color!]! @relation(name: "ProductOfColor", onDelete: CASCADE)
+  sizes: [Size!]! @relation(name: "ProductOfSize", onDelete: CASCADE)
+  stocks: [Stock!]! @relation(name: "ProductOfStock", onDelete: CASCADE)
+  productDetailFile: [ProductDetailFile!]! @relation(name: "FileOfProductDetail", onDelete: CASCADE)
+  productSizeFile: [ProductSizeFile!]! @relation(name: "FileOfSize", onDelete: CASCADE) 
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type File {
+  id: ID! @id 
+  url: String! 
+  product: Product! @relation(name: "FileofProduct")
+}
+
+type ProductDetailFile {
+  id: ID! @id 
+  productDetailFile: String! 
+  product: Product! @relation(name: "FileOfProductDetail")
+}
+
+type ProductSizeFile {
+  id: ID! @id 
+  productSizeFile: String! 
+  product: Product! @relation(name: "FileOfSize")
+}
+
+type Size {
+  id: ID! @id 
+  size: String! 
+  product: Product! @relation(name: "ProductOfSize")
+}
+
+type Color {
+  id: ID! @id 
+  color: String! 
+  product: Product! @relation(name: "ProductOfColor")
+}
+
+type Stock {
+  id: ID! @id 
+  stock: String! 
+  product: Product! @relation(name: "ProductOfStock")
+}
+
