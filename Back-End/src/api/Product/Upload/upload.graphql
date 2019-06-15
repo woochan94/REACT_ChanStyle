@@ -1,7 +1,7 @@
 type Mutation {
     upload(
         name: String!
-        price: String! 
+        price: Int! 
         mainCategory: String! 
         subCategory: String!
         files: [String!]!

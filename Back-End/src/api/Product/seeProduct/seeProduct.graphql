@@ -1,0 +1,7 @@
+type Query {
+    seeproduct(
+        sort: String 
+        mainCategory: String 
+        subCategory: String 
+    ): [Product!]!
+}

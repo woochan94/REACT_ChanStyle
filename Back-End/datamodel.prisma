@@ -15,7 +15,7 @@ type User {
 type Product {
   id: ID! @id 
   name: String! 
-  price: String! 
+  price: Int! 
   mainCategory: String! 
   subCategory: String! 
   files: [File!]! @relation(name: "FileofProduct", onDelete: CASCADE)
@@ -24,6 +24,7 @@ type Product {
   stocks: [Stock!]! @relation(name: "ProductOfStock", onDelete: CASCADE)
   productDetailFile: [ProductDetailFile!]! @relation(name: "FileOfProductDetail", onDelete: CASCADE)
   productSizeFile: [ProductSizeFile!]! @relation(name: "FileOfSize", onDelete: CASCADE) 
+  numberOfSales: Int! @default(value: 0)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

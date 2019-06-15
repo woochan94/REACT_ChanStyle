@@ -17,13 +17,16 @@ type User {
 type Product {
   id: ID!
   name: String! 
-  price: String! 
+  price: Int! 
   mainCategory: String! 
   subCategory: String!
   files: [File!]!
   colors: [Color!]!
   sizes: [Size!]!
   stocks: [Stock!]!
+  productDetailFile: [ProductDetailFile!]!
+  productSizeFile: [ProductSizeFile!]!
+  numberOfSales: Int!
   createdAt: DateTime! 
   updatedAt: DateTime! 
 }
