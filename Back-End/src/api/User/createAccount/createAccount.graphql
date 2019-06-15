@@ -1,9 +1,3 @@
-type Query {
-    test( 
-        test: String!
-    ): Boolean!
-}
-
 type Mutation {
     createAccount(
         name: String! 

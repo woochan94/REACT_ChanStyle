@@ -10,6 +10,7 @@ type User {
   address: String! 
   addressDetail: String!
   phone: String! 
+  cart: [Cart!]!
   createdAt: DateTime! 
   updatedAt: DateTime! 
 }
@@ -65,4 +66,13 @@ type Stock {
   id: ID! 
   stock: Int! 
   product: Product!
+}
+
+type Cart {
+  id: ID! 
+  user: User! 
+  product: [Product!]!
+  size: String!
+  color: String! 
+  count: Int!
 }

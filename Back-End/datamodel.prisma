@@ -8,6 +8,7 @@ type User {
   address: String! 
   addressDetail: String!
   phone: String! 
+  cart: [Cart!]! @relation(name: "UserOfCart", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -25,6 +26,7 @@ type Product {
   productDetailFile: [ProductDetailFile!]! @relation(name: "FileOfProductDetail", onDelete: CASCADE)
   productSizeFile: [ProductSizeFile!]! @relation(name: "FileOfSize", onDelete: CASCADE) 
   numberOfSales: Int! @default(value: 0)
+  cart: [Cart!]! @relation(name: "ProductOfCart", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -63,5 +65,14 @@ type Stock {
   id: ID! @id 
   stock: Int! 
   product: Product! @relation(name: "ProductOfStock")
+}
+
+type Cart {
+  id: ID! @id
+  user: User! @relation(name: "UserOfCart")
+  product: [Product] @relation(name: "ProductOfCart")
+  size: String
+  color: String
+  count: Int  
 }
 

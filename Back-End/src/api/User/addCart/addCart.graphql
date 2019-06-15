@@ -1,0 +1,8 @@
+type Mutation {
+    addCart(
+        product: String! 
+        size: String!
+        color: String! 
+        count: Int! 
+    ):Cart!
+}
