@@ -11,6 +11,7 @@ type User {
   addressDetail: String!
   phone: String! 
   cart: [Cart!]!
+  buyList: [BuyList!]!
   createdAt: DateTime! 
   updatedAt: DateTime! 
 }
@@ -81,7 +82,7 @@ type BuyList {
   id: ID! 
   user: User! 
   product: [Product!]! 
-  ssize: String! 
+  size: String! 
   color: String!
   count: Int! 
 }
