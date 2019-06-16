@@ -1,0 +1,8 @@
+type Mutation {
+    addBuyList(
+        product: String! 
+        size: String! 
+        color: String! 
+        count: Int!
+    ):BuyList!
+}

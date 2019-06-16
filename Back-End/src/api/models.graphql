@@ -76,3 +76,12 @@ type Cart {
   color: String! 
   count: Int!
 }
+
+type BuyList {
+  id: ID! 
+  user: User! 
+  product: [Product!]! 
+  ssize: String! 
+  color: String!
+  count: Int! 
+}
