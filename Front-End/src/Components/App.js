@@ -1,18 +1,26 @@
 import React from 'react';
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import GlobalStyles from "../Styles/GlobalStyles";
 import Theme from '../Styles/Theme';
-import AppRouter from './Routes';
+import Routes from './Routes';
 import { HashRouter as Router } from "react-router-dom";
 import { gql } from "apollo-boost"; 
 import { useQuery } from 'react-apollo-hooks';
-import Header from "./header";
+import Header from "./Header";
+import Footer from './Footer';
+import Navigator from './Navigator';
 
 const QUERY = gql`
   {
     isLoggedIn @client 
   }
 `; 
+
+const Wrapper = styled.div`
+  margin: 0 auto; 
+  max-width: ${props => props.theme.maxWidth};
+  width: 100%; 
+`;
 
 export default () => {
   const {
@@ -26,11 +34,14 @@ export default () => {
       <Router>
         <>
         <Header />
-        <AppRouter isLoggedIn={isLoggedIn} isAdmin={false}/>
+        <Navigator />
+        <Wrapper>
+          <Routes isLoggedIn={isLoggedIn} isAdmin={false}/>
+        </Wrapper>
+        <Footer />
         </>
       </Router>
     </>
   </ThemeProvider>
   );
 }
-  
