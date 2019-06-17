@@ -4,14 +4,29 @@ import GlobalStyles from "../Styles/GlobalStyles";
 import Theme from '../Styles/Theme';
 import AppRouter from './Routes';
 import { HashRouter as Router } from "react-router-dom";
+import { gql } from "apollo-boost"; 
+import { useQuery } from 'react-apollo-hooks';
 
-export default () => (
-  <ThemeProvider theme={Theme}>
+const QUERY = gql`
+  {
+    isLoggedIn @client 
+  }
+`; 
+
+export default () => {
+  const {
+    data: { isLoggedIn } 
+  }= useQuery(QUERY);
+
+  return (
+    <ThemeProvider theme={Theme}>
     <>
       <GlobalStyles />
       <Router>
-        <AppRouter isLoggedIn={true} isAdmin={false}/>
+        <AppRouter isLoggedIn={isLoggedIn} isAdmin={false}/>
       </Router>
     </>
   </ThemeProvider>
-)
+  );
+}
+  
