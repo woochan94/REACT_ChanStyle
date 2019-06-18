@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom"; 
 import Main from "../Routes/Main/Main";
 import MyPage from "../Routes/Mypage/MyPage";
-import Auth from "../Routes/Auth/Auth";
+import Auth from "../Routes/Auth";
 import Store from "../Routes/Store/Store";
 import Product from "../Routes/Product/Product";
 import Payment from "../Routes/Payment/Payment";
@@ -17,7 +17,7 @@ const AppRouter = ({ isLoggedIn, isAdmin }) => (
         <Route exact path="/sale" component={Sale} />
         <Route exact path="/payment" component={Payment} />
         <Route path = "/product/:productname" component={Product} />
-        <Route path = "/:username" component={ isLoggedIn ? (isAdmin ? Admin : MyPage) : Auth} />
+        <Route path = "/:username" component={ isLoggedIn ? (isAdmin ? Admin : MyPage) : Auth} /> 
     </Switch>
 ); 
 
