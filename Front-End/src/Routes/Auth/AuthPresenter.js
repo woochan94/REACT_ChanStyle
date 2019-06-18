@@ -26,22 +26,29 @@ const Form = styled(Box)`
     }
 `;
 
-export default ({ action, setAction }) => {
+export default ({ 
+    action, 
+    setAction,
+    name, 
+    email,
+    password,
+    confirmPassword 
+}) => {
     return (
         <Wrapper>
             <Form>
                 {action === "logIn" ?
                     (<form>
-                        <Input placeholder={"Email"} />
-                        <Input placeholder={"Password"} />
+                        <Input placeholder={"Email"} {...email} type={"email"} />
+                        <Input placeholder={"Password"} {...password} type={"password"} />
                         <Button text={"Login"} />
                         <Button text={"Sign Up"} onClick={() => setAction("signUp")}/> 
                     </form>) :
                     (<form>
-                        <Input placeholder={"Name"} />
-                        <Input placeholder={"Email"} />
-                        <Input placeholder={"Password"} />
-                        <Input placeholder={"Confirm Password"} />
+                        <Input placeholder={"Name"} {...name} />
+                        <Input placeholder={"Email"} {...email} type={"email"} />
+                        <Input placeholder={"Password"} {...password} type={"password"} />
+                        <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} />
                         <Button text={"Create Account"} />
                         <Button text={"Back to Login"} onClick={() => setAction("logIn")} />
                     </form>)}
