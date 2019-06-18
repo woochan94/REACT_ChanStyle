@@ -3,6 +3,7 @@ import AuthPresenter from "./AuthPresenter";
 import useInput from "../../Hooks/useInput";
 import { useMutation } from 'react-apollo-hooks';
 import { LOG_IN, LOCAL_LOG_IN } from './AuthQueries';
+import { toast } from "react-toastify";
 
 export default () => {
     // 회원가입, 로그인 등의 상태를 관리하기 위한 react hook 
@@ -24,6 +25,7 @@ export default () => {
 
     const onSubmit = async e => {
         e.preventDefault(); 
+        
         if( action === "logIn") {
             if(email !== "" && password !== "") {
                 try {
@@ -38,7 +40,8 @@ export default () => {
                         throw Error();
                     }
                 } catch {
-                    throw Error(); 
+                    // back-end로 부터의 error를 catch하여 toast로 로그인 실패 메시지를 보여줌 
+                    toast.error(`로그인에 실패하였습니다😢 email 또는 Password를 확인해 주세요.`);
                 }
             }
         }

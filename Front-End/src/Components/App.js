@@ -6,6 +6,8 @@ import Routes from './Routes';
 import { HashRouter as Router } from "react-router-dom";
 import { gql } from "apollo-boost"; 
 import { useQuery } from 'react-apollo-hooks';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import Header from "./Header";
 import Footer from './Footer';
 import Navigator from './Navigator';
@@ -39,6 +41,7 @@ export default () => {
           <Routes isLoggedIn={isLoggedIn} isAdmin={false}/>
         </Wrapper>
         <Footer />
+        <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
         </>
       </Router>
     </>
