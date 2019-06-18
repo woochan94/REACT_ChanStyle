@@ -7,6 +7,7 @@ const Container = styled.button`
     border: 0; 
     border-radius: ${props => props.theme.borderRadius}; 
     text-align: center; 
+    cursor: pointer;
 `;
 
 const Button = ({ text, onClick }) => <Container onClick={onClick}>{text}</Container>

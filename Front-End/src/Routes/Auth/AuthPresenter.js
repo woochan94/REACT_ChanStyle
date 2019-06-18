@@ -32,13 +32,14 @@ export default ({
     name, 
     email,
     password,
-    confirmPassword 
+    confirmPassword,
+    onSubmit 
 }) => {
     return (
         <Wrapper>
             <Form>
                 {action === "logIn" ?
-                    (<form>
+                    (<form onSubmit={onSubmit}>
                         <Input placeholder={"Email"} {...email} type={"email"} />
                         <Input placeholder={"Password"} {...password} type={"password"} />
                         <Button text={"Login"} />
