@@ -52,7 +52,7 @@ export default ({
                     (<form onSubmit={onSubmit}>
                         <Input placeholder={"Email"} {...email} type={"email"} />
                         <Input placeholder={"Password"} {...password} type={"password"} />
-                        <Button text={"Login"} />
+                        <Button text={"Login"} type={"submit"} />
                         <Button text={"Sign Up"} onClick={() => setAction("signUp")} />
                     </form>) :
                     (
