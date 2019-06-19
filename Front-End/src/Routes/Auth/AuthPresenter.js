@@ -4,7 +4,7 @@ import Input from "../../Components/Input";
 import Button from './../../Components/Button';
 import DaumAPI from "../../Components/DaumAPI";
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
     min-height: 76vh;
     display: flex;
     justify-content: center; 
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     }
 `;
 
-const Box = styled.div`
+const Box = styled.article`
     width: 100%; 
     border-radius: 0; 
     max-width: 500px; 

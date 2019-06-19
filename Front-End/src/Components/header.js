@@ -23,7 +23,7 @@ const HeaderWrapper = styled.div`
     }
 `;
 
-const Logo = styled.div`
+const Logo = styled.h1`
     padding: 25px 0;
     font-size: 32px;
     font-weight: 600;
