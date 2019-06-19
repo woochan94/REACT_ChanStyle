@@ -8190,14 +8190,6 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
-react-daum-postcode@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/react-daum-postcode/-/react-daum-postcode-1.8.3.tgz#c15449d3f4873516186fe94c96a6f2f1f56f3787"
-  integrity sha512-yd43qkPm6XFkJDeDLiLfk1syPDRwH/QdatEJVYqvU46l3BjirJd02nX3IDeHfiINPmzfuuZLdfDFjbRc8aIBZg==
-  dependencies:
-    prop-types "^15.6.2"
-    react "^16.4.2"
-
 react-dev-utils@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.1.tgz#5c03d85a0b2537d0c46af7165c24a7dfb274bef2"
@@ -8396,7 +8388,7 @@ react-transition-group@^2.6.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.4.2, react@^16.8.6:
+react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==

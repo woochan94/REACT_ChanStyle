@@ -8,7 +8,6 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-apollo-hooks": "^0.4.5",
-    "react-daum-postcode": "^1.8.3",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-modal": "^3.8.1",

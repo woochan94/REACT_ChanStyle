@@ -1,9 +1,9 @@
 import React from "react";
-import DaumPostcode from 'react-daum-postcode';
+import PostCode from "./DaumPostCode";
 
 export default ({ isOpen, handleAddress }) => {
 
-    let dialog = (<DaumPostcode onComplete={handleAddress} autoClose={true} />)
+    let dialog = (<PostCode onComplete={handleAddress} autoClose={true} />)
 
     if(!isOpen) {
         dialog = null; 
