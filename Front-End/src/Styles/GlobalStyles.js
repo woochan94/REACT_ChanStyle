@@ -10,6 +10,9 @@ export default createGlobalStyle`
     body {
         font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         padding-top: 150px;
+        @media (max-width: 600px) {
+            padding-top: 180px;
+        }
     }
     a {
         text-decoration: none;

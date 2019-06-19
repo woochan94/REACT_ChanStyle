@@ -5,6 +5,9 @@ const Footer = styled.footer`
     display: flex; 
     background-color: black;
     padding: 30px 0 10px;
+    @media (max-width: 480px) {
+        height: 23vh;
+    }
 `; 
 
 const FooterWrapper = styled.div`
@@ -15,6 +18,9 @@ const FooterWrapper = styled.div`
     justify-content: center; 
     align-items: center; 
     flex-direction: column;
+    @media (max-width: 480px) {
+        padding-bottom: 50px;
+    }
 `;
 
 const GIT = styled.div`

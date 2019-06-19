@@ -10,6 +10,13 @@ const Wrapper = styled.div`
     justify-content: center; 
     align-items: center; 
     flex-direction: column;
+    @media (max-width: 600px) {
+        padding: 0 50px;
+        min-height: 73vh;
+    }
+    @media (max-width: 480px) {
+        min-height: 60vh;
+    }
 `;
 
 const Box = styled.div`
@@ -21,10 +28,48 @@ const Box = styled.div`
 const Form = styled(Box)`
     form {
         width: 100%; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        flex-direction: column;
+        border: 0; 
+        border-top: ${props=> props.theme.boxBorder}; 
+        border-bottom: ${props=> props.theme.boxBorder}; 
+        @media (max-width: 600px) {
+            ${props => props.theme.whiteBox};
+        }
         input {
-            width: 100%;
+            width: 80%;
+            margin: 5px 0;
+            &:first-child {
+                margin-top: 15px;
+            }
+            @media (max-width: 600px) {
+                width: 90%;
+            }
+        }
+        button {
+            width: 80%;
+            margin: 5px 0;
+            &:last-child {
+                margin-bottom: 15px;
+            }
+            @media (max-width: 600px) {
+                width: 90%;
+            }
+        }
+        #loginBtn, #createAccountBtn {
+            background-color: ${props => props.theme.confirmColor};
+            color: white;
+            margin-bottom: 30px;
         }
     }
+`;
+
+const H3 = styled.h3`
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 15px;
 `;
 
 export default ({
@@ -49,34 +94,40 @@ export default ({
         <Wrapper>
             <Form>
                 {action === "logIn" ?
-                    (<form onSubmit={onSubmit}>
-                        <Input placeholder={"Email"} {...email} type={"email"} />
-                        <Input placeholder={"Password"} {...password} type={"password"} />
-                        <Button text={"Login"} type={"submit"} />
-                        <Button text={"Sign Up"} onClick={() => setAction("signUp")} />
-                    </form>) :
                     (
-                        <form onSubmit={onSubmit}>
-                            <Input placeholder={"Name"} {...name} />
-                            <Input placeholder={"Email"} {...email} type={"email"} />
-                            <Input placeholder={"Password"} {...password} type={"password"} />
-                            <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} />
-                            <Input placeholder={"Zip Code"} {...zipCode} />
-                            <Button text={"Find Zip Code"} onClick={() => open === true ? setOpen(false) : setOpen(true)} />
-                            <DaumAPI isOpen={open} handleAddress={handleAddress}></DaumAPI>
-                            <Input placeholder={"Address"} {...address} /> 
-                            <Input placeholder={"Address Detail"} {...addressDetail} />
-                            <select onChange={(e) => phone1(e.target.value)}>
-                                <option value="010">010</option>
-                                <option value="011">011</option>
-                                <option value="017">017</option>
-                                <option value="019">019</option>
-                            </select>
-                            <Input {...phone2} />
-                            <Input {...phone3} />
-                            <Button text={"Create Account"} type={"submit"}/>
-                            <Button text={"Back to Login"} onClick={() => setAction("logIn")} />
-                        </form>
+                        <>
+                            <H3>Login</H3>
+                            <form onSubmit={onSubmit}>
+                                <Input placeholder={"Email"} {...email} type={"email"} />
+                                <Input placeholder={"Password"} {...password} type={"password"} />
+                                <Button text={"Login"} type={"submit"} id={"loginBtn"} />
+                                <Button text={"Sign Up"} onClick={() => setAction("signUp")} />
+                            </form>
+                        </>) :
+                    (
+                        <>
+                            <form onSubmit={onSubmit}>
+                                <Input placeholder={"Name"} {...name} />
+                                <Input placeholder={"Email"} {...email} type={"email"} />
+                                <Input placeholder={"Password"} {...password} type={"password"} />
+                                <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} />
+                                <Input placeholder={"Zip Code"} {...zipCode} />
+                                <Button text={"Find Zip Code"} onClick={() => open === true ? setOpen(false) : setOpen(true)} />
+                                <DaumAPI isOpen={open} handleAddress={handleAddress}></DaumAPI>
+                                <Input placeholder={"Address"} {...address} /> 
+                                <Input placeholder={"Address Detail"} {...addressDetail} />
+                                <select onChange={(e) => phone1(e.target.value)}>
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                    <option value="017">017</option>
+                                    <option value="019">019</option>
+                                </select>
+                                <Input {...phone2} />
+                                <Input {...phone3} />
+                                <Button text={"Create Account"} type={"submit"} id={"createAccountBtn"}/>
+                                <Button text={"Back to Login"} onClick={() => setAction("logIn")} />
+                            </form>
+                        </>
                     )}
             </Form>
         </Wrapper>

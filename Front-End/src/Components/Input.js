@@ -6,6 +6,7 @@ const Container = styled.input`
     border: 0; 
     border: ${props => props.theme.boxBorder}; 
     border-radius: ${props => props.theme.borderRadius}; 
+    padding: 10px;
 `;
 
 const Input = ({ 

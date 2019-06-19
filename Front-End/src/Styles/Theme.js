@@ -5,6 +5,7 @@ export default {
     maxWidth: "1000px",
     boxBorder,
     borderRadius,
+    confirmColor: "#2c3e50",
     whiteBox: `border-radius:${borderRadius};
                 border:${boxBorder};
                 background-color: white;`

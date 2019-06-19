@@ -8,6 +8,9 @@ const Navigator = styled.nav`
     top: 82px;
     left: 0;
     border-bottom: ${props => props.theme.boxBorder};
+    @media (max-width: 600px) {
+        top: 120px;
+    }
 `;
 
 const NavigatorWrapper = styled.div`
