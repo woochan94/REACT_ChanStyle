@@ -17,6 +17,7 @@ const NavigatorWrapper = styled.div`
     width: 100%; 
     max-width: ${props => props.theme.maxWidth}; 
     margin: 0 auto;
+    background-color: white;
 `; 
 
 const UL = styled.ul`

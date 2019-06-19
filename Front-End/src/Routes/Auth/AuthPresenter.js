@@ -15,6 +15,7 @@ const Wrapper = styled.div`
         min-height: 73vh;
     }
     @media (max-width: 480px) {
+        padding: 0 20px;
         min-height: 60vh;
     }
 `;
@@ -35,6 +36,7 @@ const Form = styled(Box)`
         border: 0; 
         border-top: ${props=> props.theme.boxBorder}; 
         border-bottom: ${props=> props.theme.boxBorder}; 
+        margin-bottom: 30px;
         @media (max-width: 600px) {
             ${props => props.theme.whiteBox};
         }
@@ -72,6 +74,41 @@ const H3 = styled.h3`
     margin-bottom: 15px;
 `;
 
+const ZipCodeBox = styled.div`
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 5px 0;
+    #zipCodeInput, #zipCodeBtn {
+        width: 45%;
+        margin: 0;
+    }
+    @media (max-width: 600px) {
+        width: 90%;
+    }
+`;
+
+const Select = styled.select`
+    border: 0;
+    border: ${props => props.theme.boxBorder}; 
+    border-radius: ${props => props.theme.borderRadius}; 
+    padding: 10px;
+    text-align: center;
+    margin: 5px 0;
+`;
+
+const PhoneBox = styled.div`
+    display: flex; 
+    width: 80%; 
+    justify-content: space-between;
+    #phone1, #phone2, #phone3 {
+        width: 30%;
+    }
+    @media (max-width: 600px) {
+        width: 90%;
+    }
+`;
+
 export default ({
     action,
     setAction,
@@ -106,24 +143,29 @@ export default ({
                         </>) :
                     (
                         <>
+                            <H3>Sign Up</H3>
                             <form onSubmit={onSubmit}>
                                 <Input placeholder={"Name"} {...name} />
                                 <Input placeholder={"Email"} {...email} type={"email"} />
                                 <Input placeholder={"Password"} {...password} type={"password"} />
                                 <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} />
-                                <Input placeholder={"Zip Code"} {...zipCode} />
-                                <Button text={"Find Zip Code"} onClick={() => open === true ? setOpen(false) : setOpen(true)} />
+                                <ZipCodeBox>
+                                    <Input placeholder={"Zip Code"} {...zipCode} id={"zipCodeInput"}/>
+                                    <Button text={"Find"} id={"zipCodeBtn"} onClick={() => open === true ? setOpen(false) : setOpen(true)} />
+                                </ZipCodeBox>
                                 <DaumAPI isOpen={open} handleAddress={handleAddress}></DaumAPI>
                                 <Input placeholder={"Address"} {...address} /> 
                                 <Input placeholder={"Address Detail"} {...addressDetail} />
-                                <select onChange={(e) => phone1(e.target.value)}>
-                                    <option value="010">010</option>
-                                    <option value="011">011</option>
-                                    <option value="017">017</option>
-                                    <option value="019">019</option>
-                                </select>
-                                <Input {...phone2} />
-                                <Input {...phone3} />
+                                <PhoneBox>
+                                    <Select id={"phone1"} onChange={(e) => phone1(e.target.value)}>
+                                        <option value="010">010</option>
+                                        <option value="011">011</option>
+                                        <option value="017">017</option>
+                                        <option value="019">019</option>
+                                    </Select>
+                                    <Input {...phone2} id={"phone2"} />
+                                    <Input {...phone3} id={"phone3"} />
+                                </PhoneBox>
                                 <Button text={"Create Account"} type={"submit"} id={"createAccountBtn"}/>
                                 <Button text={"Back to Login"} onClick={() => setAction("logIn")} />
                             </form>

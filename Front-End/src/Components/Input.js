@@ -14,13 +14,15 @@ const Input = ({
     required = true, 
     value, 
     onChange, 
-    type = "text"
+    type = "text",
+    id
 }) => (<Container 
     placeholder={placeholder}
     required={required}
     value={value}
     onChange={onChange}
     type={type}
+    id={id}
 />)
 
 Input.propTypes = {
@@ -28,7 +30,8 @@ Input.propTypes = {
     require: PropTypes.bool,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    type: PropTypes.string
+    type: PropTypes.string,
+    id: PropTypes.string
 }
 
 export default Input; 

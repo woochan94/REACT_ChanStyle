@@ -42,6 +42,7 @@ export default () => {
         }
     })
 
+    // daum pstcode API의 callback 함수 
     const handleAddress = (data) => {
         let fullAddress = data.address;
         let extraAddress = '';
