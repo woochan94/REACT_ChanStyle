@@ -1,6 +1,8 @@
 import React from "react"; 
 import styled from "styled-components"; 
 import { Link } from "react-router-dom"; 
+import { useQuery } from "react-apollo-hooks";
+import { ME } from "./SharedQueries";
 
 const Navigator = styled.nav`
     width: 100%; 
@@ -37,7 +39,14 @@ const LI = styled.li`
     }
 `; 
 
-export default () => {
+export default ({ isLoggedIn }) => {
+
+    let Data;
+    if( isLoggedIn){
+        const { data } = useQuery(ME); 
+        Data = data;
+    }
+
     return (
         <Navigator>
             <NavigatorWrapper>
@@ -45,7 +54,12 @@ export default () => {
                     <LI><Link to="/">HOME</Link></LI>
                     <LI><Link to="/store">STORE</Link></LI>
                     <LI><Link to="/sale">SALE</Link></LI>
-                    <LI><Link to="/auth">LOGIN</Link></LI>
+                    {isLoggedIn ? 
+                    (Data.me ?
+                    <LI><Link to={Data.me.id}>MyPage</Link></LI> : 
+                    <LI><Link to="/auth">MyPage</Link></LI>
+                    ) : 
+                    <LI><Link to="/auth">LOGIN</Link></LI>}            
                 </UL>
             </NavigatorWrapper>
         </Navigator>

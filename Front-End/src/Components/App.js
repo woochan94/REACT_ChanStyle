@@ -36,7 +36,7 @@ export default () => {
       <Router>
         <>
         <Header />
-        <Navigator />
+        <Navigator isLoggedIn={isLoggedIn} />
         <Wrapper>
           <Routes isLoggedIn={isLoggedIn} isAdmin={false}/>
         </Wrapper>

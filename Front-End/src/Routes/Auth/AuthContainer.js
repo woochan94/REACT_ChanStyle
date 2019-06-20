@@ -70,6 +70,8 @@ export default () => {
                     // LOCAL_LOG_IN mutation에 의해 LocalStorage에 token이 set 된다. 
                     // LocalStorage에 token이 set되는 순간 로그인이 성공된것
                     localLogInMutation({ variables: { token } });
+                    // 새로고침 => 새로고침을 하지 않으면 바로 mutation 값을 읽어올수 없음 
+                    window.location ="/";
                 } else {
                     throw Error();
                 }
