@@ -13,13 +13,14 @@ const Navigator = styled.nav`
     @media (max-width: 600px) {
         top: 120px;
     }
+    background-color: ${props => props.theme.whiteColor};
 `;
 
 const NavigatorWrapper = styled.div`
     width: 100%; 
     max-width: ${props => props.theme.maxWidth}; 
     margin: 0 auto;
-    background-color: white;
+    background-color: ${props => props.theme.whiteColor};
 `; 
 
 const UL = styled.ul`

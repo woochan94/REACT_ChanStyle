@@ -1,7 +1,7 @@
 import React from "react"; 
 import PropTypes from "prop-types"; 
 import { Route, Switch } from "react-router-dom"; 
-import Main from "../Routes/Main/Main";
+import Main from "../Routes/Main";
 import MyPage from "../Routes/Mypage/MyPage";
 import Auth from "../Routes/Auth";
 import Store from "../Routes/Store/Store";

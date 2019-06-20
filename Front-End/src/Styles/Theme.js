@@ -3,6 +3,8 @@ const borderRadius = "4px";
 
 export default {
     maxWidth: "1000px",
+    bgColor: "#FAFAFA",
+    whiteColor: "#fff",
     boxBorder,
     borderRadius,
     confirmColor: "#2c3e50",
