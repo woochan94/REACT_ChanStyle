@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import ItemBox from "../../Components/ItemBox";
+import Loader from "../../Components/Loader";
 
 const Main = styled.div`
     margin-bottom: 30px;
@@ -69,6 +70,8 @@ export default ({
 }) => {
     return (
         <Main>
+            {bestLoading && newLoading && <Loader />}
+            {!bestLoading && !newLoading &&
             <MainWrapper>
                 <Slider {...settings}>
                     {testData.map((data, index) => (
@@ -103,7 +106,7 @@ export default ({
                         />
                     ))} 
                 </CustomSlider>
-            </MainWrapper>
+            </MainWrapper>}
         </Main>
     )
 }
