@@ -16,7 +16,7 @@ const AppRouter = ({ isLoggedIn, isAdmin }) => (
         <Route exact path="/store" component={Store} />
         <Route exact path="/sale" component={Sale} />
         <Route exact path="/payment" component={Payment} />
-        <Route path = "/product/:productname" component={Product} />
+        <Route path = "/product/:productid" component={Product} />
         <Route path = "/:username" component={ isLoggedIn ? (isAdmin ? Admin : MyPage) : Auth} /> 
     </Switch>
 ); 

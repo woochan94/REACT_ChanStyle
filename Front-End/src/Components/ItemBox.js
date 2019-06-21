@@ -1,8 +1,9 @@
-import React from "react"; 
-import styled from "styled-components"; 
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export default ({ imgSrc, title, price }) => {
-    const ItemDiv = styled.div`
+export default ({ imgSrc, title, price, id }) => {
+    const ItemDiv = styled.article`
         display: flex; 
         flex-direction: column;
         margin: 0 10px;
@@ -28,12 +29,14 @@ export default ({ imgSrc, title, price }) => {
     `;
 
     return (
-        <ItemDiv>
-            <Img src={imgSrc} />
-            <TextDiv>
-                <P>{title}</P>
-                <P>{price}</P>
-            </TextDiv>
-        </ItemDiv>
+        <Link to={`/product/${id}`}>
+            <ItemDiv>
+                <Img src={imgSrc} />
+                <TextDiv>
+                    <P>{title}</P>
+                    <P>{price}</P>
+                </TextDiv>
+            </ItemDiv>
+        </Link>
     )
 }

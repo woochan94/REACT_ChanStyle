@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import ItemBox from "../../Components/ItemBox";
@@ -59,6 +59,10 @@ const CustomSlider = styled(Slider)`
     }
 `;
 
+const Section = styled.section``;
+
+const Article = styled.article``;
+
 export default ({
     settings,
     itemSettings,
@@ -72,41 +76,49 @@ export default ({
         <Main>
             {bestLoading && newLoading && <Loader />}
             {!bestLoading && !newLoading &&
-            <MainWrapper>
-                <Slider {...settings}>
-                    {testData.map((data, index) => (
-                        <SliderDiv key={data.id}>
-                            <img src={data.url} alt={index}/>
-                        </SliderDiv>
-                    ))}    
-                </Slider>
-                <MainTitle>
-                    <H4><span role="img" aria-label="">🔥 BEST ITEM 🔥</span></H4>
-                </MainTitle>    
-                <CustomSlider {...itemSettings}>
-                    {!bestLoading && bestData.seeproduct.map(item => (
-                        <ItemBox
-                            key={item.id} 
-                            imgSrc={item.files[0].url}
-                            title={item.name}
-                            price={item.price}
-                        />
-                    ))} 
-                </CustomSlider>
-                <MainTitle>
-                    <H4><span role="img" aria-label="">⭐ NEW ITEM ⭐</span></H4>
-                </MainTitle>
-                <CustomSlider {...itemSettings}>
-                    {!newLoading && newData.seeproduct.map(item => (
-                        <ItemBox
-                            key={item.id} 
-                            imgSrc={item.files[0].url}
-                            title={item.name}
-                            price={item.price}
-                        />
-                    ))} 
-                </CustomSlider>
-            </MainWrapper>}
+                <MainWrapper>
+                    <Section>
+                        <Slider {...settings}>
+                            {testData.map((data, index) => (
+                                <SliderDiv key={data.id}>
+                                    <img src={data.url} alt={index} />
+                                </SliderDiv>
+                            ))}
+                        </Slider>
+                    </Section>
+                    <Section>
+                        <MainTitle>
+                            <H4><span role="img" aria-label="">🔥 BEST ITEM 🔥</span></H4>
+                        </MainTitle>
+                        <CustomSlider {...itemSettings}>
+                            {!bestLoading && bestData.seeproduct.map(item => (
+                                <ItemBox
+                                    key={item.id}
+                                    imgSrc={item.files[0].url}
+                                    title={item.name}
+                                    price={item.price}
+                                    id={item.id}
+                                />
+                            ))}
+                        </CustomSlider>
+                    </Section>
+                    <Section>
+                        <MainTitle>
+                            <H4><span role="img" aria-label="">⭐ NEW ITEM ⭐</span></H4>
+                        </MainTitle>
+                        <CustomSlider {...itemSettings}>
+                            {!newLoading && newData.seeproduct.map(item => (
+                                <ItemBox
+                                    key={item.id}
+                                    imgSrc={item.files[0].url}
+                                    title={item.name}
+                                    price={item.price}
+                                    id={item.id}
+                                />
+                            ))}
+                        </CustomSlider>
+                    </Section>
+                </MainWrapper>}
         </Main>
     )
 }
