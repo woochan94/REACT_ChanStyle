@@ -5,6 +5,8 @@ export default ({ imgSrc, title, price }) => {
     const ItemDiv = styled.div`
         display: flex; 
         flex-direction: column;
+        margin: 0 10px;
+        justify-content: space-between;
     `;
 
     const Img = styled.img`
@@ -14,15 +16,23 @@ export default ({ imgSrc, title, price }) => {
     `;
 
     const TextDiv = styled.div`
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px; 
+    `;
+
+    const P = styled.p`
+        padding-bottom: 5px;
+        color: #555555;
+        font-size: 14px;
     `;
 
     return (
         <ItemDiv>
             <Img src={imgSrc} />
             <TextDiv>
-                <h3>{title}</h3>
-                <h3>{price}</h3>
+                <P>{title}</P>
+                <P>{price}</P>
             </TextDiv>
         </ItemDiv>
     )

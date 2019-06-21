@@ -9,6 +9,7 @@ const Header = styled.header`
     left: 0;
     border-bottom: ${props => props.theme.boxBorder};
     background-color: black;
+    z-index: 9999;
 `;
 
 const HeaderWrapper = styled.div`

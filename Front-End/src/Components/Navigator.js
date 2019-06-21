@@ -14,6 +14,7 @@ const Navigator = styled.nav`
         top: 120px;
     }
     background-color: ${props => props.theme.whiteColor};
+    z-index: 9999;
 `;
 
 const NavigatorWrapper = styled.div`
