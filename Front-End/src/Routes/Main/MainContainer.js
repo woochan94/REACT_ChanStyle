@@ -62,6 +62,13 @@ export default () => {
             sort: "best"
         }
     });
+    // 최신 아이템 
+    const { data: newData, loading: newLoading } = useQuery(MAIN_SEEITEM, {
+        variables: {
+            sort: "new"
+        }
+    });
+
 
     const testData = [
         {
@@ -80,7 +87,9 @@ export default () => {
             itemSettings={itemSettings}
             testData={testData}
             bestData={bestData}
+            newData={newData}
             bestLoading={bestLoading}
+            newLoading={newLoading}
         />
     )
 }
