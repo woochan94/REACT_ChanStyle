@@ -63,7 +63,9 @@ export default ({
     itemSettings,
     testData,
     bestData,
-    bestLoading
+    newData,
+    bestLoading,
+    newLoading
 }) => {
     return (
         <Main>
@@ -76,7 +78,7 @@ export default ({
                     ))}    
                 </Slider>
                 <MainTitle>
-                    <H4> 🔥 BEST ITEM 🔥</H4>
+                    <H4><span role="img" aria-label="">🔥 BEST ITEM 🔥</span></H4>
                 </MainTitle>    
                 <CustomSlider {...itemSettings}>
                     {!bestLoading && bestData.seeproduct.map(item => (
@@ -89,8 +91,18 @@ export default ({
                     ))} 
                 </CustomSlider>
                 <MainTitle>
-                    <H4>⭐ NEW ITEM ⭐</H4>
+                    <H4><span role="img" aria-label="">⭐ NEW ITEM ⭐</span></H4>
                 </MainTitle>
+                <CustomSlider {...itemSettings}>
+                    {!newLoading && newData.seeproduct.map(item => (
+                        <ItemBox
+                            key={item.id} 
+                            imgSrc={item.files[0].url}
+                            title={item.name}
+                            price={item.price}
+                        />
+                    ))} 
+                </CustomSlider>
             </MainWrapper>
         </Main>
     )
