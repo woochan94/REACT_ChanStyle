@@ -28,7 +28,7 @@ const SliderDiv = styled.div`
 
 const MainTitle = styled.div`
     margin-top: 70px;
-    border-bottom: 1px solid #a9a9a9;
+    border-bottom: ${props => props.theme.borderBottom};
     padding: 20px;
     margin-bottom: 40px;
 `;

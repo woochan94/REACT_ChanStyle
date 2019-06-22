@@ -7,7 +7,8 @@ export default {
     whiteColor: "#fff",
     boxBorder,
     borderRadius,
-    borderBottom:"1px solid",
+    borderBottom:"1px solid #a9a9a9",
+    titleFontSize: "32px",
     confirmColor: "#2c3e50",
     whiteBox: `border-radius:${borderRadius};
                 border:${boxBorder};
