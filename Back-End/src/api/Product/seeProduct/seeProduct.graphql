@@ -1,5 +1,6 @@
 type Query {
     seeproduct(
+        id: String
         sort: String 
         mainCategory: String 
         subCategory: String 

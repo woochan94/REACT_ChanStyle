@@ -3,9 +3,17 @@ import { prisma } from "../../../../generated/prisma-client";
 export default {
     Query: {
         seeproduct: (_, args) => {
-            const { sort, mainCategory, subCategory } = args; 
+            const { sort, mainCategory, subCategory, id } = args; 
+
+            // 상품 하나 상세 보기 
+            if ( id !== undefined) {
+                return prisma.products({ where: {
+                    id
+                }});
+            }
+
             // 전체 상품 보기 (Main 화면에서 사용될 것)
-            if (mainCategory === undefined && subCategory === undefined) {
+            else if (mainCategory === undefined && subCategory === undefined) {
                 // 분류 x 
                 if(sort === undefined) {
                     return prisma.products({
