@@ -61,8 +61,6 @@ const CustomSlider = styled(Slider)`
 
 const Section = styled.section``;
 
-const Article = styled.article``;
-
 export default ({
     settings,
     itemSettings,

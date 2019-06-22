@@ -5,7 +5,7 @@ import Main from "../Routes/Main";
 import MyPage from "../Routes/Mypage/MyPage";
 import Auth from "../Routes/Auth";
 import Store from "../Routes/Store/Store";
-import Product from "../Routes/Product/Product";
+import Product from "../Routes/Product";
 import Payment from "../Routes/Payment/Payment";
 import Admin from "../Routes/Admin/Admin";
 import Sale from "../Routes/Sale/Sale";
