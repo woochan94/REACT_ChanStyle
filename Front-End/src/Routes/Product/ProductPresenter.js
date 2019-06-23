@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Loader from "../../Components/Loader";
 import Button from './../../Components/Button';
-import {CartIcon} from "./../../Components/Icons";
 
 const Product = styled.section`
     min-height: 79vh;
@@ -134,7 +133,13 @@ const TotalDiv = styled(ProductNameDiv)`
     margin-bottom: 30px;
 `;
 
-const ButtonDiv = styled.div``;
+const ButtonDiv = styled.div`
+    #OrderBtn {
+        background-color: ${props => props.theme.confirmColor};
+        color: white;
+    }
+`;
+
 
 const Form = styled.form`
     display: grid; 
@@ -225,7 +230,7 @@ export default ({
                                         <ButtonDiv>
                                             <Form>
                                                 <Button text="Cart" />
-                                                <Button text="Order Now" />
+                                                <Button id={"OrderBtn"}text={"Order Now"} />
                                             </Form>
                                         </ButtonDiv>
                                     </ProductInfoDiv>
