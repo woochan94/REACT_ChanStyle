@@ -41,6 +41,11 @@ const ProductDiv = styled.div`
     grid-column-gap: 70px;
     padding: 20px 10px;
     height: 50px;
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr; 
+        height: 100%; 
+        grid-row-gap: 50px;
+    }
 `;
 
 const ProductImgDiv = styled.div`
@@ -51,6 +56,7 @@ const ProductImgDiv = styled.div`
 const ProductInfoDiv = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 `;
 
 const ProductImg = styled.img`
@@ -61,6 +67,9 @@ const ProductImg = styled.img`
 
 const SizeDiv = styled.div`
     margin-top: 10px;
+    @media (max-width: 600px) {
+        display: none;
+    }
 `;
 
 const SizeTitleDiv = styled.div`
@@ -84,11 +93,11 @@ const ProductNameDiv = styled.div`
 const ProductPriceDiv = styled(ProductNameDiv)`
     padding: 15px 0;
     border-bottom: ${props => props.theme.boxBorder};
+    margin-bottom: 20px;
 `;
 
 const SelectOptionDiv = styled.div`
     padding: 15px 0;
-    border-bottom: ${props => props.theme.boxBorder};
 `;
 
 const OptionBox = styled.div`
@@ -108,13 +117,18 @@ const Select = styled.select`
     width: 70%;
     height: 35px;
     ${props => props.theme.whiteBox};
+    padding: 0 5px;
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const SelectedDiv = styled.div`
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
-    padding: 15px 0; 
+    padding: 30px 0; 
     border-bottom: ${props => props.theme.boxBorder};
+    border-top: ${props => props.theme.boxBorder};
 `;
 
 const SelectedItem = styled.div`
@@ -140,11 +154,14 @@ const ButtonDiv = styled.div`
     }
 `;
 
-
 const Form = styled.form`
     display: grid; 
     grid-template-columns: 1fr 3fr;
     grid-column-gap: 20px;
+
+    button {
+        padding: 20px 10px;
+    }
 `;
 
 export default ({
