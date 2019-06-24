@@ -167,7 +167,12 @@ const Form = styled.form`
 export default ({
     data,
     loading,
-    option
+    uniqColor,
+    option,
+    colorSelectOnChange,
+    color,
+    size,
+    stock
 }) => {
     return (
         <Product>
@@ -214,15 +219,17 @@ export default ({
                                             <OptionBox>
                                                 <ColorDiv>
                                                     <H3>Color</H3>
-                                                    <Select>
-                                                        {item.colors.map(color => (
-                                                            <option key={color.id} value={color.color}>{color.color}</option>
+                                                    <Select onChange={(e) => colorSelectOnChange(e)}>
+                                                        <option value="">--- color ---</option>
+                                                        {uniqColor.map(color => (
+                                                            <option key={color.colorId} value={color.colors}>{color.colors}</option>
                                                         ))}
                                                     </Select>
                                                 </ColorDiv>
                                                 <SizeOptionDiv>
                                                     <H3>Size</H3>
-                                                    <Select>
+                                                    <Select id={"selectSize"} disabled={color.value === "" ? true : false} defaultValue={""} >
+                                                        <option value=""> --- size --- </option>
                                                         {option.map(item => (
                                                             <option key={item.sizeId}>{item.sizes} - 남은재고:{item.stocks}</option>
                                                         ))}

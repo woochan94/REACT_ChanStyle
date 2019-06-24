@@ -16,7 +16,8 @@
     "react-slick": "^0.24.0",
     "react-toastify": "^5.3.0",
     "styled-components": "^4.3.1",
-    "styled-reset": "^2.0.15"
+    "styled-reset": "^2.0.15",
+    "underscore": "^1.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
