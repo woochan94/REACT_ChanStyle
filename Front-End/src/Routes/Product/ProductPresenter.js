@@ -2,6 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Loader from "../../Components/Loader";
 import Button from './../../Components/Button';
+import Scroll from "react-scroll"; 
+
+const animationScroll = Scroll.animateScroll;
+
+const options = {
+    smooth: true,
+    duration: "300"
+}
 
 const Product = styled.section`
     min-height: 79vh;
@@ -196,7 +204,17 @@ const SelectedPrice = styled.div`
 
 const ProductDetailDiv = styled.div`
     border-top: ${props => props.theme.borderBottom};
-    min-height: 50vh;
+    min-height: 100vh;
+`;
+
+const TopBtn = styled.div`
+    width: 50px;
+    height: 50px; 
+    border-radius: 50%; 
+    background-color: blue;
+    position: fixed; 
+    bottom: 30px;
+    right: 30px;
 `;
 
 export default ({
@@ -211,13 +229,16 @@ export default ({
     count,
     decrement,
     increment,
-    total
+    total,
+    scroll
 }) => {
+    console.log(scroll);
     return (
         <Product>
             {loading && <Loader />}
             {!loading &&
                 <ProductWrapper>
+                    {scroll.y >= 100 && <TopBtn onClick={() => animationScroll.scrollToTop(options)} />}
                     {data.map(item => (
                         <Section key={item.id}>
                             <TitleDiv>

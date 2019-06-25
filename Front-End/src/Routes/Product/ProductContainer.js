@@ -27,14 +27,19 @@ export default ({match}) => {
     }); 
     
     const [total, setTotal] =useState(0); 
+
+    // scroll state 
+    const [scroll, setScroll] = useState({
+        x: 0, 
+        y: 0
+    })
     
     // size와 재고량, color를 같이 묶어주기 위한 배열객체 
     let option = [];
 
     if(loading === false) {
         data.seeproduct.map((item) => (
-            item.sizes.map((_, index) => {
-             
+            item.sizes.map((_, index) => {          
                 return option.push(
                     {
                         colors: item.colors[index].color,
@@ -45,10 +50,7 @@ export default ({match}) => {
                         colorId: item.colors[index].id
                     }
                 )
-            }
-                
-            
-            ) 
+            }) 
         ))
     }
 
@@ -191,6 +193,16 @@ export default ({match}) => {
         }
     }
 
+    const onScroll = () => {
+        setScroll({x: window.scrollX, y: window.scrollY});
+    }
+
+    useEffect(() => {
+        window.scrollTo(0,0);
+        window.addEventListener("scroll", onScroll); 
+        return () => window.removeEventListener("scroll", onScroll)
+    }, [])
+
     return (
         <ProductPresenter 
             data={data.seeproduct}
@@ -206,6 +218,7 @@ export default ({match}) => {
             increment={increment}
             decrement={decrement}
             total={total}
+            scroll={scroll}
         />
     );
 };
