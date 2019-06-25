@@ -1,4 +1,4 @@
-import React from "react"; 
+import React, {useEffect, useState} from "react"; 
 import ProductPresenter from "./ProductPresenter";
 import { useQuery } from "react-apollo-hooks";
 import { SEEITEM } from "./ProductQueries";
@@ -13,22 +13,29 @@ export default ({match}) => {
 
     // 입력값을 받아오기위한 useInput 
     const color = useInput("");
-    const size = useInput(""); 
-    const stock = useInput("");
+    const [sizeValue, setSizeValue] = useState("")
+    const [stock, setStock] = useState(""); 
 
+    const [selected, setSelected] = useState([]); 
+    const [count, setCount] = useState([]);
+    const [totalarr, setTotalarr] = useState([]);
+    
     const { data, loading } = useQuery(SEEITEM, {
         variables: {
             id: productId
         }
     }); 
- 
+    
+    const [total, setTotal] =useState(0); 
+    
     // size와 재고량, color를 같이 묶어주기 위한 배열객체 
     let option = [];
 
     if(loading === false) {
         data.seeproduct.map((item) => (
-            item.sizes.map((_, index) => (
-                option.push(
+            item.sizes.map((_, index) => {
+             
+                return option.push(
                     {
                         colors: item.colors[index].color,
                         sizes: item.sizes[index].size, 
@@ -38,7 +45,10 @@ export default ({match}) => {
                         colorId: item.colors[index].id
                     }
                 )
-            )) 
+            }
+                
+            
+            ) 
         ))
     }
 
@@ -81,18 +91,105 @@ export default ({match}) => {
             => 이 객체 배열에는 color값을 제외한 size와 stock 값만이 들어있음 
             => option2 배열 
      */  
-    
-
 
     const colorSelectOnChange = (e) => {
         color.setValue(e.target.value);
         // 사용자가 color의 선택값을 ""으로 바꿨을 때 
         // size의 value 값도 ""으로 바꿔주기 위한 코드 
-        if(e.target.value === "" || e.target.value === undefined) {
+        if(e.target.value === "") {
             selectSize.value = "";
         }
     }
 
+    useEffect(() => {
+        setSizeValue("");
+    },[color.value])
+
+    const sizeSelectOnChange = (e) => {
+        const pSize = e.target.value.split("-")[0]; 
+        setSizeValue(pSize); 
+        setStock(e.target.value.split("-")[1]);
+    }
+
+    // sizeValue 값이 렌더링 (바뀔때마다) 될때마다 실행됨 
+    useEffect(() => {
+        // 이미 추가된 항목인지를 검사해줄 변수 
+        let isAdded = true;
+
+        // 재고량 검사 
+        if(stock === "0") {
+            isAdded = false; 
+            alert("품절된 상품입니다.");
+        }
+
+        if(sizeValue !== "") { 
+            selected.map(item => {
+                // selected에 이미 들어가 있는 값이라면 isAdded 변수의 값을 false로 바꿔줌으로써 
+                // setSelected가 실행되는것을 막아줌.
+                if(item.size === sizeValue && item.color === color.value){
+                    isAdded = false;  
+                    return alert("이미 추가된 상품입니다.");
+                }
+                return null;
+            })
+            // 최초에는 무조건 실행이 됨  
+            if(isAdded){
+                setSelected([
+                    ...selected, {
+                        size: sizeValue, 
+                        color: color.value,
+                        stock
+                    }
+                ]); 
+                setCount([...count, 1]); 
+                setTotalarr([...totalarr, data.seeproduct[0].price]);
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[sizeValue])
+
+
+    // selected에 totalarr이 추가되었을 때 
+    //      => 사용자가 새로운 옵션값의 상품을 추가했을 때 
+    // 1개에 대한 total값을 적용시키기 위해서 
+    useEffect(() => {
+        if(totalarr.length > 0) {
+            const asd = (a,b) => a + b;
+            // reduce는 배열의 처음부터 끝까지 순환함 
+            setTotal(totalarr.reduce(asd));
+        }
+    }, [totalarr])
+
+
+    // count 값을 증가시켜줄 함수 
+    const increment = (index,item) => {
+        // temp에 현재 count 배열을 넣어준다. 
+        const temp = count;
+        const totalPrice = totalarr;
+        if (count[index] < selected[index].stock) {
+            // index번째에서 한개 요소를 제거하고 temp[index]+1의 값을 추가
+            // temp는 값이 증가한 새로운 배열값으로 바뀜   
+            temp.splice(index, 1, temp[index] + 1);
+            totalPrice.splice(index, 1, totalPrice[index]+item.price);
+            // 변경된 temp값을 setCount시켜줌 
+            setCount([...temp]); 
+            setTotalarr([...totalPrice]);
+        }
+    }
+    
+    // count 값을 감소시켜줄 함수 
+    const decrement = (index,item) => {
+        const temp = count;
+        const totalPrice = totalarr;
+        if(count[index] > 1) {
+            temp.splice(index, 1, temp[index] - 1);
+            totalPrice.splice(index, 1, totalPrice[index]-item.price);
+            setCount([...temp]);
+            setTotalarr([...totalPrice]);
+            const asd = (a,b) => a-b; 
+            setTotal(totalarr.reduce(asd));
+        }
+    }
 
     return (
         <ProductPresenter 
@@ -101,9 +198,14 @@ export default ({match}) => {
             uniqColor={uniqColor}
             option={option2}
             colorSelectOnChange={colorSelectOnChange}
+            sizeSelectOnChange={sizeSelectOnChange}
             color={color} 
-            size={size}
-            stock={stock}
+            selected={selected}
+            count={count}
+            setCount={setCount}
+            increment={increment}
+            decrement={decrement}
+            total={total}
         />
     );
 };
