@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Loader from "../../Components/Loader";
 import Button from './../../Components/Button';
 import Scroll from "react-scroll"; 
+import { UpArrowIcon } from './../../Components/Icons';
 
 const animationScroll = Scroll.animateScroll;
 
@@ -207,14 +208,23 @@ const ProductDetailDiv = styled.div`
     min-height: 100vh;
 `;
 
+
 const TopBtn = styled.div`
     width: 50px;
     height: 50px; 
     border-radius: 50%; 
-    background-color: blue;
     position: fixed; 
     bottom: 30px;
     right: 30px;
+    background-color:#DDDDDD;
+    cursor: pointer;
+    z-index: 9000;
+`;
+
+const TopBtnDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
 `;
 
 export default ({
@@ -232,13 +242,17 @@ export default ({
     total,
     scroll
 }) => {
-    console.log(scroll);
     return (
         <Product>
             {loading && <Loader />}
             {!loading &&
                 <ProductWrapper>
-                    {scroll.y >= 100 && <TopBtn onClick={() => animationScroll.scrollToTop(options)} />}
+                    {scroll.y >= 100 && 
+                        <TopBtn onClick={() => animationScroll.scrollToTop(options)}>
+                            <TopBtnDiv>
+                                <UpArrowIcon />
+                            </TopBtnDiv>
+                        </TopBtn>}
                     {data.map(item => (
                         <Section key={item.id}>
                             <TitleDiv>
