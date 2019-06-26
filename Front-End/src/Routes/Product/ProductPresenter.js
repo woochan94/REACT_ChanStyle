@@ -29,12 +29,12 @@ const Section = styled.section`
     margin-top: 20px;
 `;
 
-const TitleDiv = styled.div`
+export const TitleDiv = styled.div`
     border-bottom: ${props => props.theme.borderBottom};
-    padding: 20px 0;
+    padding: 20px 0 10px;
 `;
 
-const H2 = styled.h2`
+export const H2 = styled.h2`
     font-size: ${props => props.theme.titleFontSize};
     font-weight: 600;
 `;
