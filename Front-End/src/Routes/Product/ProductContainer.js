@@ -203,6 +203,55 @@ export default ({match}) => {
         return () => window.removeEventListener("scroll", onScroll)
     }, [])
 
+    // 옵션 삭제 
+    const deleteSelect = (index, selected) => {
+        // 삭제 버튼의 인덱스를 제외한 배열을 새롭게 만든후 다시 set해준다. 
+        // => 삭제 버튼 인덱스번째의 옵션을 제외한 체로 들어가게 됨 
+        const aaa = selected.filter(item => item !== selected[index]);
+        setSelected([...aaa]);
+
+        // console.log("현재 count : " + count); 
+        // console.log("현재 totalarr : " + totalarr); 
+        // console.log("현재 total 값 : " + total);
+         
+        if(selected.length === 1) {
+            // 선택한 옵션이 한개 뿐일때  
+            // 모든 옵션관련 state값을 초기값으로 초기화 해준다 (count, totalarr, total)
+            setCount([]); 
+            setTotalarr([]); 
+            setTotal(0); 
+        } else {
+            // 선택한 옵션이 두개 이상일 때 
+            // 1. count[index], totalarr[index] 값을 제거
+            // 2. index + 1 번째의 count와 totalarr 값을 index 번째로 가져와야 함 
+
+            // =>   각각의 배열 (count, totalarr)을 map을 돌려서 클릭한 index 번호와 
+            //      map의 index2 번호를 비교하여 같지 않은 map의 index2에 대한 값만 
+            //      미리 만들어 놓은 새로운 배열에 push 하고 map이 끝난후 새로운 배열을 
+            //      count와 totalarr에 각각 set해준다. 
+            
+            let deleteCount = [];  
+            count.map((item,index2) => {
+                //console.log("if문 바깥쪽 - index : " + index + " index2 : " + index2 + " item : " + item); 
+                if(index !== index2) {
+                    //console.log("if문 안쪽 - index : " + index + " index2 : " + index2 + " item : " + item); 
+                    deleteCount.push(item);
+                }
+                return null; 
+            });
+            setCount(deleteCount);
+
+            let deleteTotalarr = []; 
+            totalarr.map((item, index2) => {
+                if(index !== index2) {
+                    deleteTotalarr.push(item); 
+                }
+                return null; 
+            });
+            setTotalarr(deleteTotalarr);
+        }
+    }
+
     return (
         <ProductPresenter 
             data={data.seeproduct}
@@ -219,6 +268,7 @@ export default ({match}) => {
             decrement={decrement}
             total={total}
             scroll={scroll}
+            deleteSelect={deleteSelect}
         />
     );
 };

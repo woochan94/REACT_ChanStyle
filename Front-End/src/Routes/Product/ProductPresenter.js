@@ -198,7 +198,6 @@ const SelectedCountBtnDiv = styled.div`
 
 const SelectedPrice = styled.div`
     display: flex; 
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
@@ -227,6 +226,13 @@ const TopBtnDiv = styled.div`
     margin-top: 5px;
 `;
 
+const DeleteButton = styled.button`
+    background-color: transparent; 
+    border: none;
+    cursor: pointer;
+    outline: none;
+`;
+
 export default ({
     data,
     loading,
@@ -240,7 +246,8 @@ export default ({
     decrement,
     increment,
     total,
-    scroll
+    scroll,
+    deleteSelect
 }) => {
     return (
         <Product>
@@ -334,6 +341,7 @@ export default ({
                                                 </SelectedCount>
                                                 <SelectedPrice>
                                                     {item.price*count[index]}
+                                                    <DeleteButton onClick={() => deleteSelect(index, selected) }><span role="img" aria-label="">❌</span></DeleteButton>
                                                 </SelectedPrice>
                                             </SelectedDiv>
                                             )
