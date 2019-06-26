@@ -55,7 +55,8 @@ const SignUpForm = ({
     phone1,
     phone2,
     phone3,
-    setAction
+    setAction,
+    ButtonText
 }) => {
     return (
         <form onSubmit={onSubmit}>
@@ -80,8 +81,10 @@ const SignUpForm = ({
                 <Input {...phone2} id={"phone2"} />
                 <Input {...phone3} id={"phone3"} />
             </PhoneBox>
-            <Button text={"Create Account"} type={"submit"} id={"createAccountBtn"} />
-            <Button text={"Back to Login"} onClick={() => setAction("logIn")} />
+            <Button text={ButtonText} type={"submit"} id={"createAccountBtn"} />
+            {ButtonText === "Create Account" && (
+                <Button text={"Back to Login"} onClick={() => setAction("logIn")} />
+            )}
         </form>
     )
 }
@@ -101,7 +104,8 @@ SignUpForm.propTypes = {
     phone1: PropTypes.object, 
     phone2: PropTypes.object,
     phone3: PropTypes.object, 
-    setAction: PropTypes.func
+    setAction: PropTypes.func,
+    ButtonText: PropTypes.string.isRequired
 }
 
 export default SignUpForm;

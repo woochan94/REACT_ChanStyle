@@ -125,6 +125,7 @@ export default ({
                                 phone2={phone2}
                                 phone3={phone3}
                                 setAction={setAction}
+                                ButtonText={"Create Account"}
                             />
                         </>
                     )}
