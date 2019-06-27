@@ -5,5 +5,7 @@ type Mutation {
         address: String
         addressDetail: String
         phone: String
-    ): User!
+        password: String 
+        confirmPassword: String 
+    ): Boolean!
 }
