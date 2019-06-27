@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost"; 
+import { gql } from "apollo-boost";
 
 export const EDIT_PROFILE = gql`
     mutation editUser(
@@ -19,5 +19,23 @@ export const EDIT_PROFILE = gql`
             password: $password,
             confirmPassword: $confirmPassword
         ) 
+    }
+`;
+
+export const SEE_CART = gql`
+    {
+        seeCart {
+            id
+            product {
+                files {
+                    url
+                }
+                name
+                price
+            }
+            size
+            color
+            count
+        }
     }
 `;

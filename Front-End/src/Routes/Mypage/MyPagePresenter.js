@@ -57,6 +57,40 @@ const Article = styled.article`
     margin-top: 60px;
 `;
 
+const Table = styled.table`
+    width: 100%;
+    border: 1px solid #ccc; 
+    border-left: 0;
+    border-right: 0;
+    thead {
+        border-bottom: 1px solid #ccc; 
+        tr {
+            background-color: #2c3e50;
+            color: white;
+        }
+        th {
+            padding: 10px 0;
+        }
+    }
+    tbody {
+        border-bottom: 1px solid #ccc;
+        min-height: 20px;
+        tr {
+            height: 100px;
+            td {
+                vertical-align: middle;
+                text-align: center;
+            }
+        }
+    }
+    tfoot {
+        td {
+            text-align: center;
+            padding: 5px 0;
+        }
+    }
+`;
+
 export default ({
     tab,
     clickTab,
@@ -106,9 +140,35 @@ export default ({
                 </MyPageHeader>
                 <Article>
                     {tab === "cart" ? 
-                        <div>
-                            cart
-                        </div>: 
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th scope="col"><input type="checkBox" /></th>
+                                    <th scope="col">product</th>
+                                    <th scope="col">Name (Option) </th>
+                                    <th scope="col">price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">select</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkBox" /></td>
+                                    <td>이미지</td>
+                                    <td>이미지</td>
+                                    <td>이미지</td>
+                                    <td>이미지</td>
+                                    <td>이미지</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan="1">Total</td>
+                                    <td colSpan="4"></td>
+                                    <td colSpan="1">가격</td>
+                                </tr>
+                            </tfoot>
+                        </Table>: 
                     tab === "buyList" ? 
                         <div>
                             buyList

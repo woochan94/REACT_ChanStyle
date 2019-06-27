@@ -3,7 +3,7 @@ import MyPagePresenter from "./MyPagePresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
-import { EDIT_PROFILE } from './MyPageQueries';
+import { EDIT_PROFILE, SEE_CART } from './MyPageQueries';
 import { toast } from "react-toastify";
 
 export default () => {
@@ -38,6 +38,17 @@ export default () => {
             confirmPassword: confirmPassword.value
         }
     });
+
+    const {loading:cartLoading, data:cartData} = useQuery(SEE_CART); 
+
+    if(cartLoading === false){
+        console.log("file : " + cartData.seeCart[0].product[0].files[0].url); 
+        console.log("product : " + cartData.seeCart[0].product[0].name);
+        console.log("price: " + cartData.seeCart[0].product[0].price * cartData.seeCart[0].count); 
+        console.log("color: " + cartData.seeCart[0].color); 
+        console.log("size: " + cartData.seeCart[0].size);
+        console.log("count: " + cartData.seeCart[0].count); 
+    }
 
     useEffect(() => {
         setTimeout(() => {
