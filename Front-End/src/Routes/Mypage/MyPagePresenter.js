@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components"; 
 import { TitleDiv, H2 } from "../Product/ProductPresenter";
 import Button from "../../Components/Button";
+import { Form } from "../Auth/AuthPresenter";
+import SignUpForm from "../../Components/SignUpForm";
 
 const MyPage = styled.section`
     min-height: 79vh;
@@ -50,12 +52,28 @@ const MyNavDiv = styled.div`
 `;
 
 const Article = styled.article`
+    display: flex; 
+    justify-content: center;
     margin-top: 60px;
 `;
 
 export default ({
     tab,
-    clickTab
+    clickTab,
+    onSubmit,
+    name,
+    email,
+    password, 
+    confirmPassword,
+    zipCode,
+    address,
+    addressDetail,
+    phone1,
+    phone2,
+    phone3,
+    open,
+    setOpen,
+    handleAddress
 }) => {
     return (
         <MyPage>
@@ -95,9 +113,25 @@ export default ({
                         <div>
                             buyList
                         </div>:
-                        <div>
-                            editProfile
-                        </div>
+                        <Form>
+                            <SignUpForm 
+                                onSubmit={onSubmit}
+                                name={name}
+                                email={email}
+                                ButtonText={"Edit Profile"}
+                                password={password}
+                                confirmPassword={confirmPassword}
+                                zipCode={zipCode}
+                                address={address}
+                                addressDetail={addressDetail}
+                                phone1={phone1}
+                                phone2={phone2}
+                                phone3={phone3}
+                                open={open}
+                                setOpen={setOpen}
+                                handleAddress={handleAddress}
+                            />
+                        </Form>
                     }
                 </Article>
             </MyPageWrapper>

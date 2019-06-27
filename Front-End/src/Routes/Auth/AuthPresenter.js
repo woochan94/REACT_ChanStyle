@@ -110,7 +110,7 @@ export default ({
                         <>
                             <H3>Sign Up</H3>
                             <SignUpForm
-                                obSubmit={onSubmit}
+                                onSubmit={onSubmit}
                                 name={name}
                                 email={email}
                                 password={password}

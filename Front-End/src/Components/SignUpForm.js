@@ -62,8 +62,18 @@ const SignUpForm = ({
         <form onSubmit={onSubmit}>
             <Input placeholder={"Name"} {...name} />
             <Input placeholder={"Email"} {...email} type={"email"} />
-            <Input placeholder={"Password"} {...password} type={"password"} />
-            <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} />
+            {ButtonText === "Create Account" ? (
+                <>
+                    <Input placeholder={"Password"} {...password} type={"password"} />
+                    <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} />
+                </>
+            ) : (
+                <>
+                    <Input placeholder={"Password"} {...password} type={"password"} required={false}/>
+                    <Input placeholder={"Confirm Password"} {...confirmPassword} type={"password"} required={false}/>
+                </>
+            )}
+            
             <ZipCodeBox>
                 <Input placeholder={"Zip Code"} {...zipCode} id={"zipCodeInput"} />
                 <Button text={"Find"} id={"zipCodeBtn"} onClick={() => open === true ? setOpen(false) : setOpen(true)} />
@@ -101,7 +111,7 @@ SignUpForm.propTypes = {
     handleAddress: PropTypes.func.isRequired, 
     address: PropTypes.object.isRequired, 
     addressDetail: PropTypes.object.isRequired,
-    phone1: PropTypes.object, 
+    phone1: PropTypes.func, 
     phone2: PropTypes.object,
     phone3: PropTypes.object, 
     setAction: PropTypes.func,
