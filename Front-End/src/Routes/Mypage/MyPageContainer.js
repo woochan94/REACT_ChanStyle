@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react"; 
 import MyPagePresenter from "./MyPagePresenter"; 
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
+import { EDIT_PROFILE } from './MyPageQueries';
+import { toast } from "react-toastify";
 
 export default () => {
-    const { loading, data } = useQuery(ME); 
+    const { loading, data } = useQuery(ME, {
+        fetchPolicy:"no-cache"
+    }); 
+
+    const [delay, setDelay] = useState(false)
 
     const [tab, setTab] = useState("cart");
     const [open, setOpen] = useState(false);
@@ -13,7 +19,7 @@ export default () => {
     const name = useInput(""); 
     const email = useInput(""); 
     const password = useInput(""); 
-    const confirmPasword = useInput("");
+    const confirmPassword = useInput("");
     const zipCode = useInput("");  
     const address = useInput(""); 
     const addressDetail = useInput("");
@@ -21,21 +27,39 @@ export default () => {
     const phone2 = useInput("");
     const phone3 = useInput(""); 
 
+    const editProfileMutation = useMutation(EDIT_PROFILE, {
+        variables: {
+            name: name.value, 
+            zipCode: zipCode.value, 
+            address: address.value, 
+            addressDetail: addressDetail.value,
+            phone: phone1.value + "-" + phone2.value + "-" + phone3.value, 
+            password: password.value,
+            confirmPassword: confirmPassword.value
+        }
+    });
 
     useEffect(() => {
-        if(loading === false) {
+        setTimeout(() => {
+            setDelay(true)
+        }, 1000);
+    }, [])
+
+    useEffect(() => {
+        if(loading === false && delay) {
             const fullPhone = data.me.phone.split("-");
             name.setValue(data.me.name);
             email.setValue(data.me.email);
             zipCode.setValue(data.me.zipCode);
-            address.setValue(data.me.address); 
+            address.setValue(data.me.address);
             addressDetail.setValue(data.me.addressDetail);
             phone1.setValue(fullPhone[0]); 
             phone2.setValue(fullPhone[1]);
             phone3.setValue(fullPhone[2]);
+            setDelay(false)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[loading])
+    },[loading,delay])
 
     const handleAddress = (data) => {
         let fullAddress = data.address;
@@ -60,13 +84,35 @@ export default () => {
         setTab(tabString);
     }
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault(); 
 
-        console.log("submit");
+        if(
+            name.value !== "" && 
+            zipCode.value !== "" && 
+            address.value !== "" && 
+            addressDetail.value !== "" && 
+            phone1.value !== "" &&
+            phone2.value !== "" &&
+            phone3.value !== ""
+        ) {
+            if(password !== "") {
+                if(password.value !== confirmPassword.value) {
+                    toast.error("비밀번호가 일치하지 않습니다.");
+                    return false;
+                }
+            }
+
+            try {
+                const { data:edit } = await editProfileMutation();
+                if(edit) {
+                    toast.success("개인정보가 성공적으로 수정되었습니다!");
+                }
+            } catch (e) {
+                toast.error(e.message);
+            }
+        }
     }
-
-
 
     return (
         <MyPagePresenter 
@@ -76,7 +122,7 @@ export default () => {
             name={name}
             email={email}
             password={password} 
-            confirmPasword={confirmPasword}
+            confirmPassword={confirmPassword}
             zipCode={zipCode}
             address={address}
             addressDetail={addressDetail}
@@ -86,6 +132,7 @@ export default () => {
             open={open}
             setOpen={setOpen}
             handleAddress={handleAddress}
+            data={data}
         />
     )
 }

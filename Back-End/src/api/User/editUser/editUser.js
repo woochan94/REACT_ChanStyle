@@ -12,7 +12,7 @@ export default {
 
             const { user } = request;
 
-            if(password !== undefined && confirmPassword !== undefined && password === confirmPassword) {
+            if(password !== "" && confirmPassword !== "" && password === confirmPassword) {
                 if(chk_password.test(password) === false) {
                     throw Error("비밀번호는 영문, 숫자, 특수문자 조합의 8~16자리여야 합니다.");                     
                 } else {
