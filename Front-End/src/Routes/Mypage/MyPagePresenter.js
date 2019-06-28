@@ -1,5 +1,5 @@
-import React from "react"; 
-import styled from "styled-components"; 
+import React from "react";
+import styled from "styled-components";
 import { TitleDiv, H2 } from "../Product/ProductPresenter";
 import Button from "../../Components/Button";
 import { Form } from "../Auth/AuthPresenter";
@@ -12,13 +12,18 @@ const MyPage = styled.section`
 `;
 
 const MyPageWrapper = styled.div`
+    #cartOrderBtn {
+        width: auto; 
+        padding: 10px 35px;
+        float: right;
+    }
     @media (max-width: 1024px) {
         padding: 0 50px;
     }
     @media (max-width: 600px) {
         padding: 0 20px;
     }
-`; 
+`;
 
 const MyPageHeader = styled.header``;
 
@@ -56,6 +61,8 @@ const MyNavDiv = styled.div`
 const Article = styled.article`
     display: flex; 
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-top: 60px;
 `;
 
@@ -64,8 +71,9 @@ const Table = styled.table`
     border: 1px solid #ccc; 
     border-left: 0;
     border-right: 0;
+    margin-bottom: 25px;
     thead {
-        border-bottom: 1px solid #ccc; 
+        border-bottom: 1px solid #ccc;
         tr {
             background-color: #2c3e50;
             color: white;
@@ -106,7 +114,7 @@ export default ({
     onSubmit,
     name,
     email,
-    password, 
+    password,
     confirmPassword,
     zipCode,
     address,
@@ -119,7 +127,8 @@ export default ({
     handleAddress,
     cartLoading,
     cartData,
-    passCartId
+    passCartId,
+    allCheck
 }) => {
     return (
         <MyPage>
@@ -127,108 +136,116 @@ export default ({
                 <MyPageHeader>
                     <MyTitleDiv>
                         <H2>My Page</H2>
-                        <Button text={"LogOut"} onClick={() => console.log("logout")}/>
+                        <Button text={"LogOut"} onClick={() => console.log("logout")} />
                     </MyTitleDiv>
                     <MyNavDiv>
-                        <button onClick={() => clickTab("cart")} 
-                            style={ tab === "cart" ? 
-                                    {borderColor:"#ccc", borderBottom:"1px solid #fff", marginBottom: "-1px"} : 
-                                    {borderColor: "transparent"} } > 
-                            Cart 
+                        <button onClick={() => clickTab("cart")}
+                            style={tab === "cart" ?
+                                { borderColor: "#ccc", borderBottom: "1px solid #fff", marginBottom: "-1px" } :
+                                { borderColor: "transparent" }} >
+                            Cart
                         </button>
-                        <button onClick={() => clickTab("buyList")} 
-                            style={ tab === "buyList" ? 
-                                    {borderColor:"#ccc", borderBottom:"1px solid #fff", marginBottom: "-1px"} : 
-                                    {borderColor: "transparent"} } > 
-                            buyList 
+                        <button onClick={() => clickTab("buyList")}
+                            style={tab === "buyList" ?
+                                { borderColor: "#ccc", borderBottom: "1px solid #fff", marginBottom: "-1px" } :
+                                { borderColor: "transparent" }} >
+                            buyList
                         </button>
-                        <button onClick={() => clickTab("editProfile")} 
-                            style={ tab === "editProfile" ? 
-                                    {borderColor:"#ccc", borderBottom:"1px solid #fff", marginBottom: "-1px"} : 
-                                    {borderColor: "transparent"} } > 
-                            editProfile 
+                        <button onClick={() => clickTab("editProfile")}
+                            style={tab === "editProfile" ?
+                                { borderColor: "#ccc", borderBottom: "1px solid #fff", marginBottom: "-1px" } :
+                                { borderColor: "transparent" }} >
+                            editProfile
                         </button>
                     </MyNavDiv>
                 </MyPageHeader>
-                <Article>
-                    {tab === "cart" ?
-                        <>
-                        {cartLoading === true && <Loader />}
-                        {cartLoading === false && (
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th scope="col"><input type="checkBox" /></th>
-                                        <th scope="col">product</th>
-                                        <th scope="col">Name (Option) </th>
-                                        <th scope="col">price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">select</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {cartData.seeCart.map((item,index) => (
-                                        item.product.map(product => (
-                                            product.files.map(file => (
-                                                <tr key={index} >
-                                                    <td><input id={item.id} type="checkBox" onChange={(e) => e.target.checked && console.log(e.target.id)}/></td>
-                                                    <td>
-                                                        <Link to={`/product/${product.id}`}>
-                                                            <img src={file.url} alt={file.id} />
-                                                        </Link>
-                                                    </td>
-                                                    <td>
-                                                        <Link to={`/product/${product.id}`}>
-                                                            <div>
-                                                                {product.name}
-                                                            </div>
-                                                            {item.size}/{item.color}
-                                                        </Link>
-                                                    </td>
-                                                    <td>{product.price}</td>
-                                                    <td>{item.count}</td>
-                                                    <td><button onClick={() => passCartId(item.id)}>삭제</button></td>
-                                                </tr>
+                {tab === "cart" ?
+                    <>
+                        <Article>
+                            {cartLoading === true && <Loader />}
+                            {cartLoading === false && (
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><input type="checkBox" onChange={(e) => allCheck(e.target.checked)} /></th>
+                                            <th scope="col">product</th>
+                                            <th scope="col">Name (Option) </th>
+                                            <th scope="col">price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cartData.seeCart.length === 0 && (
+                                            <tr>
+                                                <td colSpan="6">장바구니가 비어있습니다.</td>
+                                            </tr>
+                                        )}
+                                        {cartData.seeCart.map((item, index) => (
+                                            item.product.map(product => (
+                                                product.files.map(file => (
+                                                    <tr key={index} >
+                                                        <td><input id={item.id} type="checkBox" checked={false} onChange={(e) => e.target.checked && console.log(e.target.id)} /></td>
+                                                        <td>
+                                                            <Link to={`/product/${product.id}`}>
+                                                                <img src={file.url} alt={file.id} />
+                                                            </Link>
+                                                        </td>
+                                                        <td>
+                                                            <Link to={`/product/${product.id}`}>
+                                                                <div>
+                                                                    {product.name}
+                                                                </div>
+                                                                {item.size}/{item.color}
+                                                            </Link>
+                                                        </td>
+                                                        <td>{product.price}</td>
+                                                        <td>{item.count}</td>
+                                                        <td><button onClick={() => passCartId(item.id)}>삭제</button></td>
+                                                    </tr>
+                                                ))
                                             ))
-                                        ))
-                                    ))}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colSpan="1">Total</td>
-                                        <td colSpan="4"></td>
-                                        <td colSpan="1">가격</td>
-                                    </tr>
-                                </tfoot>
-                            </Table>
-                        )}
-                        </> 
-                        : 
-                    tab === "buyList" ? 
+                                        ))}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colSpan="1">Total</td>
+                                            <td colSpan="4"></td>
+                                            <td colSpan="1">가격</td>
+                                        </tr>
+                                    </tfoot>
+                                </Table>
+                            )}
+                        </Article>
+                        <Button id={"cartOrderBtn"} text={"Order Now"} />
+                    </>
+                    :
+                    tab === "buyList" ?
                         <div>
                             buyList
-                        </div>:
-                        <Form>
-                            <SignUpForm 
-                                onSubmit={onSubmit}
-                                name={name}
-                                email={email}
-                                ButtonText={"Edit Profile"}
-                                password={password}
-                                confirmPassword={confirmPassword}
-                                zipCode={zipCode}
-                                address={address}
-                                addressDetail={addressDetail}
-                                phone1={phone1}
-                                phone2={phone2}
-                                phone3={phone3}
-                                open={open}
-                                setOpen={setOpen}
-                                handleAddress={handleAddress}
-                            />
-                        </Form>
-                    }
-                </Article>
+                        </div> :
+                        <Article>
+                            <Form>
+                                <SignUpForm
+                                    onSubmit={onSubmit}
+                                    name={name}
+                                    email={email}
+                                    ButtonText={"Edit Profile"}
+                                    password={password}
+                                    confirmPassword={confirmPassword}
+                                    zipCode={zipCode}
+                                    address={address}
+                                    addressDetail={addressDetail}
+                                    phone1={phone1}
+                                    phone2={phone2}
+                                    phone3={phone3}
+                                    open={open}
+                                    setOpen={setOpen}
+                                    handleAddress={handleAddress}
+                                />
+                            </Form>
+                        </Article>
+                }
             </MyPageWrapper>
         </MyPage>
     )

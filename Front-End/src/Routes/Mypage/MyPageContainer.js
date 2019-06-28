@@ -149,6 +149,24 @@ export default () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cartId])
 
+    const allCheck = (checked) => {
+        if(checked) {
+            if(cartLoading === false) {
+                cartData.seeCart.map((item,index) => {
+                    const chkBox = document.getElementById(item.id);
+                    return chkBox.checked = true;
+                })
+            }
+        } else {
+            if(cartLoading === false) {
+                cartData.seeCart.map((item) => {
+                    const chkBox = document.getElementById(item.id);
+                    return chkBox.checked = false;
+                })
+            }
+        }
+    }
+
 
     return (
         <MyPagePresenter 
@@ -172,6 +190,7 @@ export default () => {
             cartLoading={cartLoading}
             cartData={cartData}
             passCartId={passCartId}
+            allCheck={allCheck}
         />
     )
 }
