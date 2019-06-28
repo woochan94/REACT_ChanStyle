@@ -4,6 +4,8 @@ import { TitleDiv, H2 } from "../Product/ProductPresenter";
 import Button from "../../Components/Button";
 import { Form } from "../Auth/AuthPresenter";
 import SignUpForm from "../../Components/SignUpForm";
+import Loader from "../../Components/Loader";
+import { Link } from 'react-router-dom';
 
 const MyPage = styled.section`
     min-height: 79vh;
@@ -73,13 +75,20 @@ const Table = styled.table`
         }
     }
     tbody {
-        border-bottom: 1px solid #ccc;
         min-height: 20px;
         tr {
             height: 100px;
+            border-bottom: 1px solid #ccc;
             td {
                 vertical-align: middle;
                 text-align: center;
+                padding: 10px 0;
+                img {
+                    width: 130px;
+                    height: 150px;
+                    ${props => props.theme.whiteBox};
+                    background-color: transparent;
+                }
             }
         }
     }
@@ -107,7 +116,10 @@ export default ({
     phone3,
     open,
     setOpen,
-    handleAddress
+    handleAddress,
+    cartLoading,
+    cartData,
+    passCartId
 }) => {
     return (
         <MyPage>
@@ -139,36 +151,59 @@ export default ({
                     </MyNavDiv>
                 </MyPageHeader>
                 <Article>
-                    {tab === "cart" ? 
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th scope="col"><input type="checkBox" /></th>
-                                    <th scope="col">product</th>
-                                    <th scope="col">Name (Option) </th>
-                                    <th scope="col">price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">select</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="checkBox" /></td>
-                                    <td>이미지</td>
-                                    <td>이미지</td>
-                                    <td>이미지</td>
-                                    <td>이미지</td>
-                                    <td>이미지</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colSpan="1">Total</td>
-                                    <td colSpan="4"></td>
-                                    <td colSpan="1">가격</td>
-                                </tr>
-                            </tfoot>
-                        </Table>: 
+                    {tab === "cart" ?
+                        <>
+                        {cartLoading === true && <Loader />}
+                        {cartLoading === false && (
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><input type="checkBox" /></th>
+                                        <th scope="col">product</th>
+                                        <th scope="col">Name (Option) </th>
+                                        <th scope="col">price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">select</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {cartData.seeCart.map((item,index) => (
+                                        item.product.map(product => (
+                                            product.files.map(file => (
+                                                <tr key={index} >
+                                                    <td><input id={item.id} type="checkBox" onChange={(e) => e.target.checked && console.log(e.target.id)}/></td>
+                                                    <td>
+                                                        <Link to={`/product/${product.id}`}>
+                                                            <img src={file.url} alt={file.id} />
+                                                        </Link>
+                                                    </td>
+                                                    <td>
+                                                        <Link to={`/product/${product.id}`}>
+                                                            <div>
+                                                                {product.name}
+                                                            </div>
+                                                            {item.size}/{item.color}
+                                                        </Link>
+                                                    </td>
+                                                    <td>{product.price}</td>
+                                                    <td>{item.count}</td>
+                                                    <td><button onClick={() => passCartId(item.id)}>삭제</button></td>
+                                                </tr>
+                                            ))
+                                        ))
+                                    ))}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colSpan="1">Total</td>
+                                        <td colSpan="4"></td>
+                                        <td colSpan="1">가격</td>
+                                    </tr>
+                                </tfoot>
+                            </Table>
+                        )}
+                        </> 
+                        : 
                     tab === "buyList" ? 
                         <div>
                             buyList

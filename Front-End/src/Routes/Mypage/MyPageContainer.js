@@ -3,19 +3,19 @@ import MyPagePresenter from "./MyPagePresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
-import { EDIT_PROFILE, SEE_CART } from './MyPageQueries';
+import { EDIT_PROFILE, SEE_CART, DELETE_CART } from './MyPageQueries';
 import { toast } from "react-toastify";
 
 export default () => {
+    // 자신의 정보를 가져오는 query 
     const { loading, data } = useQuery(ME, {
         fetchPolicy:"no-cache"
     }); 
 
-    const [delay, setDelay] = useState(false)
-
+    // tab메뉴 state 
     const [tab, setTab] = useState("cart");
-    const [open, setOpen] = useState(false);
-
+    
+    // 개인정보에 관련된 state값 
     const name = useInput(""); 
     const email = useInput(""); 
     const password = useInput(""); 
@@ -25,7 +25,13 @@ export default () => {
     const addressDetail = useInput("");
     const phone1 = useInput(""); 
     const phone2 = useInput("");
-    const phone3 = useInput(""); 
+    const phone3 = useInput("");
+    const [open, setOpen] = useState(false);
+        // 개인정보를 변경한후 변경정보를 얻어오기 위한 delay 
+    const [delay, setDelay] = useState(false);
+    
+
+    const [cartId, setCartId] = useState("");
 
     const editProfileMutation = useMutation(EDIT_PROFILE, {
         variables: {
@@ -39,22 +45,22 @@ export default () => {
         }
     });
 
-    const {loading:cartLoading, data:cartData} = useQuery(SEE_CART); 
-
-    if(cartLoading === false){
-        console.log("file : " + cartData.seeCart[0].product[0].files[0].url); 
-        console.log("product : " + cartData.seeCart[0].product[0].name);
-        console.log("price: " + cartData.seeCart[0].product[0].price * cartData.seeCart[0].count); 
-        console.log("color: " + cartData.seeCart[0].color); 
-        console.log("size: " + cartData.seeCart[0].size);
-        console.log("count: " + cartData.seeCart[0].count); 
-    }
+    const {loading:cartLoading, data:cartData, refetch} = useQuery(SEE_CART, {
+        fetchPolicy: "network-only"
+    });
+ 
+    const deleteCartMutation = useMutation(DELETE_CART, {
+        variables: {
+            id: cartId
+        }
+    })
 
     useEffect(() => {
         setTimeout(() => {
-            setDelay(true)
+            setDelay(true);
         }, 1000);
     }, [])
+
 
     useEffect(() => {
         if(loading === false && delay) {
@@ -125,6 +131,25 @@ export default () => {
         }
     }
 
+    const passCartId = async (id) => {
+        setCartId(id);
+    }
+
+    useEffect(() => {
+        const deleteCartFunc = async () => {
+            const { data } = await deleteCartMutation(); 
+            if(data) {
+                refetch();
+            }
+        }
+        if(cartId !== "") {
+            deleteCartFunc();
+            setCartId("");
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cartId])
+
+
     return (
         <MyPagePresenter 
             tab={tab}
@@ -144,6 +169,9 @@ export default () => {
             setOpen={setOpen}
             handleAddress={handleAddress}
             data={data}
+            cartLoading={cartLoading}
+            cartData={cartData}
+            passCartId={passCartId}
         />
     )
 }

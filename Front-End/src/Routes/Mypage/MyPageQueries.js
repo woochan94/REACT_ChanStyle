@@ -30,12 +30,22 @@ export const SEE_CART = gql`
                 files {
                     url
                 }
+                id
                 name
                 price
             }
             size
             color
             count
+            sizeId
+            colorId
+            countId
         }
+    }
+`;
+
+export const DELETE_CART = gql`
+    mutation deleteCart($id: String!) {
+        deleteCart(id:$id)
     }
 `;
