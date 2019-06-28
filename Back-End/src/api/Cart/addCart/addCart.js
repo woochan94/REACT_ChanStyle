@@ -5,7 +5,7 @@ export default {
         addCart: async (_, args, { request, isAuthenticated}) => {
             isAuthenticated(request); 
             const { user } = request; 
-            const { product, size, color, count } = args; 
+            const { product, size, sizeId, color, colorId, count, countId } = args; 
             return prisma.createCart({
                 user: {
                     connect: {
@@ -19,7 +19,10 @@ export default {
                 }, 
                 size, 
                 color, 
-                count
+                count,
+                sizeId,
+                colorId,
+                countId
             }) 
         }
     }

@@ -76,6 +76,9 @@ type Cart {
   size: String!
   color: String! 
   count: Int!
+  sizeId: String! 
+  colorId: String! 
+  countId: String! 
 }
 
 type BuyList {
