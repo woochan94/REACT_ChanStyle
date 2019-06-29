@@ -167,14 +167,14 @@ const SelectedItem = styled.div`
     align-items: center;
 `;
 
-const SelectedCount = styled.div`
+export const SelectedCount = styled.div`
     display: flex; 
     justify-content: center;
     align-items: center;
     margin-left: 15%;
 `;
 
-const SelectedCountTextDiv = styled.div`
+export const SelectedCountTextDiv = styled.div`
     background-color: white;
     height: 100%;
     width: 100%;
@@ -186,7 +186,7 @@ const SelectedCountTextDiv = styled.div`
     padding-left: 50%;
 `;
 
-const SelectedCountBtnDiv = styled.div` 
+export const SelectedCountBtnDiv = styled.div` 
     display: flex;
     flex-direction: column;
     button {

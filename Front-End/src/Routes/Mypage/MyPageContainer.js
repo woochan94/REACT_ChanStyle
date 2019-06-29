@@ -30,8 +30,11 @@ export default () => {
         // 개인정보를 변경한후 변경정보를 얻어오기 위한 delay 
     const [delay, setDelay] = useState(false);
     
-
-    const [cartId, setCartId] = useState("");
+    // cart에 관련된 state값 
+    const [cartId, setCartId] = useState(""); 
+    const count = [];
+    const totalarr = [];
+    const [total, setTotal] = useState(0);
 
     const editProfileMutation = useMutation(EDIT_PROFILE, {
         variables: {
@@ -167,6 +170,33 @@ export default () => {
         }
     }
 
+    if(cartLoading === false ) {
+        cartData.seeCart.map(item =>
+            item.product.map(product => {
+                return count.push(
+                    {
+                        counts: item.count,
+                        countsId: item.countId, 
+                        price: product.price,
+                        totalPrice: item.count*product.price
+                    }
+                )
+            })
+        );
+    }
+
+    // 처음 장바구니 창에 들어왔을 때 
+    // 현재 장바구니 아이템들의 총 값을 계산하기 위한 useEffect hook
+    useEffect(() => {
+        if(count.length !== 0) {
+            count.map(item => (
+                totalarr.push(item.totalPrice)
+            ))
+            const totalFunc = (a, b) => a + b; 
+            setTotal(totalarr.reduce(totalFunc));
+        }
+    }, [cartLoading])
+
 
     return (
         <MyPagePresenter 
@@ -191,6 +221,7 @@ export default () => {
             cartData={cartData}
             passCartId={passCartId}
             allCheck={allCheck}
+            total={total}
         />
     )
 }

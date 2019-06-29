@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { TitleDiv, H2 } from "../Product/ProductPresenter";
+import { TitleDiv, H2, SelectedCountBtnDiv, SelectedCountTextDiv, SelectedCount } from "../Product/ProductPresenter";
 import Button from "../../Components/Button";
 import { Form } from "../Auth/AuthPresenter";
 import SignUpForm from "../../Components/SignUpForm";
@@ -191,6 +191,19 @@ const ResponsiveTotalDiv = styled.div`
 
 `;
 
+const SelectedCountTextDiv2 = styled(SelectedCountTextDiv)`
+    padding: 5px 15px;
+    @media (max-width: 600px) {
+        width: auto;
+    }
+`;
+const SelectedCount2 = styled(SelectedCount)`
+    @media (max-width: 600px) {
+        margin-left: 0;
+        justify-content: left;
+    }
+`;
+
 export default ({
     tab,
     clickTab,
@@ -211,7 +224,8 @@ export default ({
     cartLoading,
     cartData,
     passCartId,
-    allCheck
+    allCheck,
+    total
 }) => {
     return (
         <MyPage>
@@ -284,7 +298,15 @@ export default ({
                                                                 </Link>
                                                             </td>
                                                             <td>{product.price}</td>
-                                                            <td>{item.count}</td>
+                                                            <td>
+                                                                <SelectedCount2>
+                                                                    <SelectedCountTextDiv2>{item.count}</SelectedCountTextDiv2>
+                                                                    <SelectedCountBtnDiv>
+                                                                        <Button text={"▲"} />
+                                                                        <Button text={"▼"} />
+                                                                    </SelectedCountBtnDiv>
+                                                                </SelectedCount2>
+                                                            </td>
                                                             <td><button onClick={() => passCartId(item.id)}>삭제</button></td>
                                                         </tr>
                                                     ))
@@ -295,12 +317,12 @@ export default ({
                                             <tr>
                                                 <td colSpan="1">Total</td>
                                                 <td colSpan="4"></td>
-                                                <td colSpan="1">가격</td>
+                                                <td colSpan="1">{total}</td>
                                             </tr>
                                         </tfoot>
                                     </Table2>
                                     <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
-                                        Total : 가격
+                                        Total : {total}
                                     </ResponsiveTotalDiv>
                                     <Button id={"cartOrderBtn"} text={"Order Now"} />
                                 </>
