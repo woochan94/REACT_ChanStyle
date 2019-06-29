@@ -24,6 +24,7 @@ const Box = styled.article`
     width: 100%; 
     border-radius: 0; 
     max-width: 500px; 
+    margin: 0 auto;
 `;
 
 export const Form = styled(Box)`

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 const MyPage = styled.section`
     min-height: 79vh;
+    overflow: hidden;
 `;
 
 const MyPageWrapper = styled.div`
@@ -16,6 +17,16 @@ const MyPageWrapper = styled.div`
         width: auto; 
         padding: 10px 35px;
         float: right;
+        margin: 20px 0;
+        @media (max-width: 600px) {
+            width: 100%;
+            margin: 20px 0 60px 0;
+        }
+    }
+    #responsiveTotalDiv {
+        @media (min-width: 600px) {
+            display: none;
+        }
     }
     @media (max-width: 1024px) {
         padding: 0 50px;
@@ -49,7 +60,7 @@ const MyNavDiv = styled.div`
         font-size: 18px;
         outline: none;
         padding: 15px;
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             padding: 10px;
         }
         :hover {
@@ -59,53 +70,125 @@ const MyNavDiv = styled.div`
 `;
 
 const Article = styled.article`
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     margin-top: 60px;
+    form {
+        margin: 0 auto;
+    }
 `;
 
-const Table = styled.table`
+const Table2 = styled.table`
     width: 100%;
-    border: 1px solid #ccc; 
-    border-left: 0;
-    border-right: 0;
-    margin-bottom: 25px;
+    img {
+        width: 130px;
+        height: 150px;
+    }
+    td, th {
+        padding: 10px; 
+        vertical-align: middle;
+    }
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
     thead {
-        border-bottom: 1px solid #ccc;
-        tr {
-            background-color: #2c3e50;
-            color: white;
-        }
-        th {
-            padding: 10px 0;
-        }
+        background-color: ${props => props.theme.confirmColor}; 
+        color: white;
     }
     tbody {
-        min-height: 20px;
         tr {
-            height: 100px;
             border-bottom: 1px solid #ccc;
-            td {
-                vertical-align: middle;
-                text-align: center;
-                padding: 10px 0;
-                img {
-                    width: 130px;
-                    height: 150px;
-                    ${props => props.theme.whiteBox};
-                    background-color: transparent;
-                }
+        }
+        #emptyTd {
+            padding: 50px 0;
+            @media (max-width: 600px) {
+                display: none;
             }
         }
     }
     tfoot {
-        td {
-            text-align: center;
-            padding: 5px 0;
+        tr {
+            border-bottom: 1px solid #ccc;
+        }
+        @media (max-width: 600px) {
+            display: none;
         }
     }
+    @media (max-width: 600px) {
+        display: block;
+        thead {
+            display: none;
+        }
+        img {
+            width: 100px;
+        }
+        tr {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0;
+            width: 100%;
+            position:relative;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+        tbody {
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+        }
+        td:first-child {
+            position: relative;
+            top: 0;
+            transform: translateY(0);
+            width: 100%;
+            background-color: ${props => props.theme.confirmColor};
+            border-radius: 10px 10px 0 0;
+            border-color: ${props => props.theme.confirmColor}; 
+            border : 1px solid;
+        }
+        td {
+            display: block;
+            :nth-child(2) {
+                position:absolute !important;
+                left: 0;
+                width: auto !important;
+                height: 180px;
+                border-right: 1px solid #ccc;
+            }
+        }
+        td {
+            :not(:first-child):not(:nth-child(2)) {
+                position: relative;
+                margin-left: 125px;
+                padding: 5px 1em; 
+                text-align: left; 
+                width: 100%;
+            }
+        }
+        td:not(:first-child):before {
+            content: '';
+            display: block;
+            left: 0;
+            position: relative;
+            font-size: .8em;
+            padding-bottom: 0.3em;
+            text-align: left;
+            color: darkgray;
+        }
+        td:nth-child(3):before {
+            content: 'Name (Option)';
+        }
+        td:nth-child(4):before {
+            content: 'Price';
+        }
+        td:nth-child(5):before {
+            content: 'Quantity';
+        }
+    }   
+`;
+
+const ResponsiveTotalDiv = styled.div`
+
 `;
 
 export default ({
@@ -164,60 +247,65 @@ export default ({
                         <Article>
                             {cartLoading === true && <Loader />}
                             {cartLoading === false && (
-                                <Table>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"><input type="checkBox" onChange={(e) => allCheck(e.target.checked)} /></th>
-                                            <th scope="col">product</th>
-                                            <th scope="col">Name (Option) </th>
-                                            <th scope="col">price</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">select</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {cartData.seeCart.length === 0 && (
+                                <>
+                                    <Table2>
+                                        <thead>
                                             <tr>
-                                                <td colSpan="6">장바구니가 비어있습니다.</td>
+                                                <th scope="col"><input type="checkBox" onChange={(e) => allCheck(e.target.checked)}/></th>
+                                                <th scope="col">product</th>
+                                                <th scope="col">Name (Option) </th>
+                                                <th scope="col">price</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">select</th>
                                             </tr>
-                                        )}
-                                        {cartData.seeCart.map((item, index) => (
-                                            item.product.map(product => (
-                                                product.files.map(file => (
-                                                    <tr key={index} >
-                                                        <td><input id={item.id} type="checkBox" checked={false} onChange={(e) => e.target.checked && console.log(e.target.id)} /></td>
-                                                        <td>
-                                                            <Link to={`/product/${product.id}`}>
-                                                                <img src={file.url} alt={file.id} />
-                                                            </Link>
-                                                        </td>
-                                                        <td>
-                                                            <Link to={`/product/${product.id}`}>
-                                                                <div>
-                                                                    {product.name}
-                                                                </div>
-                                                                {item.size}/{item.color}
-                                                            </Link>
-                                                        </td>
-                                                        <td>{product.price}</td>
-                                                        <td>{item.count}</td>
-                                                        <td><button onClick={() => passCartId(item.id)}>삭제</button></td>
-                                                    </tr>
+                                        </thead>
+                                        <tbody>
+                                            {cartData.seeCart.length === 0 && (
+                                                <tr>
+                                                    <td id={"emptyTd"} colSpan="6">장바구니가 비어있습니다.</td>
+                                                </tr>
+                                            )}
+                                            {cartData.seeCart.map((item, index) => (
+                                                item.product.map(product => (
+                                                    product.files.map(file => (
+                                                        <tr key={index} >
+                                                            <td><input id={item.id} type="checkBox" onChange={(e) => e.target.checked && console.log(e.target.id)} /></td>
+                                                            <td>
+                                                                <Link to={`/product/${product.id}`}>
+                                                                    <img src={file.url} alt={file.id} />
+                                                                </Link>
+                                                            </td>
+                                                            <td>
+                                                                <Link to={`/product/${product.id}`}>
+                                                                    <div>
+                                                                        {product.name}
+                                                                    </div>
+                                                                    {item.size}/{item.color}
+                                                                </Link>
+                                                            </td>
+                                                            <td>{product.price}</td>
+                                                            <td>{item.count}</td>
+                                                            <td><button onClick={() => passCartId(item.id)}>삭제</button></td>
+                                                        </tr>
+                                                    ))
                                                 ))
-                                            ))
-                                        ))}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colSpan="1">Total</td>
-                                            <td colSpan="4"></td>
-                                            <td colSpan="1">가격</td>
-                                        </tr>
-                                    </tfoot>
-                                </Table>
+                                            ))}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colSpan="1">Total</td>
+                                                <td colSpan="4"></td>
+                                                <td colSpan="1">가격</td>
+                                            </tr>
+                                        </tfoot>
+                                    </Table2>
+                                    <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
+                                        Total : 가격
+                                    </ResponsiveTotalDiv>
+                                    <Button id={"cartOrderBtn"} text={"Order Now"} />
+                                </>
                             )}
                         </Article>
-                        <Button id={"cartOrderBtn"} text={"Order Now"} />
                     </>
                     :
                     tab === "buyList" ?
