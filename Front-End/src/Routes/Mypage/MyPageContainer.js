@@ -171,16 +171,29 @@ export default () => {
         }
     }
 
+    
+    useEffect(() => {
+        const countTemp = []; 
+        if(cartLoading === false) {
+            cartData.seeCart.map(item => {
+                countTemp.push(item.count); 
+            }); 
+            setCount([...countTemp]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[cartData])
+    
     const cartCountUp = (i) => {
-        
+        count.splice(i, 1, count[i]+1); 
+        setCount([...count]);
     }
 
-    useEffect(() => {
-        if(cartLoading === false) {
-
+    const cartCountDown = (i) => {
+        if(count[i] > 1) {
+            count.splice(i, 1, count[i]-1); 
+            setCount([...count]);
         }
-    },[cartLoading])
-
+    }
 
     return (
         <MyPagePresenter 
@@ -207,6 +220,8 @@ export default () => {
             allCheck={allCheck}
             total={total}
             cartCountUp={cartCountUp}
+            cartCountDown={cartCountDown}
+            count={count}
         />
     )
 }

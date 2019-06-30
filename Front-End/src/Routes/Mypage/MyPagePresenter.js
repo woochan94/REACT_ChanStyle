@@ -226,7 +226,9 @@ export default ({
     passCartId,
     allCheck,
     total,
-    cartCountUp
+    cartCountUp,
+    cartCountDown,
+    count
 }) => {
     return (
         <MyPage>
@@ -301,10 +303,10 @@ export default ({
                                                             <td>{product.price}</td>
                                                             <td>
                                                                 <SelectedCount2>
-                                                                    <SelectedCountTextDiv2>{item.count}</SelectedCountTextDiv2>
+                                                                    <SelectedCountTextDiv2>{count[index]}</SelectedCountTextDiv2>
                                                                     <SelectedCountBtnDiv>
                                                                         <Button text={"▲"} onClick={() => cartCountUp(index)}/>
-                                                                        <Button text={"▼"} />
+                                                                        <Button text={"▼"} onClick={() => cartCountDown(index)} />
                                                                     </SelectedCountBtnDiv>
                                                                 </SelectedCount2>
                                                             </td>
