@@ -171,14 +171,27 @@ export default () => {
         }
     }
 
-    
+    const totalFunc = (a,b) => a + b;
+
     useEffect(() => {
         const countTemp = []; 
+        const totalarrTemp = [];
+        const totalTemp = [];
         if(cartLoading === false) {
-            cartData.seeCart.map(item => {
-                countTemp.push(item.count); 
-            }); 
+            cartData.seeCart.map(item => (
+                countTemp.push(item.count)
+            )); 
             setCount([...countTemp]);
+            cartData.seeCart.map(item => (
+                item.product.map(product => (
+                    totalarrTemp.push(product.price)
+                ))
+            ));
+            setTotalarr([...totalarrTemp]);
+            countTemp.map((count,index) => (
+                totalTemp.push(count*totalarrTemp[index])
+            ));
+            setTotal(totalTemp.reduce(totalFunc));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[cartData])
@@ -194,6 +207,18 @@ export default () => {
             setCount([...count]);
         }
     }
+
+    useEffect(() => {
+        const totalarrTemp = []; 
+        count.map((item,index) => (
+            totalarrTemp.push(item*totalarr[index])
+        ));
+        if(totalarrTemp.length !== 0) {
+            setTotal(totalarrTemp.reduce(totalFunc));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[count])
+ 
 
     return (
         <MyPagePresenter 
