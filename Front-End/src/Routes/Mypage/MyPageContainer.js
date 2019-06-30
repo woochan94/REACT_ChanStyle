@@ -32,8 +32,9 @@ export default () => {
     
     // cart에 관련된 state값 
     const [cartId, setCartId] = useState(""); 
-    const count = [];
-    const totalarr = [];
+    
+    const [count, setCount] = useState([]); 
+    const [totalarr, setTotalarr] = useState([]);
     const [total, setTotal] = useState(0);
 
     const editProfileMutation = useMutation(EDIT_PROFILE, {
@@ -170,32 +171,15 @@ export default () => {
         }
     }
 
-    if(cartLoading === false ) {
-        cartData.seeCart.map(item =>
-            item.product.map(product => {
-                return count.push(
-                    {
-                        counts: item.count,
-                        countsId: item.countId, 
-                        price: product.price,
-                        totalPrice: item.count*product.price
-                    }
-                )
-            })
-        );
+    const cartCountUp = (i) => {
+        
     }
 
-    // 처음 장바구니 창에 들어왔을 때 
-    // 현재 장바구니 아이템들의 총 값을 계산하기 위한 useEffect hook
     useEffect(() => {
-        if(count.length !== 0) {
-            count.map(item => (
-                totalarr.push(item.totalPrice)
-            ))
-            const totalFunc = (a, b) => a + b; 
-            setTotal(totalarr.reduce(totalFunc));
+        if(cartLoading === false) {
+
         }
-    }, [cartLoading])
+    },[cartLoading])
 
 
     return (
@@ -222,6 +206,7 @@ export default () => {
             passCartId={passCartId}
             allCheck={allCheck}
             total={total}
+            cartCountUp={cartCountUp}
         />
     )
 }
