@@ -228,7 +228,8 @@ export default ({
     total,
     cartCountUp,
     cartCountDown,
-    count
+    count,
+    selectOrder
 }) => {
     return (
         <MyPage>
@@ -286,7 +287,7 @@ export default ({
                                                 item.product.map(product => (
                                                     product.files.map(file => (
                                                         <tr key={index} >
-                                                            <td><input id={item.id} type="checkBox" onChange={(e) => e.target.checked && console.log(e.target.id)} /></td>
+                                                            <td><input id={item.id} type="checkBox" onChange={(e) => e.target.checked} /></td>
                                                             <td>
                                                                 <Link to={`/product/${product.id}`}>
                                                                     <img src={file.url} alt={file.id} />
@@ -327,7 +328,7 @@ export default ({
                                     <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
                                         Total : {total}
                                     </ResponsiveTotalDiv>
-                                    <Button id={"cartOrderBtn"} text={"Order Now"} />
+                                    <Button id={"cartOrderBtn"} text={"Order Now"} onClick={() => selectOrder()} />
                                 </>
                             )}
                         </Article>

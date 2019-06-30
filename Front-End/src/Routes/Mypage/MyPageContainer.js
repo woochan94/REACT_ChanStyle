@@ -209,15 +209,35 @@ export default () => {
     }
 
     useEffect(() => {
-        const totalarrTemp = []; 
-        count.map((item,index) => (
-            totalarrTemp.push(item*totalarr[index])
-        ));
-        if(totalarrTemp.length !== 0) {
-            setTotal(totalarrTemp.reduce(totalFunc));
+        if (cartLoading === false) {
+            const totalarrTemp = [];
+            const countTemp = [];
+            count.map((item) => (
+                countTemp.push(item)
+            ));
+
+            cartData.seeCart.map((item, index) => (
+                item.product.map(product => (
+                    totalarrTemp.push(countTemp[index] * product.price)
+                ))
+            ))
+            setTotalarr([...totalarrTemp]);
+            if (totalarrTemp.length !== 0) {
+                setTotal(totalarrTemp.reduce(totalFunc));
+            }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[count])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [count])
+
+    const selectOrder = () => {
+        cartData.seeCart.map((item,index) => {
+            const chkBox = document.getElementById(item.id);
+            if(chkBox.checked === true) {
+                console.log(item);
+                console.log("count : " + count[index] + " totalarr : " + totalarr[index]);
+            }
+        })
+    }
  
 
     return (
@@ -247,6 +267,7 @@ export default () => {
             cartCountUp={cartCountUp}
             cartCountDown={cartCountDown}
             count={count}
+            selectOrder={selectOrder}
         />
     )
 }
