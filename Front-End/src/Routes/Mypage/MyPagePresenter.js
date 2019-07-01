@@ -76,7 +76,7 @@ const Article = styled.article`
     }
 `;
 
-const Table2 = styled.table`
+const Table = styled.table`
     width: 100%;
     img {
         width: 130px;
@@ -89,10 +89,6 @@ const Table2 = styled.table`
     td {
         text-align: center;
         vertical-align: middle;
-    }
-    thead {
-        background-color: ${props => props.theme.confirmColor}; 
-        color: white;
     }
     tbody {
         tr {
@@ -204,6 +200,29 @@ const SelectedCount2 = styled(SelectedCount)`
     }
 `;
 
+const BuyListTable = styled.table`
+    width: 100%; 
+    tbody {
+        text-align: center; 
+        tr {
+            border-bottom: 1px solid #ccc;
+            td {
+                padding: 10px;
+            }
+        }
+    }
+`;
+
+const Thead = styled.thead`
+    background-color: ${props => props.theme.confirmColor}; 
+    color: white; 
+`;
+
+const Th = styled.th`
+    padding: 10px; 
+    vertical-align: middle;
+`;
+
 export default ({
     tab,
     clickTab,
@@ -229,7 +248,8 @@ export default ({
     cartCountUp,
     cartCountDown,
     count,
-    selectOrder
+    selectOrder,
+    buyData 
 }) => {
     return (
         <MyPage>
@@ -266,17 +286,17 @@ export default ({
                             {cartLoading === true && <Loader />}
                             {cartLoading === false && (
                                 <>
-                                    <Table2>
-                                        <thead>
+                                    <Table>
+                                        <Thead>
                                             <tr>
-                                                <th scope="col"><input type="checkBox" onChange={(e) => allCheck(e.target.checked)}/></th>
-                                                <th scope="col">product</th>
-                                                <th scope="col">Name (Option) </th>
-                                                <th scope="col">price</th>
-                                                <th scope="col">Quantity</th>
-                                                <th scope="col">select</th>
+                                                <Th scope="col"><input type="checkBox" onChange={(e) => allCheck(e.target.checked)}/></Th>
+                                                <Th scope="col">product</Th>
+                                                <Th scope="col">Name (Option) </Th>
+                                                <Th scope="col">price</Th>
+                                                <Th scope="col">Quantity</Th>
+                                                <Th scope="col">select</Th>
                                             </tr>
-                                        </thead>
+                                        </Thead>
                                         <tbody>
                                             {cartData.seeCart.length === 0 && (
                                                 <tr>
@@ -324,7 +344,7 @@ export default ({
                                                 <td colSpan="1">{total}</td>
                                             </tr>
                                         </tfoot>
-                                    </Table2>
+                                    </Table>
                                     <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
                                         Total : {total}
                                     </ResponsiveTotalDiv>
@@ -335,9 +355,39 @@ export default ({
                     </>
                     :
                     tab === "buyList" ?
-                        <div>
-                            buyList
-                        </div> :
+                        <Article>
+                            {buyData === undefined && <Loader />}
+                            {buyData !== undefined && 
+                                <BuyListTable>
+                                    <Thead>
+                                        <tr>
+                                            <Th scope="col">num</Th>
+                                            <Th scope="col">Name(option)</Th>
+                                            <Th scope="col">Price</Th>
+                                            <Th scope="col">Quantity</Th>
+                                        </tr>
+                                    </Thead>
+                                    <tbody>
+                                        {buyData.seeBuyList2.map((item, index) => (
+                                            item.product.map(product => (
+                                                <tr key={product.id}>
+                                                    <td>{index}</td>
+                                                    <td>
+                                                        {product.name}
+                                                    </td>
+                                                    <td>
+                                                        {product.price*item.count} 
+                                                    </td>
+                                                    <td>
+                                                        {item.count}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ))}
+                                    </tbody>
+                                </BuyListTable>
+                            }
+                        </Article> :
                         <Article>
                             <Form>
                                 <SignUpForm

@@ -49,3 +49,19 @@ export const DELETE_CART = gql`
         deleteCart(id:$id)
     }
 `;
+
+export const SEE_BUYLIST = gql`
+    mutation seeBuyList2 {
+        seeBuyList2 {
+            id
+            product {
+                id
+                name 
+                price 
+            }
+            size 
+            color 
+            count
+        }
+    }
+`; 

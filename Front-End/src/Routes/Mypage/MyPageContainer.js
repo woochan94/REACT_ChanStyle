@@ -3,7 +3,7 @@ import MyPagePresenter from "./MyPagePresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
-import { EDIT_PROFILE, SEE_CART, DELETE_CART } from './MyPageQueries';
+import { EDIT_PROFILE, SEE_CART, DELETE_CART, SEE_BUYLIST } from './MyPageQueries';
 import { toast } from "react-toastify";
 
 export default () => {
@@ -57,7 +57,9 @@ export default () => {
         variables: {
             id: cartId
         }
-    })
+    });
+
+    const seeBuyListMutation = useMutation(SEE_BUYLIST,{});
 
     useEffect(() => {
         setTimeout(() => {
@@ -238,7 +240,19 @@ export default () => {
             }
         })
     }
- 
+
+    const [buyData, setBuyData] = useState();
+
+    useEffect(() => {
+        if(tab === "buyList") {
+            const seeBuyListFunc = async () => {
+                const { data } = await seeBuyListMutation();
+                setBuyData(data);
+            }
+            seeBuyListFunc();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tab])
 
     return (
         <MyPagePresenter 
@@ -268,6 +282,7 @@ export default () => {
             cartCountDown={cartCountDown}
             count={count}
             selectOrder={selectOrder}
+            buyData={buyData}
         />
     )
 }
