@@ -1,3 +1,7 @@
 type Query {
     seeBuyList: [BuyList!]!
 }
+
+type Mutation {
+    seeBuyList2: [BuyList!]!
+}

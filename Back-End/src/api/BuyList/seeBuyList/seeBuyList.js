@@ -13,5 +13,18 @@ export default {
                 }
             })
         }
+    }, 
+    Mutation: {
+        seeBuyList2: (_, __, { request, isAuthenticated }) => {
+            isAuthenticated(request); 
+            const { user } = request; 
+            return prisma.buyLists({
+                where: {
+                    user: {
+                        id: user.id
+                    }
+                }
+            })
+        }
     }
 }
