@@ -249,7 +249,11 @@ export default ({
     cartCountDown,
     count,
     selectOrder,
-    buyData 
+    buyData,
+    test,
+    BuyListData,
+    buyListLoading,
+    pageNum
 }) => {
     return (
         <MyPage>
@@ -387,6 +391,11 @@ export default ({
                                     </tbody>
                                 </BuyListTable>
                             }
+                            {buyListLoading === false && BuyListData.seeBuyList.map((item,index) => {
+                                if(index < pageNum) {
+                                    return <button key={item.id} onClick={() => test(index)}>{index+1}</button>
+                                }
+                            })}
                         </Article> :
                         <Article>
                             <Form>

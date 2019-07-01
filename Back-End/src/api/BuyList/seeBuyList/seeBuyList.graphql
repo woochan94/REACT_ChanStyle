@@ -3,5 +3,5 @@ type Query {
 }
 
 type Mutation {
-    seeBuyList2: [BuyList!]!
+    seeBuyList2(first: Int, skip: Int): [BuyList!]!
 }

@@ -15,15 +15,18 @@ export default {
         }
     }, 
     Mutation: {
-        seeBuyList2: (_, __, { request, isAuthenticated }) => {
+        seeBuyList2: (_, args, { request, isAuthenticated }) => {
             isAuthenticated(request); 
             const { user } = request; 
+            const { first, skip } = args;
             return prisma.buyLists({
                 where: {
                     user: {
                         id: user.id
                     }
-                }
+                },
+                first,
+                skip
             })
         }
     }

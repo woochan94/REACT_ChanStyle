@@ -51,8 +51,8 @@ export const DELETE_CART = gql`
 `;
 
 export const SEE_BUYLIST = gql`
-    mutation seeBuyList2 {
-        seeBuyList2 {
+    mutation seeBuyList2($first:Int $skip:Int) {
+        seeBuyList2(first: $first, skip: $skip) {
             id
             product {
                 id
@@ -65,3 +65,11 @@ export const SEE_BUYLIST = gql`
         }
     }
 `; 
+
+export const BUYLIST_QUERY = gql`
+    {
+        seeBuyList {
+            id
+        }
+    }
+`;

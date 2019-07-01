@@ -3,7 +3,7 @@ import MyPagePresenter from "./MyPagePresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
-import { EDIT_PROFILE, SEE_CART, DELETE_CART, SEE_BUYLIST } from './MyPageQueries';
+import { EDIT_PROFILE, SEE_CART, DELETE_CART, SEE_BUYLIST, BUYLIST_QUERY } from './MyPageQueries';
 import { toast } from "react-toastify";
 
 export default () => {
@@ -59,14 +59,35 @@ export default () => {
         }
     });
 
-    const seeBuyListMutation = useMutation(SEE_BUYLIST,{});
+    
+    // 페이징을 위한 초기 first, skip 값 
+    const first = 4;
+    const [skip, setSkip] = useState(0); 
+    const [page, setPage] = useState();
+    const [totalPage, setTotalpage] = useState(0); 
 
+    const { loading:buyListLoading, data:BuyListData } = useQuery(BUYLIST_QUERY);
+
+    const seeBuyListMutation = useMutation(SEE_BUYLIST,{
+        variables: {
+            first, 
+            skip
+        }
+    });
+
+    const test = (i) => {
+        setPage(i); 
+        setSkip(i*first); 
+    }
     useEffect(() => {
         setTimeout(() => {
             setDelay(true);
         }, 1000);
     }, [])
 
+    useEffect(() => {
+        seeBuyListFunc();
+    },[page])
 
     useEffect(() => {
         if(loading === false && delay) {
@@ -243,13 +264,18 @@ export default () => {
 
     const [buyData, setBuyData] = useState();
 
+    const seeBuyListFunc = async () => {
+        const { data } = await seeBuyListMutation();
+        setBuyData(data);
+    }
+
+
     useEffect(() => {
         if(tab === "buyList") {
-            const seeBuyListFunc = async () => {
-                const { data } = await seeBuyListMutation();
-                setBuyData(data);
-            }
             seeBuyListFunc();
+            if(buyListLoading === false) {
+                setTotalpage(Math.ceil(BuyListData.seeBuyList.length/first));
+            }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tab])
@@ -283,6 +309,10 @@ export default () => {
             count={count}
             selectOrder={selectOrder}
             buyData={buyData}
+            test={test}
+            BuyListData={BuyListData}
+            pageNum={totalPage}
+            buyListLoading={buyListLoading}
         />
     )
 }
