@@ -101,7 +101,10 @@ const Table = styled.table`
         #emptyTd {
             padding: 50px 0;
             @media (max-width: 600px) {
-                display: none;
+                display: block;
+                border-radius: 10px; 
+                background-color: transparent; 
+                border-color: #ccc;
             }
         }
     }
@@ -245,6 +248,22 @@ const PageDiv = styled.div`
 export default ({
     tab,
     clickTab,
+    // 장바구니 
+    cartLoading,
+    cartData,
+    passCartId,
+    allCheck,
+    total,
+    cartCountUp,
+    cartCountDown,
+    count,
+    selectOrder,
+    // 구매목록 
+    buyData,
+    changePage,
+    buyListLoading,
+    pageNum,
+    // 개인정보 수정 
     onSubmit,
     name,
     email,
@@ -258,21 +277,7 @@ export default ({
     phone3,
     open,
     setOpen,
-    handleAddress,
-    cartLoading,
-    cartData,
-    passCartId,
-    allCheck,
-    total,
-    cartCountUp,
-    cartCountDown,
-    count,
-    selectOrder,
-    buyData,
-    test2,
-    BuyListData,
-    buyListLoading,
-    pageNum
+    handleAddress
 }) => {
     return (
         <MyPage>
@@ -360,13 +365,15 @@ export default ({
                                                 ))
                                             ))}
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colSpan="1">Total</td>
-                                                <td colSpan="4"></td>
-                                                <td colSpan="1">{total}</td>
-                                            </tr>
-                                        </tfoot>
+                                        {!isNaN(total) && (
+                                            <tfoot>
+                                                <tr>
+                                                    <td colSpan="1">Total</td>
+                                                    <td colSpan="4"></td>
+                                                    <td colSpan="1">{total}</td>
+                                                </tr>
+                                            </tfoot>
+                                        )}
                                     </Table>
                                     <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
                                         Total : {total}
@@ -379,8 +386,8 @@ export default ({
                     :
                     tab === "buyList" ?
                         <Article>
-                            {buyData === undefined && <Loader />}
-                            {buyData !== undefined && 
+                            {buyData === "" && <Loader />}
+                            {buyData !== "" && 
                                 <BuyListTable>
                                     <Thead>
                                         <tr>
@@ -396,9 +403,7 @@ export default ({
                                                 <tr key={product.id}>
                                                     <td>{index}</td>
                                                     <td>
-                                                        <Link to={`/product/${product.id}`}>
-                                                            {product.name}
-                                                        </Link>
+                                                        {product.name}
                                                     </td>
                                                     <td>
                                                         {product.price*item.count} 
@@ -422,7 +427,7 @@ export default ({
                                         lastItem={null}
                                         siblingRange={1}
                                         totalPages={pageNum}
-                                        onPageChange={(e) => test2(e.target.attributes.value.value)}
+                                        onPageChange={(e) => changePage(e.target.attributes.value.value)}
                                     />
                                 </PageDiv>
                             }               
