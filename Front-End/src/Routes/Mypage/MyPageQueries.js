@@ -73,3 +73,9 @@ export const BUYLIST_QUERY = gql`
         }
     }
 `;
+
+export const LOG_OUT = gql`
+    mutation logUserOut {
+        logUserOut @client
+    }
+`;

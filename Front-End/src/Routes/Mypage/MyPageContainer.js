@@ -3,7 +3,7 @@ import MyPagePresenter from "./MyPagePresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
-import { EDIT_PROFILE, SEE_CART, DELETE_CART, SEE_BUYLIST, BUYLIST_QUERY } from './MyPageQueries';
+import { EDIT_PROFILE, SEE_CART, DELETE_CART, SEE_BUYLIST, BUYLIST_QUERY, LOG_OUT } from './MyPageQueries';
 import { toast } from "react-toastify";
 
 export default () => {
@@ -298,6 +298,9 @@ export default () => {
         }, 500);
     }, [data])
 
+    // 로그아웃 
+    const logOut = useMutation(LOG_OUT);
+
     return (
         <MyPagePresenter
             tab={tab}
@@ -336,6 +339,8 @@ export default () => {
             pageNum={totalPage}
             buyListLoading={buyListLoading}
             changePage={changePage}
+
+            logOut={logOut}
         />
     )
 }

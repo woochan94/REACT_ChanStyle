@@ -277,7 +277,9 @@ export default ({
     phone3,
     open,
     setOpen,
-    handleAddress
+    handleAddress,
+    // 로그아웃 
+    logOut
 }) => {
     return (
         <MyPage>
@@ -285,7 +287,7 @@ export default ({
                 <MyPageHeader>
                     <MyTitleDiv>
                         <H2>My Page</H2>
-                        <Button text={"LogOut"} onClick={() => console.log("logout")} />
+                        <Button text={"LogOut"} onClick={() => logOut()} />
                     </MyTitleDiv>
                     <MyNavDiv>
                         <button onClick={() => clickTab("cart")}
