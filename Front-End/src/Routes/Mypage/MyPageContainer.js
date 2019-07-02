@@ -79,6 +79,12 @@ export default () => {
         setPage(i); 
         setSkip(i*first); 
     }
+
+    const test2 = (value) => {
+        setPage(value-1); 
+        setSkip((value-1)*first);
+    }
+    
     useEffect(() => {
         setTimeout(() => {
             setDelay(true);
@@ -313,6 +319,7 @@ export default () => {
             BuyListData={BuyListData}
             pageNum={totalPage}
             buyListLoading={buyListLoading}
+            test2={test2}
         />
     )
 }

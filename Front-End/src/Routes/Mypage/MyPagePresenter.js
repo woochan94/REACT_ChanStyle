@@ -6,6 +6,7 @@ import { Form } from "../Auth/AuthPresenter";
 import SignUpForm from "../../Components/SignUpForm";
 import Loader from "../../Components/Loader";
 import { Link } from 'react-router-dom';
+import { Pagination } from "semantic-ui-react";
 
 const MyPage = styled.section`
     min-height: 79vh;
@@ -33,6 +34,9 @@ const MyPageWrapper = styled.div`
     }
     @media (max-width: 600px) {
         padding: 0 20px;
+    }
+    @media (max-width: 350px) {
+        padding: 0 10px;
     }
 `;
 
@@ -223,6 +227,21 @@ const Th = styled.th`
     vertical-align: middle;
 `;
 
+const PageDiv = styled.div`
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    div {
+        min-height: 0 !important;
+        box-shadow: none !important;
+        a{
+            padding: 5px 7px !important;
+            min-width: 0 !important;
+        }
+    }
+`;
+
 export default ({
     tab,
     clickTab,
@@ -250,7 +269,7 @@ export default ({
     count,
     selectOrder,
     buyData,
-    test,
+    test2,
     BuyListData,
     buyListLoading,
     pageNum
@@ -377,7 +396,9 @@ export default ({
                                                 <tr key={product.id}>
                                                     <td>{index}</td>
                                                     <td>
-                                                        {product.name}
+                                                        <Link to={`/product/${product.id}`}>
+                                                            {product.name}
+                                                        </Link>
                                                     </td>
                                                     <td>
                                                         {product.price*item.count} 
@@ -391,11 +412,20 @@ export default ({
                                     </tbody>
                                 </BuyListTable>
                             }
-                            {buyListLoading === false && BuyListData.seeBuyList.map((item,index) => {
-                                if(index < pageNum) {
-                                    return <button key={item.id} onClick={() => test(index)}>{index+1}</button>
-                                }
-                            })}
+                            {buyListLoading === false && 
+                                <PageDiv>
+                                    <Pagination 
+                                        boundaryRange={0}
+                                        defaultActivePage={1}
+                                        ellipsisItem={null}
+                                        firstItem={null}
+                                        lastItem={null}
+                                        siblingRange={1}
+                                        totalPages={pageNum}
+                                        onPageChange={(e) => test2(e.target.attributes.value.value)}
+                                    />
+                                </PageDiv>
+                            }               
                         </Article> :
                         <Article>
                             <Form>
