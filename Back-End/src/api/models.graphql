@@ -55,30 +55,30 @@ type Size {
   id: ID! 
   size: String! 
   product: Product!
+  cart: Cart!
 }
 
 type Color {
   id: ID! 
   color: String! 
   product: Product!
+  cart: Cart!
 }
 
 type Stock {
   id: ID! 
   stock: Int! 
   product: Product!
+  cart: Cart!
 }
 
 type Cart {
   id: ID! 
   user: User! 
   product: [Product!]!
-  size: String!
-  color: String! 
-  count: Int!
-  sizeId: String! 
-  colorId: String! 
-  countId: String! 
+  sizeId: [String!]!
+  colorId: [String!]! 
+  stockId: [String!]! 
 }
 
 type BuyList {

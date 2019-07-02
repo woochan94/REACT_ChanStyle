@@ -1,11 +1,8 @@
 type Mutation {
     addCart(
-        product: String! 
-        sizeId: String! 
-        size: String!
-        colorId: String!
-        color: String! 
-        countId: String! 
-        count: Int! 
-    ):Cart!
+        product: [String!] 
+        sizeId: [String!]
+        colorId: [String!] 
+        stockId: [String!] 
+    ):Boolean!
 }

@@ -54,30 +54,30 @@ type Size {
   id: ID! @id 
   size: String! 
   product: Product! @relation(name: "ProductOfSize")
+  cart: [Cart!]! @relation(name: "CartOfSize")
 }
 
 type Color {
   id: ID! @id 
   color: String! 
   product: Product! @relation(name: "ProductOfColor")
+  cart: [Cart!]! @relation(name: "CartOfColor")
 }
 
 type Stock {
   id: ID! @id 
   stock: Int! 
   product: Product! @relation(name: "ProductOfStock")
+  cart: [Cart!]! @realtion(name: "CartOfStock")
 }
 
 type Cart {
   id: ID! @id
   user: User! @relation(name: "UserOfCart")
   product: [Product!]! @relation(name: "ProductOfCart")
-  size: String!
-  color: String!
-  count: Int!  
-  sizeId: String! 
-  colorId: String! 
-  countId: String!
+  sizeId: [Size!]! @relation(name: "CartOfSize")
+  colorId: [Color!]! @relation(name: "CartOfColor")
+  stockId: [Stock!]! @realtion(name: "CartOfStock")    
 }
 
 type BuyList {
