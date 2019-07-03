@@ -35,3 +35,9 @@ export const SEEITEM = gql`
         }
     }
 `;
+
+export const ADD_CART = gql`
+    mutation addCart($product: [String!]!, $sizeId: [String!]!, $colorId: [String!]!, $stockId: [String!]!) {
+        addCart(product: $product, sizeId: $sizeId, colorId: $colorId, stockId: $stockId)
+    }
+`

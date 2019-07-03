@@ -235,31 +235,34 @@ const DeleteButton = styled.button`
 
 export default ({
     data,
-    loading,
+    loading,  
     uniqColor,
-    option,
     colorSelectOnChange,
-    sizeSelectOnChange,
     color,
+    option,
+    sizeSelectOnChange,
     selected,
+
     count,
     decrement,
     increment,
     total,
     scroll,
-    deleteSelect
+    deleteSelect,
+    test
 }) => {
     return (
         <Product>
             {loading && <Loader />}
-            {!loading &&
+            {!loading && 
                 <ProductWrapper>
                     {scroll.y >= 100 && 
                         <TopBtn onClick={() => animationScroll.scrollToTop(options)}>
                             <TopBtnDiv>
                                 <UpArrowIcon />
                             </TopBtnDiv>
-                        </TopBtn>}
+                        </TopBtn>
+                    }
                     {data.map(item => (
                         <Section key={item.id}>
                             <TitleDiv>
@@ -268,7 +271,7 @@ export default ({
                             <ProductDiv>
                                 <ProductImgDiv>
                                     {item.files.map(file => (
-                                        <ProductImg
+                                        <ProductImg 
                                             key={file.id}
                                             src={file.url}
                                         />
@@ -285,81 +288,86 @@ export default ({
                                         ))}
                                     </SizeDiv>
                                 </ProductImgDiv>
-                                {data.map(item => (
-                                    <ProductInfoDiv key={item.id}>
-                                        <ProductNameDiv>
-                                            <H3>Name</H3>
-                                            {item.name}
-                                        </ProductNameDiv>
-                                        <ProductPriceDiv>
-                                            <H3>Price</H3>
-                                            {item.price}
-                                        </ProductPriceDiv>
-                                        <SelectOptionDiv>
-                                            <H3>Select Option</H3>
-                                            <OptionBox>
-                                                <ColorDiv>
-                                                    <H3>Color</H3>
-                                                    <Select onChange={(e) => colorSelectOnChange(e)}>
-                                                        <option value="">--- color ---</option>
-                                                        {uniqColor.map(color => (
-                                                            <option key={color.colorId} value={color.colors}>{color.colors}</option>
-                                                        ))}
-                                                    </Select>
-                                                </ColorDiv>
-                                                <SizeOptionDiv>
-                                                    <H3>Size</H3>
-                                                    <Select
-                                                        id={"selectSize"}
-                                                        disabled={color.value === "" ? true : false}
-                                                        defaultValue={""}
-                                                        onChange={(e) => sizeSelectOnChange(e)}
-                                                    >
-                                                        <option value=""> --- size --- </option>
-                                                        {option.map(item => (
-                                                            <option key={item.sizeId} value={item.sizes + "-" + item.stocks}>{item.sizes} - 남은재고:{item.stocks}</option>
-                                                        ))}
-                                                    </Select>
-                                                </SizeOptionDiv>
-                                            </OptionBox>
-                                            </SelectOptionDiv>
-                                        {selected.length > 0 && selected.map((option, index)=> {
-                                            return (                                    
+                                <ProductInfoDiv key={item.id}>
+                                    <ProductNameDiv>
+                                        <H3>Name</H3>
+                                        <span>{item.name}</span>
+                                    </ProductNameDiv>
+                                    <ProductPriceDiv>
+                                        <H3>Price</H3>
+                                        <span>{item.price}</span>
+                                    </ProductPriceDiv>
+                                    < SelectOptionDiv>
+                                        <H3>Select Option</H3>
+                                        <OptionBox>
+                                            <ColorDiv>
+                                                <H3>Color</H3>
+                                                <Select onChange={(e) => colorSelectOnChange(e)}>
+                                                    <option value="">--- color ---</option>
+                                                    {uniqColor.map(color => (
+                                                        <option key={color.colorId} value={color.colors}>{color.colors}</option>
+                                                    ))}
+                                                </Select>
+                                            </ColorDiv>
+                                            <SizeOptionDiv>
+                                                <H3>Size</H3>
+                                                <Select
+                                                    id={"selectSize"} 
+                                                    disabled={color === "" ? true : false}
+                                                    defaultValue={""}
+                                                    onChange={(e) => sizeSelectOnChange(e)}
+                                                >
+                                                    <option value=""> --- size --- </option>
+                                                    {option.map(item => (
+                                                        <option
+                                                            key={item.sizeId} 
+                                                            value={item.colors + "-" + item.colorId + "-" + item.sizes + "-" + item.sizeId + "-" + item.stocks + "-" + item.stockId}
+                                                        >
+                                                        {item.sizes} - 남은재고:{item.stocks}    
+                                                        </option>
+                                                    ))}
+                                                </Select>
+                                            </SizeOptionDiv>
+                                        </OptionBox>
+                                    </SelectOptionDiv>
+                                    {selected.length > 0 && 
+                                        selected.map((option, index) => {
+                                            return (
                                                 <SelectedDiv key={index}>
-                                                <SelectedItem>
-                                                    <div>
-                                                        {item.name}
-                                                    </div>
-                                                    -{option.color}/{option.size}
-                                                </SelectedItem>
-                                                <SelectedCount>
-                                                    <SelectedCountTextDiv>{count[index]}</SelectedCountTextDiv>
-                                                    <SelectedCountBtnDiv>
-                                                        <Button text="▲" onClick={() => increment(index,item)} />
-                                                        <Button text="▼" onClick={() => decrement(index,item)}/>
-                                                    </SelectedCountBtnDiv>
-                                                </SelectedCount>
-                                                <SelectedPrice>
-                                                    {item.price*count[index]}
-                                                    <DeleteButton onClick={() => deleteSelect(index, selected) }><span role="img" aria-label="">❌</span></DeleteButton>
-                                                </SelectedPrice>
-                                            </SelectedDiv>
+                                                    <SelectedItem>
+                                                        <div>
+                                                            {item.name}
+                                                        </div>
+                                                        -{option.color}/{option.size}
+                                                    </SelectedItem>
+                                                    <SelectedCount>
+                                                        <SelectedCountTextDiv>{count[index]}</SelectedCountTextDiv>
+                                                        <SelectedCountBtnDiv>
+                                                            <Button text="▲" onClick={() => increment(index,item)} />
+                                                            <Button text="▼" onClick={() => decrement(index,item)}/>
+                                                        </SelectedCountBtnDiv>
+                                                    </SelectedCount>
+                                                    <SelectedPrice>
+                                                        {item.price*count[index]}
+                                                        <DeleteButton onClick={() => deleteSelect(index, selected) }><span role="img" aria-label="">❌</span></DeleteButton>
+                                                    </SelectedPrice>
+                                                </SelectedDiv>
                                             )
-                                        })}
-                                        <TotalDiv>
-                                            <H3>Total</H3>
-                                            {total}
-                                        </TotalDiv>
-                                        <ButtonDiv>
-                                            <Form>
-                                                <Button text="Cart" />
-                                                <Button id={"OrderBtn"} text={"Order Now"} />
-                                            </Form>
-                                        </ButtonDiv>
-                                    </ProductInfoDiv>
-                                ))}
+                                        })
+                                    }
+                                    <TotalDiv>
+                                        <H3>Total</H3>
+                                        <span>{total}</span>
+                                    </TotalDiv>
+                                    <ButtonDiv>
+                                        <Form>
+                                            <Button text="Cart" onClick={() => test(selected, item, count)}/>
+                                            <Button id={"OrderBtn"} text={"Order Now"} />
+                                        </Form>
+                                    </ButtonDiv>
+                                </ProductInfoDiv>
                             </ProductDiv>
-                            <ProductDetailDiv></ProductDetailDiv>
+                            <ProductDetailDiv />
                         </Section>
                     ))}
                 </ProductWrapper>
