@@ -334,7 +334,7 @@ export default ({
                                                 </tr>
                                             )}
                                             {cartData.seeCart.map((item, index) => (
-                                                item.product.map(product => (
+                                                item.product.map((product, index2) => (
                                                     product.files.map(file => (
                                                         <tr key={index} >
                                                             <td><input id={item.id} type="checkBox" onChange={(e) => e.target.checked} /></td>
@@ -348,7 +348,7 @@ export default ({
                                                                     <div>
                                                                         {product.name}
                                                                     </div>
-                                                                    {item.size}/{item.color}
+                                                                    {item.sizeId[index2].size}/{item.colorId[index2].color}
                                                                 </Link>
                                                             </td>
                                                             <td>{product.price}</td>

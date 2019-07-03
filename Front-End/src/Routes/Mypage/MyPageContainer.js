@@ -38,7 +38,9 @@ export default () => {
         const totalTemp = [];
         if (cartLoading === false) {
             cartData.seeCart.map(item => (
-                countTemp.push(item.count)
+                item.count.map(cnt => (
+                    countTemp.push(cnt.count)
+                ))
             ));
             setCount([...countTemp]);
             cartData.seeCart.map(item => (

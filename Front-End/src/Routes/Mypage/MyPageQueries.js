@@ -34,12 +34,22 @@ export const SEE_CART = gql`
                 name
                 price
             }
-            size
-            color
-            count
-            sizeId
-            colorId
-            countId
+            sizeId {
+                id 
+                size 
+            }
+            colorId {
+                id 
+                color 
+            }
+            stockId {
+                id 
+                stock
+            }
+            count {
+                id 
+                count
+            }
         }
     }
 `;

@@ -10,8 +10,6 @@ export default ({ match }) => {
 
     const selectSize = document.getElementById("selectSize");
 
-
-
     const [selected, setSelected] = useState([]);
     const [count, setCount] = useState([]);
     const [totalarr, setTotalarr] = useState([]);
@@ -267,25 +265,28 @@ export default ({ match }) => {
     const sizeIdArray = [];
     const colorIdArray = [];
     const stockIdArray = [];
+    const countArray = [];
 
     const addCartMutation = useMutation(ADD_CART, {
         variables: {
             product: productArray,
             sizeId: sizeIdArray,
             colorId: colorIdArray,
-            stockId: stockIdArray
+            stockId: stockIdArray,
+            count: countArray
         }
     })
 
 
     const test = async (selected, product, count) => {
         if(selected.length !== 0) {
-            selected.map(item => {
+            selected.map((item,index) => {
                 return (
                     productArray.push(product.id),
                     sizeIdArray.push(item.sizeId),
                     colorIdArray.push(item.colorId),
-                    stockIdArray.push(item.stockId)
+                    stockIdArray.push(item.stockId), 
+                    countArray.push(count[index])
                 )
             }); 
             const { data } = await addCartMutation();
