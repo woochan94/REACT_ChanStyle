@@ -4,5 +4,6 @@ type Mutation {
         sizeId: [String!]
         colorId: [String!] 
         stockId: [String!] 
+        count: [Int!]
     ):Boolean!
 }

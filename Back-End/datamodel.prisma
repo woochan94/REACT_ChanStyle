@@ -68,7 +68,13 @@ type Stock {
   id: ID! @id 
   stock: Int! 
   product: Product! @relation(name: "ProductOfStock")
-  cart: [Cart!]! @realtion(name: "CartOfStock")
+  cart: [Cart!]! @relation(name: "CartOfStock")
+}
+
+type Count {
+  id: ID! @id 
+  count: Int! 
+  cart: [Cart!] @relation(name: "CartOfCount")
 }
 
 type Cart {
@@ -77,7 +83,8 @@ type Cart {
   product: [Product!]! @relation(name: "ProductOfCart")
   sizeId: [Size!]! @relation(name: "CartOfSize")
   colorId: [Color!]! @relation(name: "CartOfColor")
-  stockId: [Stock!]! @realtion(name: "CartOfStock")    
+  stockId: [Stock!]! @relation(name: "CartOfStock")  
+  count: [Count!]! @relation(name: "CartOfCount", onDelete: CASCADE)  
 }
 
 type BuyList {

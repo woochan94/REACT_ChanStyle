@@ -5,10 +5,12 @@ export default {
         addCart: async (_, args, { request, isAuthenticated }) => {
             isAuthenticated(request);
             const { user } = request;
-            const { product, sizeId, colorId, stockId } = args;
-            try {
-                await product.map(async (_, index) => {
-
+            const { product, sizeId, colorId, stockId, count } = args;
+            try  {
+                await count.map(async(item, index) => {
+                    const countId = await prisma.createCount({
+                        count: item
+                    }); 
                     await prisma.createCart({
                         user: {
                             connect: {
@@ -35,12 +37,17 @@ export default {
                                 id: stockId[index]
                             }
                         },
-
+                        count: {
+                            connect: {
+                                id: countId.id
+                            }
+                        }
                     })
                 })
                 return true;
-            } catch (error) {
-                return false
+            } catch(err) {
+                console.log(err);
+                return false;
             }
         }
     }

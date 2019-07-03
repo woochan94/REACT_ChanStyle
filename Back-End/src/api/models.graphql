@@ -72,13 +72,20 @@ type Stock {
   cart: Cart!
 }
 
+type Count {
+  id: ID! 
+  count: Int! 
+  cart: Cart
+}
+
 type Cart {
   id: ID! 
   user: User! 
   product: [Product!]!
-  sizeId: [String!]!
-  colorId: [String!]! 
-  stockId: [String!]! 
+  sizeId: [Size!]!
+  colorId: [Color!]! 
+  stockId: [Stock!]! 
+  count: [Count!]!
 }
 
 type BuyList {
