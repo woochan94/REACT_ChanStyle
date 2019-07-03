@@ -277,8 +277,9 @@ export default ({ match }) => {
         }
     })
 
+    const [success, setSuccess] = useState(true);
 
-    const test = async (selected, product, count) => {
+    const addCart = async (selected, product, count) => {
         if(selected.length !== 0) {
             selected.map((item,index) => {
                 return (
@@ -290,7 +291,9 @@ export default ({ match }) => {
                 )
             }); 
             const { data } = await addCartMutation();
-            console.log(data);
+            if(data) {
+                setSuccess(true);
+            }
         }
     }
 
@@ -311,7 +314,8 @@ export default ({ match }) => {
             total={total}
             scroll={scroll}
             deleteSelect={deleteSelect}
-            test={test}
+            addCart={addCart}
+            success={success}
         />
     );
 };

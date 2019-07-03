@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Loader from "../../Components/Loader";
 import Button from './../../Components/Button';
 import Scroll from "react-scroll"; 
-import { UpArrowIcon } from './../../Components/Icons';
+import { UpArrowIcon, Logo, CartIcon, CloseIcon } from './../../Components/Icons';
 
 const animationScroll = Scroll.animateScroll;
 
@@ -46,6 +46,7 @@ const H3 = styled.h3`
 
 const ProductDiv = styled.div`
     display: grid; 
+    position: relative;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 70px;
     padding: 40px 10px;
@@ -233,6 +234,52 @@ const DeleteButton = styled.button`
     outline: none;
 `;
 
+const ConfirmDiv = styled.div`
+    display: grid;
+    position: absolute; 
+    background-color: #fff;
+    grid-template-rows: 1fr 5fr 2fr;  
+    top: 30%; 
+    left: 30%; 
+    width: 40%; 
+    height: 40%;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0), 0px 0px 10px rgba(0,0,0,0.1);
+`;
+
+const ConfirmCloseDiv = styled.div`
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+    padding-right: 5px; 
+    cursor: pointer;
+`;
+
+const ConfirmContentDiv = styled.div`
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px; 
+    span {
+        padding-top: 30px;
+        font-weight: 600;
+    }
+`; 
+
+const ConfirmButtonDiv = styled.div`
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    button {
+        width: auto;
+        margin: 0 10px;
+        &:first-child {
+            background-color: ${props => props.theme.confirmColor} !important;
+            color: #fff;
+        }
+    } 
+`;
+
 export default ({
     data,
     loading,  
@@ -242,14 +289,14 @@ export default ({
     option,
     sizeSelectOnChange,
     selected,
-
     count,
     decrement,
     increment,
     total,
     scroll,
     deleteSelect,
-    test
+    addCart,
+    success
 }) => {
     return (
         <Product>
@@ -361,11 +408,24 @@ export default ({
                                     </TotalDiv>
                                     <ButtonDiv>
                                         <Form>
-                                            <Button text="Cart" onClick={() => test(selected, item, count)}/>
+                                            <Button text="Cart" onClick={() => addCart(selected, item, count)}/>
                                             <Button id={"OrderBtn"} text={"Order Now"} />
                                         </Form>
                                     </ButtonDiv>
                                 </ProductInfoDiv>
+                                {success && (
+                                    <ConfirmDiv>
+                                        <ConfirmCloseDiv><CloseIcon/></ConfirmCloseDiv>
+                                        <ConfirmContentDiv>
+                                            <CartIcon />
+                                            <span>장바구니에 상품이 성공적으로 담겼습니다.</span>
+                                        </ConfirmContentDiv>
+                                        <ConfirmButtonDiv>
+                                            <Button text={"장바구니 이동"} />
+                                            <Button text={"쇼핑 계속하기"} />
+                                        </ConfirmButtonDiv>
+                                    </ConfirmDiv>
+                                )}
                             </ProductDiv>
                             <ProductDetailDiv />
                         </Section>
