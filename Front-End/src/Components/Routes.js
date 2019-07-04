@@ -6,7 +6,7 @@ import MyPage from "../Routes/Mypage";
 import Auth from "../Routes/Auth";
 import Store from "../Routes/Store/Store";
 import Product from "../Routes/Product";
-import Payment from "../Routes/Payment/Payment";
+import Payment from "../Routes/Payment";
 import Admin from "../Routes/Admin/Admin";
 import Sale from "../Routes/Sale/Sale";
 
