@@ -347,6 +347,8 @@ export default ({ match, history }) => {
                 countArray = [];
                 history.push('/payment');
             }
+        } else {
+            alert("상품의 옵션을 선택해 주세요");
         }
     }
 
