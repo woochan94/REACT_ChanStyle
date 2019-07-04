@@ -41,3 +41,9 @@ export const ADD_CART = gql`
         addCart(product: $product, sizeId: $sizeId, colorId: $colorId, stockId: $stockId, count: $count)
     }
 `
+
+export const ADD_PAYMENT = gql`
+    mutation addPayment($product: [String!]!, $size: [String!]!, $color: [String!]!, $stock: [String!]!, $count: [Int!]!) {
+        addPayment(product: $product, size: $size, color: $color, stock: $stock, count: $count)
+    }
+`;

@@ -327,7 +327,8 @@ export default ({
     addCart,
     success,
     confirmClose,
-    myId
+    myId, 
+    addPayment
 }) => {
     return (
         <Product>
@@ -440,7 +441,7 @@ export default ({
                                     <ButtonDiv>
                                         <Form>
                                             <Button text="Cart" onClick={() => addCart(selected, item, count)}/>
-                                            <Button id={"OrderBtn"} text={"Order Now"} />
+                                            <Button id={"OrderBtn"} text={"Order Now"} onClick={() => addPayment(selected, item, count)} />
                                         </Form>
                                     </ButtonDiv>
                                 </ProductInfoDiv>

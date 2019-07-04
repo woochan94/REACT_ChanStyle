@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ProductPresenter from "./ProductPresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
-import { SEEITEM, ADD_CART } from "./ProductQueries";
+import { SEEITEM, ADD_CART, ADD_PAYMENT } from "./ProductQueries";
 import _ from "underscore";
 
 // react-router에서 match를 통해 url에 관한 정보(params, url ...)가 object로 넘어옴 
-export default ({ match }) => {
+export default ({ match, history }) => {
     const productId = match.params.productid;
 
     const selectSize = document.getElementById("selectSize");
@@ -110,13 +110,15 @@ export default ({ match }) => {
     }, [color])
 
     const sizeSelectOnChange = (e) => {
-        const optionValue = e.target.value.split("-");
+        if(e.target.value !== "") {
+            const optionValue = e.target.value.split("-");
 
-        setColorId(optionValue[1]);
-        setSize(optionValue[2]);
-        setSizeId(optionValue[3]);
-        setStock(optionValue[4]); 
-        setStockId(optionValue[5]);
+            setColorId(optionValue[1]);
+            setSize(optionValue[2]);
+            setSizeId(optionValue[3]);
+            setStock(optionValue[4]); 
+            setStockId(optionValue[5]);
+        }
     }
 
     // sizeValue 값이 렌더링 (바뀔때마다) 될때마다 실행됨 
@@ -157,10 +159,9 @@ export default ({ match }) => {
                     setTotalarr([...totalarr, data.seeproduct[0].price]);
                 }
             }
-        }
+        } 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [size])
-
 
     // selected에 totalarr이 추가되었을 때 
     //      => 사용자가 새로운 옵션값의 상품을 추가했을 때 
@@ -263,11 +264,11 @@ export default ({ match }) => {
         }
     }
 
-    const productArray = [];
-    const sizeIdArray = [];
-    const colorIdArray = [];
-    const stockIdArray = [];
-    const countArray = [];
+    let productArray = [];
+    let sizeIdArray = [];
+    let colorIdArray = [];
+    let stockIdArray = [];
+    let countArray = [];
 
     const addCartMutation = useMutation(ADD_CART, {
         variables: {
@@ -295,6 +296,11 @@ export default ({ match }) => {
             const { data } = await addCartMutation();
             if(data) {
                 setSuccess(true);
+                productArray = []; 
+                sizeIdArray = [];
+                colorIdArray = [];
+                stockIdArray = [];
+                countArray = [];
             }
         }
     }
@@ -310,6 +316,39 @@ export default ({ match }) => {
             setMyId(myId); 
         }
     }, [data])
+
+    const addPaymentMutation = useMutation(ADD_PAYMENT, {
+        variables: {
+            product: productArray,
+            size: sizeIdArray,
+            color: colorIdArray,
+            stock: stockIdArray,
+            count: countArray
+        }
+    })
+
+    const addPayment = async (selected, product, count) => {
+        if(selected.length !== 0) {
+            selected.map((item,index) => {
+                return (
+                    productArray.push(product.id),
+                    sizeIdArray.push(item.sizeId),
+                    colorIdArray.push(item.colorId),
+                    stockIdArray.push(item.stockId), 
+                    countArray.push(count[index])
+                )
+            }); 
+            const { data } = await addPaymentMutation();
+            if(data) {
+                productArray = []; 
+                sizeIdArray = [];
+                colorIdArray = [];
+                stockIdArray = [];
+                countArray = [];
+                history.push('/payment');
+            }
+        }
+    }
 
     return (
         <ProductPresenter
@@ -332,6 +371,7 @@ export default ({ match }) => {
             success={success}
             confirmClose={confirmClose}
             myId={myId}
+            addPayment={addPayment}
         />
     );
 };
