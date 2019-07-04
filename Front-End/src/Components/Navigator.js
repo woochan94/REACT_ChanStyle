@@ -58,7 +58,7 @@ export default ({ isLoggedIn }) => {
                     <LI><Link to="/sale">SALE</Link></LI>
                     {isLoggedIn ? 
                     (Data.me ?
-                    <LI><Link to={`/${Data.me.id}`}>MyPage</Link></LI> : 
+                    <LI><Link id={"myPage"} to={`/${Data.me.id}`}>MyPage</Link></LI> : 
                     <LI><Link to="/auth">MyPage</Link></LI>
                     ) : 
                     <LI><Link to="/auth">LOGIN</Link></LI>}            

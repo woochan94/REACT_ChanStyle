@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Loader from "../../Components/Loader";
 import Button from './../../Components/Button';
 import Scroll from "react-scroll"; 
-import { UpArrowIcon, Logo, CartIcon, CloseIcon } from './../../Components/Icons';
+import { UpArrowIcon, CartIcon, CloseIcon } from './../../Components/Icons';
+import { Link } from "react-router-dom";
 
 const animationScroll = Scroll.animateScroll;
 
@@ -245,6 +246,23 @@ const ConfirmDiv = styled.div`
     height: 40%;
     border: 1px solid #ddd;
     box-shadow: 0px 0px 0px rgba(0,0,0,0), 0px 0px 10px rgba(0,0,0,0.1);
+    @media (max-width: 900px) {
+        width: 50%; 
+        left: 25%;
+    }
+    @media (max-width: 768px) {
+        width: 70%; 
+        left: 20%;
+    }
+    @media (max-width: 600px) {
+        height: 35%;
+        width: 75%;
+        left: 12%;
+    }
+    @media (max-width: 480px) {
+        width: 100%; 
+        left: 0;
+    }
 `;
 
 const ConfirmCloseDiv = styled.div`
@@ -252,7 +270,6 @@ const ConfirmCloseDiv = styled.div`
     justify-content: flex-end; 
     align-items: center;
     padding-right: 5px; 
-    cursor: pointer;
 `;
 
 const ConfirmContentDiv = styled.div`
@@ -263,6 +280,10 @@ const ConfirmContentDiv = styled.div`
     span {
         padding-top: 30px;
         font-weight: 600;
+        @media (max-width: 400px) {
+            padding: 30px; 
+            text-align: center;
+        }
     }
 `; 
 
@@ -276,8 +297,16 @@ const ConfirmButtonDiv = styled.div`
         &:first-child {
             background-color: ${props => props.theme.confirmColor} !important;
             color: #fff;
+
+        }
+        @media (max-width: 400px) {
+            font-size: 14px;
         }
     } 
+`;
+
+const ConfirmIconDiv = styled.div`
+    cursor: pointer;
 `;
 
 export default ({
@@ -296,7 +325,9 @@ export default ({
     scroll,
     deleteSelect,
     addCart,
-    success
+    success,
+    confirmClose,
+    myId
 }) => {
     return (
         <Product>
@@ -415,14 +446,20 @@ export default ({
                                 </ProductInfoDiv>
                                 {success && (
                                     <ConfirmDiv>
-                                        <ConfirmCloseDiv><CloseIcon/></ConfirmCloseDiv>
+                                        <ConfirmCloseDiv>
+                                            <ConfirmIconDiv onClick={() => confirmClose()}>
+                                                <CloseIcon/>
+                                            </ConfirmIconDiv>
+                                        </ConfirmCloseDiv>
                                         <ConfirmContentDiv>
                                             <CartIcon />
                                             <span>장바구니에 상품이 성공적으로 담겼습니다.</span>
                                         </ConfirmContentDiv>
                                         <ConfirmButtonDiv>
-                                            <Button text={"장바구니 이동"} />
-                                            <Button text={"쇼핑 계속하기"} />
+                                            <Link to={`/${myId}`} >
+                                                <Button text={"장바구니 이동"} />
+                                            </Link>
+                                            <Button text={"쇼핑 계속하기"} onClick={() => confirmClose()}/>
                                         </ConfirmButtonDiv>
                                     </ConfirmDiv>
                                 )}

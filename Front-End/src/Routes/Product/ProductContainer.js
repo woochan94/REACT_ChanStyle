@@ -22,6 +22,8 @@ export default ({ match }) => {
     const [sizeId, setSizeId] = useState("");
     const [optionState, setOptionState] = useState([]); 
 
+    const [myId, setMyId] = useState("");
+
     const { data, loading } = useQuery(SEEITEM, {
         variables: {
             id: productId
@@ -277,7 +279,7 @@ export default ({ match }) => {
         }
     })
 
-    const [success, setSuccess] = useState(true);
+    const [success, setSuccess] = useState(false);
 
     const addCart = async (selected, product, count) => {
         if(selected.length !== 0) {
@@ -296,6 +298,18 @@ export default ({ match }) => {
             }
         }
     }
+
+    const confirmClose = () => {
+        setSuccess(false);
+    }
+
+    useEffect(() => {
+        const myIdElement = document.getElementById("myPage"); 
+        if(myIdElement !== null) {
+            const myId = myIdElement.getAttribute("href").split("/")[1]; 
+            setMyId(myId); 
+        }
+    }, [data])
 
     return (
         <ProductPresenter
@@ -316,6 +330,8 @@ export default ({ match }) => {
             deleteSelect={deleteSelect}
             addCart={addCart}
             success={success}
+            confirmClose={confirmClose}
+            myId={myId}
         />
     );
 };
