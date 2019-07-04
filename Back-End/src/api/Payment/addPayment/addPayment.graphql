@@ -1,0 +1,9 @@
+type Mutation {
+    addPayment(
+        product: [String!] 
+        size: [String!] 
+        color: [String!]
+        stock: [String!]
+        count: [Int!]
+    ):Boolean!
+}

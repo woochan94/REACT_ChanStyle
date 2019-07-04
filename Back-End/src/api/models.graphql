@@ -11,6 +11,7 @@ type User {
   addressDetail: String!
   phone: String! 
   cart: [Cart!]!
+  payment: [Payment!]!
   buyList: [BuyList!]!
   createdAt: DateTime! 
   updatedAt: DateTime! 
@@ -56,6 +57,7 @@ type Size {
   size: String! 
   product: Product!
   cart: Cart!
+  payment: Payment!
 }
 
 type Color {
@@ -63,6 +65,7 @@ type Color {
   color: String! 
   product: Product!
   cart: Cart!
+  payment: Payment!
 }
 
 type Stock {
@@ -70,12 +73,14 @@ type Stock {
   stock: Int! 
   product: Product!
   cart: Cart!
+  payment: Payment!
 }
 
 type Count {
   id: ID! 
   count: Int! 
   cart: Cart
+  payment: Payment! 
 }
 
 type Cart {
@@ -95,4 +100,14 @@ type BuyList {
   size: String! 
   color: String!
   count: Int! 
+}
+
+type Payment {
+  id: ID!
+  user: User! 
+  product: [Product!]! 
+  size: [Size!]!
+  color: [Color!]!
+  stock: [Stock!]!
+  count: [Count!]!
 }

@@ -9,6 +9,7 @@ type User {
   phone: String! 
   cart: [Cart!]! @relation(name: "UserOfCart", onDelete: CASCADE)
   buyList: [BuyList!]! @relation(name: "UserOfBuyList", onDelete: CASCADE)
+  payment: [Payment!]! @relation(name: "UserOfPayment", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -28,6 +29,7 @@ type Product {
   numberOfSales: Int! @default(value: 0)
   cart: [Cart!]! @relation(name: "ProductOfCart", onDelete: CASCADE)
   buyList: [BuyList!]! @relation(name: "ProductOfBuyList", onDelete: CASCADE)
+  payment: [Payment!]! @relation(name: "ProductOfPayment", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -55,6 +57,7 @@ type Size {
   size: String! 
   product: Product! @relation(name: "ProductOfSize")
   cart: [Cart!]! @relation(name: "CartOfSize")
+  payment: [Payment!]! @relation(name: "PaymentOfSize")
 }
 
 type Color {
@@ -62,6 +65,7 @@ type Color {
   color: String! 
   product: Product! @relation(name: "ProductOfColor")
   cart: [Cart!]! @relation(name: "CartOfColor")
+  payment: [Payment!]! @relation(name: "PaymentOfColor")
 }
 
 type Stock {
@@ -69,12 +73,14 @@ type Stock {
   stock: Int! 
   product: Product! @relation(name: "ProductOfStock")
   cart: [Cart!]! @relation(name: "CartOfStock")
+  payment: [Payment!]! @relation(name: "PaymentOfStock")
 }
 
 type Count {
   id: ID! @id 
   count: Int! 
   cart: [Cart!] @relation(name: "CartOfCount")
+  payment: [Payment!]! @relation(name: "PaymentOfCount")
 }
 
 type Cart {
@@ -94,4 +100,14 @@ type BuyList {
   size: String! 
   color: String! 
   count: Int! 
+}
+
+type Payment {
+  id: ID! @id 
+  user: User! @relation(name: "UserOfPayment")
+  product: [Product!]! @relation(name: "ProductOfPayment")
+  size: [Size!]! @relation(name: "PaymentOfSize")
+  color: [Color!]! @relation(name: "PaymentOfColor") 
+  stock: [Stock!]! @relation(name: "PaymentOfStock") 
+  count: [Count!]! @relation(name: "PaymentOfCount", onDelete: CASCADE)
 }
