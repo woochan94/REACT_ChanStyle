@@ -156,26 +156,44 @@ export default ({history}) => {
             const chkBox = document.getElementById(item.id);
             if (chkBox.checked === true) {
                 isChecked = true;
-                item.product.map((product,index) =>{
-                    return (
-                        productArray.push(product.id),
-                        sizeIdArray.push(item.sizeId[index].id),
-                        colorIdArray.push(item.colorId[index].id),
-                        stockIdArray.push(item.stockId[index].id), 
-                        countArray.push(item.count[index].count)
-                    )
-                }); 
-                const { data } = await addPaymentMutation(); 
-                if(data) {
-                    productArray = []; 
-                    sizeIdArray = [];
-                    colorIdArray = [];
-                    stockIdArray = [];
-                    countArray = [];
-                    history.push('/payment');
-                }
+                return (
+                    productArray.push(item.product[0].id),
+                    sizeIdArray.push(item.sizeId[0].id),
+                    colorIdArray.push(item.colorId[0].id),
+                    stockIdArray.push(item.stockId[0].id), 
+                    countArray.push(count[index])
+                )
+                // item.product.map((product,index) =>{
+                //     return (
+                //         productArray.push(product.id),
+                //         sizeIdArray.push(item.sizeId[index].id),
+                //         colorIdArray.push(item.colorId[index].id),
+                //         stockIdArray.push(item.stockId[index].id), 
+                //         countArray.push(item.count[index].count)
+                //     )
+                // }); 
+                // const { data } = await addPaymentMutation(); 
+                // if(data) {
+                //     productArray = []; 
+                //     sizeIdArray = [];
+                //     colorIdArray = [];
+                //     stockIdArray = [];
+                //     countArray = [];
+                //     setTimeout(() => history.push('/payment'), 1000);
+                // }
             }
         })
+        if(isChecked) {
+            const { data } = await addPaymentMutation(); 
+            if(data) {
+                productArray = []; 
+                sizeIdArray = [];
+                colorIdArray = [];
+                stockIdArray = [];
+                countArray = [];
+                setTimeout(() => history.push('/payment'), 1000);
+            }
+        }
         if(isChecked === false) {
             alert("주문할 상품을 선택하여 주세요");
         }
@@ -374,6 +392,7 @@ export default ({history}) => {
             buyListLoading={buyListLoading}
             changePage={changePage}
             logOut={logOut}
+            totalarr={totalarr}
         />
     )
 }
