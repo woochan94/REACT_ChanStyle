@@ -73,7 +73,7 @@ const MyNavDiv = styled.div`
     }
 `;
 
-const Article = styled.article`
+export const Article = styled.article`
     margin-top: 60px;
     form {
         margin: 0 auto;

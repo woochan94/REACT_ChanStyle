@@ -41,6 +41,7 @@ const Table = styled.table`
             display: none;
         }
     }
+
     @media (max-width: 600px) {
         display: block;
         thead {
@@ -57,12 +58,18 @@ const Table = styled.table`
             position:relative;
             border-radius: 10px;
             border: 1px solid #ccc;
+            @media (max-width: 350px) {
+                width: 95%;
+            }
         }
         tbody {
             display: flex; 
             flex-direction: column; 
             justify-content: center;
             align-items: center;
+            @media (max-width: 350px) {
+                align-items: stretch;
+            }
         }
         td:first-child {
             position: relative;
@@ -91,7 +98,7 @@ const Table = styled.table`
                 margin-left: 125px;
                 padding: 5px 1em; 
                 text-align: left; 
-                width: 100%;
+                width: auto;
             }
         }
         td:not(:first-child):before {
@@ -142,6 +149,12 @@ const SelectedCountTextDiv2 = styled(SelectedCountTextDiv)`
 
 const ResponsiveTotalDiv = styled.div``;
 
+const PaymentTd = styled.td`
+    @media (min-width: 600px) {
+        display: none;
+    }
+`;
+
 const ProductTable =({
     allCheck,
     cartData,
@@ -150,7 +163,8 @@ const ProductTable =({
     cartCountDown,
     passCartId,
     total,
-    selectOrder
+    selectOrder,
+    paymentData
 }) => {
     return (
         <>
@@ -204,8 +218,30 @@ const ProductTable =({
                             ))
                         ))
                     ))}
+                {paymentData && paymentData.seePayment.map((item, index) => (
+                    item.product.map((product, index2) => (
+                        product.files.map(file => (
+                            <tr key={index}>
+                                <PaymentTd></PaymentTd>
+                                <td style={{height:"141px"}}>
+                                    <img style={{height:"120px"}} src={file.url} alt={file.id} />
+                                </td>
+                                <td>
+                                    <div>
+                                        {product.name}
+                                    </div>
+                                    {item.size[index2].size}/{item.color[index2].color}
+                                </td>
+                                <td>{product.price}</td>
+                                <td>
+                                    {item.count[index2].count}
+                                </td>
+                            </tr>
+                        ))
+                    ))
+                ))}
                 </tbody>
-                {!isNaN(total) && (
+                {!isNaN(total) && cartData && (
                     <tfoot>
                         <tr>
                             <td colSpan="1">Total</td>
@@ -214,11 +250,20 @@ const ProductTable =({
                         </tr>
                     </tfoot>
                 )}
+                {!isNaN(total) && paymentData && (
+                    <tfoot>
+                        <tr>
+                            <td colSpan="1">Total</td>
+                            <td colSpan="2"></td>
+                            <td colSpan="1">{total}</td>
+                        </tr>
+                    </tfoot>
+                )}
             </Table>
             <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
                 Total : {total}
             </ResponsiveTotalDiv>
-            <Button id={"cartOrderBtn"} text={"Order Now"} onClick={() => selectOrder()} />
+            {cartData && <Button id={"cartOrderBtn"} text={"Order Now"} onClick={() => selectOrder()} />}
         </>
     )
 }
