@@ -5,8 +5,9 @@ import { ME } from './../../Components/SharedQueries';
 import useInput from "../../Hooks/useInput";
 import { EDIT_PROFILE, SEE_CART, DELETE_CART, SEE_BUYLIST, BUYLIST_QUERY, LOG_OUT } from './MyPageQueries';
 import { toast } from "react-toastify";
+import { ADD_PAYMENT } from './../Product/ProductQueries';
 
-export default () => {
+export default ({history}) => {
     // tab
     const [tab, setTab] = useState("cart");
     const clickTab = (tabString) => {
@@ -22,6 +23,12 @@ export default () => {
     // 총 합계를 구하기 위한 식 (array.reduce에서 사용됨)
     const totalFunc = (a, b) => a + b;
 
+    let productArray = [];
+    let sizeIdArray = [];
+    let colorIdArray = [];
+    let stockIdArray = [];
+    let countArray = [];
+
     const { loading: cartLoading, data: cartData, refetch } = useQuery(SEE_CART, {fetchPolicy: "network-only", fetchResults: true});
 
     const deleteCartMutation = useMutation(DELETE_CART, {
@@ -29,6 +36,16 @@ export default () => {
             id: cartId
         }
     });
+
+    const addPaymentMutation = useMutation(ADD_PAYMENT, {
+        variables: {
+            product: productArray,
+            size: sizeIdArray,
+            color: colorIdArray,
+            stock: stockIdArray,
+            count: countArray 
+        }
+    })
 
     useEffect(() => {
         const countTemp = [];
@@ -132,14 +149,36 @@ export default () => {
         }
     }
 
-    const selectOrder = () => {
-        cartData.seeCart.map((item, index) => {
+    let isChecked = false; 
+
+    const selectOrder = async () => {
+        cartData.seeCart.map(async (item, index) => {
             const chkBox = document.getElementById(item.id);
             if (chkBox.checked === true) {
-                console.log(item);
-                console.log("count : " + count[index] + " totalarr : " + totalarr[index]);
+                isChecked = true;
+                item.product.map((product,index) =>{
+                    return (
+                        productArray.push(product.id),
+                        sizeIdArray.push(item.sizeId[index].id),
+                        colorIdArray.push(item.colorId[index].id),
+                        stockIdArray.push(item.stockId[index].id), 
+                        countArray.push(item.count[index].count)
+                    )
+                }); 
+                const { data } = await addPaymentMutation(); 
+                if(data) {
+                    productArray = []; 
+                    sizeIdArray = [];
+                    colorIdArray = [];
+                    stockIdArray = [];
+                    countArray = [];
+                    history.push('/payment');
+                }
             }
         })
+        if(isChecked === false) {
+            alert("주문할 상품을 선택하여 주세요");
+        }
     }
 
 
@@ -305,7 +344,6 @@ export default () => {
         <MyPagePresenter
             tab={tab}
             clickTab={clickTab}
-
             cartLoading={cartLoading}
             cartData={cartData}
             passCartId={passCartId}
@@ -315,8 +353,6 @@ export default () => {
             cartCountDown={cartCountDown}
             count={count}
             selectOrder={selectOrder}
-
-
             onSubmit={onSubmit}
             name={name}
             email={email}
@@ -332,14 +368,11 @@ export default () => {
             setOpen={setOpen}
             handleAddress={handleAddress}
             data={data}
-
-
             buyData={buyData}
             BuyListData={BuyListData}
             pageNum={totalPage}
             buyListLoading={buyListLoading}
             changePage={changePage}
-
             logOut={logOut}
         />
     )
