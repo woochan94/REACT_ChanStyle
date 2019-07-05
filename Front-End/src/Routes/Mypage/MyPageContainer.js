@@ -22,9 +22,7 @@ export default () => {
     // 총 합계를 구하기 위한 식 (array.reduce에서 사용됨)
     const totalFunc = (a, b) => a + b;
 
-    const { loading: cartLoading, data: cartData, refetch } = useQuery(SEE_CART, {
-        fetchPolicy: "no-cache"
-    });
+    const { loading: cartLoading, data: cartData, refetch } = useQuery(SEE_CART, {fetchPolicy: "network-only", fetchResults: true});
 
     const deleteCartMutation = useMutation(DELETE_CART, {
         variables: {
@@ -60,7 +58,7 @@ export default () => {
             //
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cartData])
+    }, [cartLoading, cartData])
 
     const cartCountUp = (i) => {
         count.splice(i, 1, count[i] + 1);

@@ -187,7 +187,7 @@ export default ({
                     <>
                         <Article>
                             {cartLoading === true && <Loader />}
-                            {cartLoading === false && (
+                            {cartLoading === false && setTimeout(() => <Loader />, 1500) && (
                                 <ProductTable 
                                     allCheck={allCheck}
                                     cartData={cartData}

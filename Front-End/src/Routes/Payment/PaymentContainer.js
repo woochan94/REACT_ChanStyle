@@ -8,7 +8,7 @@ export default () => {
     let IMP = window.IMP;
     IMP.init(process.env.REACT_APP_IMP_CODE);
 
-    const { loading, data } = useQuery(SEE_PAYMENT);
+    const { loading, data } = useQuery(SEE_PAYMENT, {fetchPolicy: "network-only"});
     const { loading:meLoading, data:meData } = useQuery(ME);
 
     const [total, setTotal] = useState(0);
@@ -20,7 +20,6 @@ export default () => {
     const [phone, setPhone] = useState(""); 
 
     const totalFunc = (a, b) => a + b;
-
 
     const [payProductName, setPayProductName] = useState("");
     useEffect(() => {
@@ -47,10 +46,14 @@ export default () => {
             }
             if(data.seePayment.length > 1) {
                 setPayProductName(data.seePayment[0].product[0].name+ " 외 " + (data.seePayment.length-1) + "개") 
+            } else {
+                if(loading === false && data && data.seePayment.length === 1) {
+                    setPayProductName(data.seePayment[0].product[0].name)
+                }
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data])
+    }, [loading, data])
 
     useEffect(() => {
         if(meLoading === false) {
@@ -79,10 +82,8 @@ export default () => {
         }, function(rsp) {
             let msg = '결제가 완료되었습니다.';
             if ( rsp.success ) {
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
+                // 결제 완료 페이지로 이동 
+                // 제품 수량 감소시키기 
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;

@@ -90,7 +90,7 @@ export default ({
         <Payment>
             <PaymentWrapper>
                 {paymentLoading === true && <Loader />}
-                {paymentLoading === false && (
+                {paymentLoading === false && setTimeout(() => <Loader />, 2000) &&(
                     <>
                         <Article>
                             <TitleDiv>
