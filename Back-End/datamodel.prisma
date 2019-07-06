@@ -58,6 +58,7 @@ type Size {
   product: Product! @relation(name: "ProductOfSize")
   cart: [Cart!]! @relation(name: "CartOfSize")
   payment: [Payment!]! @relation(name: "PaymentOfSize")
+  buyList: [BuyList!]! @relation(name:"BuyListOfSize")
 }
 
 type Color {
@@ -66,6 +67,7 @@ type Color {
   product: Product! @relation(name: "ProductOfColor")
   cart: [Cart!]! @relation(name: "CartOfColor")
   payment: [Payment!]! @relation(name: "PaymentOfColor")
+  buyList: [BuyList!]! @relation(name:"BuyListOfColor")
 }
 
 type Stock {
@@ -93,13 +95,19 @@ type Cart {
   count: [Count!]! @relation(name: "CartOfCount", onDelete: CASCADE)  
 }
 
+type Quantity {
+  id: ID! @id 
+  quantity : Int! 
+  buyList: [BuyList!]! @relation(name:"BuyListOfQuanitity")
+}
+
 type BuyList {
   id: ID! @id 
   user: User! @relation(name: "UserOfBuyList")
   product: [Product!]! @relation(name: "ProductOfBuyList")
-  size: String! 
-  color: String! 
-  count: Int! 
+  size: [Size!]! @relation(name:"BuyListOfSize")
+  color: [Color!]! @relation(name:"BuyListOfColor")
+  quantity: [Quantity!]! @relation(name:"BuyListOfQuanitity")
 }
 
 type Payment {

@@ -58,6 +58,7 @@ type Size {
   product: Product!
   cart: Cart!
   payment: Payment!
+  buyList: BuyList!
 }
 
 type Color {
@@ -66,6 +67,7 @@ type Color {
   product: Product!
   cart: Cart!
   payment: Payment!
+  buyList: BuyList!
 }
 
 type Stock {
@@ -93,13 +95,20 @@ type Cart {
   count: [Count!]!
 }
 
+type Quantity {
+  id: ID!
+  quantity: Int!
+  user: User! 
+  buyList: [BuyList!]!
+}
+
 type BuyList {
   id: ID! 
   user: User! 
   product: [Product!]! 
-  size: String! 
-  color: String!
-  count: Int! 
+  size: [Size!]! 
+  color: [Color!]!
+  quantity: [Quantity!]!
 }
 
 type Payment {
