@@ -1,8 +1,8 @@
 type Mutation {
     addBuyList(
-        product: String! 
-        size: String! 
-        color: String! 
-        count: Int!
-    ):BuyList!
+        product: [String]
+        size: [String]
+        color: [String]
+        quantity: [Int]
+    ):Boolean!
 }
