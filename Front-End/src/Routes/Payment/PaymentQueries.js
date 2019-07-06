@@ -45,3 +45,9 @@ export const EDIT_NUMBEROFSALES = gql`
         editNumberOfSales(id: $id, saleCount: $saleCount) 
     }
 `
+
+export const ADD_BUYLIST = gql`
+    mutation addBuyList($product: [String!]!, $size: [String!]!, $color: [String!]!, $quantity: [Int!]!) {
+        addBuyList(product: $product, size: $size, color: $color, quantity: $quantity)
+    }
+`; 

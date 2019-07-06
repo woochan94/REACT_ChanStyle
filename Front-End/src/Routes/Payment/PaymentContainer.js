@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PaymentPresenter from "./PaymentPresenter";
-import { SEE_PAYMENT, EDIT_STOCK, EDIT_NUMBEROFSALES } from './PaymentQueries';
+import { SEE_PAYMENT, EDIT_STOCK, EDIT_NUMBEROFSALES, ADD_BUYLIST } from './PaymentQueries';
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 
@@ -71,6 +71,10 @@ export default () => {
     let stockCount = [];
     let numberOfSalesTemp = [];
     let productIdTemp = [];
+    let sizeTemp = [];
+    let colorTemp = [];
+    let quantityTemp = [];
+
 
     const editStockMutation = useMutation(EDIT_STOCK, {
         variables: {
@@ -86,27 +90,45 @@ export default () => {
         }
     })
 
+    const addBuyListMutation = useMutation(ADD_BUYLIST, {
+        variables: {
+            product: productIdTemp, 
+            size: sizeTemp, 
+            color: colorTemp, 
+            quantity: quantityTemp
+        }
+    })
+
+    // 구매목록 추가 
+    const addBuyListFunction = async () => {
+        const { data } = await addBuyListMutation();
+        if (data) {
+            console.log("addBuyList");
+            // payment 제거, 장바구니 제거 
+        }
+    }
+
+    // 판매량 증가 
     const editNumberFunction = async () => {
         const { data } = await editNumberOfSalesMutation(); 
         if (data) {
-            console.log("성공 2"); 
+            console.log("editNumber"); 
+            addBuyListFunction();
         }
     }
 
 
+    // 재고량 감소 
     const editStockFunction = async () => {
         const { data } = await editStockMutation();
-        if( data) {
-            // 판매량 증가 (stockCount 만큼, productid에)
-            // -> 기존의 판매량을 가져와야함 
-                // 구매목록 추가 
-                    // 결제 완료 페이지로 이동   
-            console.log("성공");
+        if (data) { 
+            console.log("editStock");
             editNumberFunction();
         }
     }
 
     const openPay = async () => {
+
         IMP.request_pay({
             pg : 'html5_inicis',
             pay_method : 'card',
@@ -127,13 +149,16 @@ export default () => {
                     numberOfSalesTemp.push(item.product[0].numberOfSales + item.count[0].count);
                     stockId.push(item.stock[0].id); 
                     stockCount.push(item.stock[0].stock - item.count[0].count);
+                    sizeTemp.push(item.size[0].id); 
+                    colorTemp.push(item.color[0].id); 
+                    quantityTemp.push(item.count[0].count);
                 })
                 editStockFunction();
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
             }
-        
+
             alert(msg);
         });
     }

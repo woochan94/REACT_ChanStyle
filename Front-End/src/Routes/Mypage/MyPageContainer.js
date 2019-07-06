@@ -204,7 +204,7 @@ export default ({history}) => {
     // 구매 목록 
     const [buyData, setBuyData] = useState("");
     // 페이징을 위한 초기 first, skip 값 
-    const first = 4;
+    const first = 1;
     const [skip, setSkip] = useState(0);
     const [page, setPage] = useState();
     const [totalPage, setTotalpage] = useState(0);

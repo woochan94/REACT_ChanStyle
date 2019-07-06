@@ -154,6 +154,7 @@ export default ({
     // 로그아웃 
     logOut
 }) => {
+    console.log(buyData);
     return (
         <MyPage>
             <MyPageWrapper>
@@ -224,10 +225,10 @@ export default ({
                                                         {product.name}
                                                     </td>
                                                     <td>
-                                                        {product.price*item.count} 
+                                                        {product.price*item.quantity[index].quantity} 
                                                     </td>
                                                     <td>
-                                                        {item.count}
+                                                        {item.quantity[index].quantity}
                                                     </td>
                                                 </tr>
                                             ))

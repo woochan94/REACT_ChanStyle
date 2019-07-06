@@ -69,9 +69,18 @@ export const SEE_BUYLIST = gql`
                 name 
                 price 
             }
-            size 
-            color 
-            count
+            size {
+                id 
+                size 
+            }
+            color {
+                id 
+                color 
+            }
+            quantity {
+                id 
+                quantity
+            }
         }
     }
 `; 
