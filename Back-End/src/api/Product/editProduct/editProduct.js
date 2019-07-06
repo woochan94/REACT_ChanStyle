@@ -29,6 +29,26 @@ export default {
                 throw Error("You can't do that");
             }
         }, 
+        // 판매량 수정 
+        editNumberOfSales: (_, args) => {
+            const { id, saleCount } = args; 
+            try {
+                id.map(async(item, index) => {
+                    await prisma.updateProduct({
+                        where: {
+                            id: item 
+                        }, 
+                        data: {
+                            numberOfSales: saleCount[index]
+                        }
+                    })
+                })
+                return true;
+            } catch {
+                return false; 
+            }
+        },
+
         // 파일 수정 
         editFile: (_, args) => {
             console.log(args);

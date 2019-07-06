@@ -9,6 +9,13 @@ type Mutation {
 }
 
 type Mutation {
+    editNumberOfSales (
+        id: [String!]! 
+        saleCount: [Int!]!
+    ): Boolean! 
+}
+
+type Mutation {
     editFile (
         id: String! 
         url: String! 
