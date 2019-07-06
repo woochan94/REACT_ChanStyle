@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PaymentPresenter from "./PaymentPresenter";
-import { SEE_PAYMENT, EDIT_STOCK } from './PaymentQueries';
+import { SEE_PAYMENT, EDIT_STOCK, EDIT_NUMBEROFSALES } from './PaymentQueries';
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 
@@ -69,6 +69,8 @@ export default () => {
 
     let stockId = []; 
     let stockCount = [];
+    let numberOfSalesTemp = [];
+    let productIdTemp = [];
 
     const editStockMutation = useMutation(EDIT_STOCK, {
         variables: {
@@ -77,10 +79,30 @@ export default () => {
         }
     })
 
+    const editNumberOfSalesMutation = useMutation(EDIT_NUMBEROFSALES, {
+        variables: {
+            id: productIdTemp, 
+            saleCount: numberOfSalesTemp
+        }
+    })
+
+    const editNumberFunction = async () => {
+        const { data } = await editNumberOfSalesMutation(); 
+        if (data) {
+            console.log("성공 2"); 
+        }
+    }
+
+
     const editStockFunction = async () => {
         const { data } = await editStockMutation();
         if( data) {
+            // 판매량 증가 (stockCount 만큼, productid에)
+            // -> 기존의 판매량을 가져와야함 
+                // 구매목록 추가 
+                    // 결제 완료 페이지로 이동   
             console.log("성공");
+            editNumberFunction();
         }
     }
 
@@ -99,10 +121,10 @@ export default () => {
         }, function(rsp) {
             let msg = '결제가 완료되었습니다.';
             if ( rsp.success ) {
-                // 결제 완료 페이지로 이동 
-                // 제품 수량 감소시키기 
-                // 구매목록 추가 
+                // 결제가 완료되면 구매수량만큼 재고에서 감소시킨다. 
                 data.seePayment.map(async (item) => {
+                    productIdTemp.push(item.product[0].id);
+                    numberOfSalesTemp.push(item.product[0].numberOfSales + item.count[0].count);
                     stockId.push(item.stock[0].id); 
                     stockCount.push(item.stock[0].stock - item.count[0].count);
                 })

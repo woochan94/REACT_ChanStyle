@@ -8,6 +8,7 @@ export const SEE_PAYMENT = gql`
                 id 
                 name
                 price
+                numberOfSales
                 files {
                     id 
                     url
@@ -38,3 +39,9 @@ export const EDIT_STOCK = gql`
         editStock(id: $id, stock: $stock)
     }
 `; 
+
+export const EDIT_NUMBEROFSALES = gql`
+    mutation editNumberOfSales($id: [String!]!, $saleCount: [Int!]!) {
+        editNumberOfSales(id: $id, saleCount: $saleCount) 
+    }
+`
