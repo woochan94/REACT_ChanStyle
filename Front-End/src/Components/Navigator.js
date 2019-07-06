@@ -26,7 +26,7 @@ const NavigatorWrapper = styled.div`
 
 const UL = styled.ul`
     display: grid; 
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(3, 1fr); 
     text-align: center; 
     font-size: 20px; 
     font-weight: 500;
@@ -34,11 +34,6 @@ const UL = styled.ul`
 
 const LI = styled.li`
     padding: 10px 0; 
-    &:nth-child(3) {
-        a {
-            color: red;
-        }
-    }
 `; 
 
 export default ({ isLoggedIn }) => {
@@ -55,7 +50,6 @@ export default ({ isLoggedIn }) => {
                 <UL>
                     <LI><Link to="/">HOME</Link></LI>
                     <LI><Link to="/store">STORE</Link></LI>
-                    <LI><Link to="/sale">SALE</Link></LI>
                     {isLoggedIn ? 
                     (Data.me ?
                     <LI><Link id={"myPage"} to={`/${Data.me.id}`}>MyPage</Link></LI> : 
