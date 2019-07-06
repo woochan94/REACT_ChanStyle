@@ -69,14 +69,21 @@ export default {
         // 재고 수정 
         editStock: (_, args) => {
             const { id, stock } = args;
-            return prisma.updateStock({
-                data: {
-                    stock
-                },
-                where: {
-                    id
-                }
-            })
+            try {
+                id.map(async(item, index) => {
+                    await prisma.updateStock({
+                        where: {
+                            id: item 
+                        }, 
+                        data: {
+                            stock: stock[index]
+                        }
+                    })
+                })   
+                return true;
+            } catch {
+                return false; 
+            }
         }, 
         // 상품디테일 파일 수정 
         editProductDetailFile: (_, args) => {

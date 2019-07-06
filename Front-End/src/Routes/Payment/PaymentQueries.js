@@ -32,3 +32,9 @@ export const SEE_PAYMENT = gql`
         }
     }
 `; 
+
+export const EDIT_STOCK = gql`
+    mutation editStock($id: [String!]!, $stock: [Int!]!) {
+        editStock(id: $id, stock: $stock)
+    }
+`; 

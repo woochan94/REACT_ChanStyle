@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PaymentPresenter from "./PaymentPresenter";
-import { SEE_PAYMENT } from './PaymentQueries';
-import { useQuery } from "react-apollo-hooks";
+import { SEE_PAYMENT, EDIT_STOCK } from './PaymentQueries';
+import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 
 export default () => {
@@ -67,13 +67,30 @@ export default () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[meLoading])
 
-    const openPay = () => {
+    let stockId = []; 
+    let stockCount = [];
+
+    const editStockMutation = useMutation(EDIT_STOCK, {
+        variables: {
+            id: stockId, 
+            stock: stockCount
+        }
+    })
+
+    const editStockFunction = async () => {
+        const { data } = await editStockMutation();
+        if( data) {
+            console.log("성공");
+        }
+    }
+
+    const openPay = async () => {
         IMP.request_pay({
             pg : 'html5_inicis',
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
             name : payProductName,
-            amount : total,
+            amount : 1000, // total
             buyer_email : email,
             buyer_name : name,
             buyer_tel : phone,
@@ -84,6 +101,12 @@ export default () => {
             if ( rsp.success ) {
                 // 결제 완료 페이지로 이동 
                 // 제품 수량 감소시키기 
+                // 구매목록 추가 
+                data.seePayment.map(async (item) => {
+                    stockId.push(item.stock[0].id); 
+                    stockCount.push(item.stock[0].stock - item.count[0].count);
+                })
+                editStockFunction();
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;

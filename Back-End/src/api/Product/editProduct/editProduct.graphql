@@ -31,9 +31,9 @@ type Mutation {
 
 type Mutation {
     editStock (
-        id: String! 
-        stock: Int!
-    ): Product! 
+        id: [String!]! 
+        stock: [Int!]!
+    ): Boolean! 
 }
 
 type Mutation {
