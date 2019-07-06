@@ -13,3 +13,9 @@ export const ME = gql`
         }
     }
 `;
+
+export const DELETE_PAYMENT = gql`
+    mutation deletePayment($id: [String!]!) {
+        deletePayment(id: $id)
+    }
+`; 

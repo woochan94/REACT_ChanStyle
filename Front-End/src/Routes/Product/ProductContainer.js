@@ -345,7 +345,7 @@ export default ({ match, history }) => {
                 colorIdArray = [];
                 stockIdArray = [];
                 countArray = [];
-                history.push('/payment');
+                setTimeout(() => history.push('/payment'), 500); 
             }
         } else {
             alert("상품의 옵션을 선택해 주세요");
