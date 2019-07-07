@@ -4,7 +4,7 @@ import { SEE_PAYMENT, EDIT_STOCK, EDIT_NUMBEROFSALES, ADD_BUYLIST } from './Paym
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
 
-export default () => {
+export default ({history}) => {
     let IMP = window.IMP;
     IMP.init(process.env.REACT_APP_IMP_CODE);
 
@@ -18,6 +18,7 @@ export default () => {
     const [addressDetail, setAddressDetail] = useState(""); 
     const [email, setEmail] = useState(""); 
     const [phone, setPhone] = useState(""); 
+    const [complete, setComplete] = useState(false); 
 
     const totalFunc = (a, b) => a + b;
 
@@ -105,6 +106,9 @@ export default () => {
         if (data) {
             console.log("addBuyList");
             // payment 제거, 장바구니 제거 
+            // => payment는 다른페이지로 이동하면 제거 됨 
+            // => 장바구니 에서 아이템 제거하고 구매완료페이지로 이동 
+            setComplete(true);
         }
     }
 
@@ -157,10 +161,14 @@ export default () => {
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg);
             }
 
-            alert(msg);
         });
+    }
+
+    const goHome = () => {
+        history.push('/');
     }
 
 
@@ -176,6 +184,8 @@ export default () => {
             email={email}
             phone={phone}
             openPay={openPay}
+            complete={complete}
+            goHome={goHome}
         />
     )
 }

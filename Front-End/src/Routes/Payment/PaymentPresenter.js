@@ -4,6 +4,7 @@ import { H2, TitleDiv } from "../Product/ProductPresenter";
 import ProductTable from "../../Components/ProductTable";
 import { Article } from "../Mypage/MyPagePresenter";
 import Loader from "../../Components/Loader";
+import Button from "../../Components/Button";
 
 const Payment = styled.section`
     min-height: 79vh; 
@@ -74,6 +75,47 @@ const PayBtn = styled.button`
     color: #fff;
 `;
 
+const CompleteArticle = styled.article`
+    padding-top: 200px;
+`;
+
+const CompleteDiv = styled.div`
+    width: 100%; 
+    height: 100%; 
+    ${props => props.theme.whiteBox};
+    box-shadow: 0px 0px 0px rgba(0,0,0,0), 0px 0px 10px rgba(0,0,0,0.1);
+    padding: 100px 0 50px 0;
+`;
+
+const CompleteTextDiv = styled.div`
+    display: flex; 
+    justify-content: center;
+    h2 {
+        font-size: 45px; 
+        font-weight: 600;
+        @media (max-width: 600px) {
+            font-size: 32px; 
+        }
+        @media (max-width: 400px) {
+            font-size: 27px;
+        }
+    }
+    span {
+        color: firebrick;
+    }
+`; 
+
+const CompleteButtonDiv = styled.div`
+    display: flex; 
+    justify-content: center;
+    padding-top: 50px;
+    button {
+        width: auto !important;
+        background-color: ${props => props.theme.confirmColor} !important; 
+        color: #fff !important;
+    }
+`;
+
 export default ({
     paymentData,
     paymentLoading,
@@ -84,13 +126,15 @@ export default ({
     addressDetail,
     email,
     phone,
-    openPay
+    openPay,
+    complete,
+    goHome
 }) => {
     return (
         <Payment>
             <PaymentWrapper>
                 {paymentLoading === true && <Loader />}
-                {paymentLoading === false && setTimeout(() => <Loader />, 2000) &&(
+                {paymentLoading === false && !complete && setTimeout(() => <Loader />, 2000) &&(
                     <>
                         <Article>
                             <TitleDiv>
@@ -138,6 +182,18 @@ export default ({
                             <PayBtn onClick={() => openPay()}>결제하기</PayBtn>
                         </ButtonDiv>
                     </>
+                )}
+                {complete && (
+                    <CompleteArticle>
+                        <CompleteDiv>
+                            <CompleteTextDiv>
+                                <h2>주문이 <span>완료</span>되었습니다.</h2>
+                            </CompleteTextDiv>
+                            <CompleteButtonDiv>
+                                <Button text={"홈으로 가기"} onClick={() => goHome()}/>
+                            </CompleteButtonDiv>
+                        </CompleteDiv> 
+                    </CompleteArticle>
                 )}
 
             </PaymentWrapper>
