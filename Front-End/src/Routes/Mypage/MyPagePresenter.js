@@ -11,6 +11,9 @@ import ProductTable from "../../Components/ProductTable";
 const MyPage = styled.section`
     min-height: 79vh;
     overflow: hidden;
+    max-width: ${props => props.theme.maxWidth};
+    margin: 0 auto;
+    width: 100%; 
 `;
 
 const MyPageWrapper = styled.div`

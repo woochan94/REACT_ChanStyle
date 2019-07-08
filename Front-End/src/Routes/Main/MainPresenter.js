@@ -5,6 +5,9 @@ import ItemBox from "../../Components/ItemBox";
 import Loader from "../../Components/Loader";
 
 const Main = styled.div`
+    max-width: ${props => props.theme.maxWidth};
+    margin: 0 auto;
+    width: 100%; 
     margin-bottom: 30px;
 `;
 

@@ -18,12 +18,6 @@ const QUERY = gql`
   }
 `; 
 
-const Wrapper = styled.div`
-  margin: 0 auto; 
-  max-width: ${props => props.theme.maxWidth};
-  width: 100%; 
-`;
-
 export default () => {
   const {
     data: { isLoggedIn } 
@@ -37,9 +31,7 @@ export default () => {
         <>
         <Header />
         <Navigator isLoggedIn={isLoggedIn} />
-        <Wrapper>
-          <Routes isLoggedIn={isLoggedIn} isAdmin={false}/>
-        </Wrapper>
+        <Routes isLoggedIn={isLoggedIn} isAdmin={false}/>
         <Footer />
         <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
         </>
