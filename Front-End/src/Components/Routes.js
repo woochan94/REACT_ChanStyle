@@ -4,7 +4,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import Main from "../Routes/Main";
 import MyPage from "../Routes/Mypage";
 import Auth from "../Routes/Auth";
-import Store from "../Routes/Store/Store";
+import Store from "../Routes/Store";
 import Product from "../Routes/Product";
 import Payment from "../Routes/Payment";
 import Admin from "../Routes/Admin/Admin";
