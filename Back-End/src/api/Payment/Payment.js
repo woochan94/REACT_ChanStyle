@@ -7,6 +7,7 @@ export default {
         size: ({ id }) => prisma.payment({ id }).size(),
         color: ({ id }) => prisma.payment({ id }).color(), 
         stock: ({ id }) => prisma.payment({ id }).stock(),
-        count: ({ id }) => prisma.payment({ id }).count()
+        count: ({ id }) => prisma.payment({ id }).count(),
+        cart: ({ id }) => prisma.payment({ id }).cart()
     }
 }

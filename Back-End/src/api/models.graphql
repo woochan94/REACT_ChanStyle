@@ -93,6 +93,7 @@ type Cart {
   colorId: [Color!]! 
   stockId: [Stock!]! 
   count: [Count!]!
+  payment: [Payment!]
 }
 
 type Quantity {
@@ -119,4 +120,5 @@ type Payment {
   color: [Color!]!
   stock: [Stock!]!
   count: [Count!]!
+  cart: [Cart!]
 }

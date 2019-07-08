@@ -6,14 +6,15 @@ export default {
             isAuthenticated(request); 
             const { id } = args;
             try {
-                await prisma.deleteCart({
-                    id
-                });
+                await id.map(async(item) => {
+                    await prisma.deleteCart({
+                        id: item
+                    })
+                })
                 return true;
             } catch {
-                return false;
-            }
-       
+                return false; 
+            }       
         }
     }
 }
