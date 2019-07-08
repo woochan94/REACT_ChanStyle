@@ -78,5 +78,24 @@ export default {
                 }
             } 
         }
+    },
+    Mutation : {
+        seeProductBest: (_, args) => {
+            const { sort } = args; 
+            if(sort === "all") {
+                return prisma.products({
+                    orderBy: "numberOfSales_DESC", 
+                    first: 4
+                })
+            }
+        },
+        seeProductAll: (_, args) => {
+            const { sort } = args; 
+            if(sort === "all") {
+                return prisma.products({
+                    orderBy: "createdAt_DESC"
+                })
+            }
+        }
     }
 }

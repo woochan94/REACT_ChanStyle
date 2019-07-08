@@ -6,3 +6,18 @@ type Query {
         subCategory: String 
     ): [Product!]!
 }
+
+type Mutation {
+    seeProductBest(
+        sort: String! 
+    ): [Product!]!
+}
+
+type Mutation {
+    seeProductAll(
+        id: String 
+        sort: String!
+        mainCategory: String
+        subCategory: String 
+    ): [Product!]!
+}
