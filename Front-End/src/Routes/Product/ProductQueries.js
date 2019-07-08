@@ -43,7 +43,7 @@ export const ADD_CART = gql`
 `
 
 export const ADD_PAYMENT = gql`
-    mutation addPayment($product: [String!]!, $size: [String!]!, $color: [String!]!, $stock: [String!]!, $count: [Int!]!) {
-        addPayment(product: $product, size: $size, color: $color, stock: $stock, count: $count)
+    mutation addPayment($product: [String!]!, $size: [String!]!, $color: [String!]!, $stock: [String!]!, $count: [Int!]!, $cart: [String!]) {
+        addPayment(product: $product, size: $size, color: $color, stock: $stock, count: $count, cart: $cart)
     }
 `;

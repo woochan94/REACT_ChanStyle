@@ -55,7 +55,7 @@ export const SEE_CART = gql`
 `;
 
 export const DELETE_CART = gql`
-    mutation deleteCart($id: String!) {
+    mutation deleteCart($id: [String!]!) {
         deleteCart(id:$id)
     }
 `;

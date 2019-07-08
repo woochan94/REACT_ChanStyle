@@ -3,6 +3,7 @@ import PaymentPresenter from "./PaymentPresenter";
 import { SEE_PAYMENT, EDIT_STOCK, EDIT_NUMBEROFSALES, ADD_BUYLIST } from './PaymentQueries';
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { ME } from './../../Components/SharedQueries';
+import { DELETE_CART } from './../Mypage/MyPageQueries';
 
 export default ({history}) => {
     let IMP = window.IMP;
@@ -75,6 +76,7 @@ export default ({history}) => {
     let sizeTemp = [];
     let colorTemp = [];
     let quantityTemp = [];
+    let cartId = [];
 
 
     const editStockMutation = useMutation(EDIT_STOCK, {
@@ -100,6 +102,27 @@ export default ({history}) => {
         }
     })
 
+    const deleteCartMutation = useMutation(DELETE_CART, {
+        variables: {
+            id: cartId
+        }
+    })
+
+    const deleteCartFunction = async () => {
+        const { data } = await deleteCartMutation(); 
+        if(data) {
+            stockId = []; 
+            stockCount = [];
+            numberOfSalesTemp = [];
+            productIdTemp = [];
+            sizeTemp = [];
+            colorTemp = [];
+            quantityTemp = [];
+            cartId = [];
+            setComplete(true);
+        }
+    }
+
     // 구매목록 추가 
     const addBuyListFunction = async () => {
         const { data } = await addBuyListMutation();
@@ -108,7 +131,20 @@ export default ({history}) => {
             // payment 제거, 장바구니 제거 
             // => payment는 다른페이지로 이동하면 제거 됨 
             // => 장바구니 에서 아이템 제거하고 구매완료페이지로 이동 
-            setComplete(true);
+            if(cartId.length !== 0) {
+                deleteCartFunction();
+            } else {
+                stockId = []; 
+                stockCount = [];
+                numberOfSalesTemp = [];
+                productIdTemp = [];
+                sizeTemp = [];
+                colorTemp = [];
+                quantityTemp = [];
+                cartId = [];
+                setComplete(true);
+            }
+
         }
     }
 
@@ -132,7 +168,6 @@ export default ({history}) => {
     }
 
     const openPay = async () => {
-
         IMP.request_pay({
             pg : 'html5_inicis',
             pay_method : 'card',
@@ -151,11 +186,14 @@ export default ({history}) => {
                 data.seePayment.map(async (item) => {
                     productIdTemp.push(item.product[0].id);
                     numberOfSalesTemp.push(item.product[0].numberOfSales + item.count[0].count);
-                    stockId.push(item.stock[0].id); 
+                    stockId.push(item.stock[0].id);
                     stockCount.push(item.stock[0].stock - item.count[0].count);
-                    sizeTemp.push(item.size[0].id); 
-                    colorTemp.push(item.color[0].id); 
+                    sizeTemp.push(item.size[0].id);
+                    colorTemp.push(item.color[0].id);
                     quantityTemp.push(item.count[0].count);
+                    if(item.cart.length !== 0) {
+                        cartId.push(item.cart[0].id);
+                    }
                 })
                 editStockFunction();
             } else {

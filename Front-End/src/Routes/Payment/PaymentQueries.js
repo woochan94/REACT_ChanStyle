@@ -30,6 +30,9 @@ export const SEE_PAYMENT = gql`
                 id 
                 count
             }
+            cart {
+                id 
+            }
         }
     }
 `; 

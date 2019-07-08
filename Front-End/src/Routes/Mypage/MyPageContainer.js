@@ -28,6 +28,7 @@ export default ({history}) => {
     let colorIdArray = [];
     let stockIdArray = [];
     let countArray = [];
+    let cartArray = []; 
 
     const { loading: cartLoading, data: cartData, refetch } = useQuery(SEE_CART, {fetchPolicy: "network-only", fetchResults: true});
 
@@ -43,7 +44,8 @@ export default ({history}) => {
             size: sizeIdArray,
             color: colorIdArray,
             stock: stockIdArray,
-            count: countArray 
+            count: countArray, 
+            cart: cartArray
         }
     })
 
@@ -161,26 +163,9 @@ export default ({history}) => {
                     sizeIdArray.push(item.sizeId[0].id),
                     colorIdArray.push(item.colorId[0].id),
                     stockIdArray.push(item.stockId[0].id), 
-                    countArray.push(count[index])
+                    countArray.push(count[index]), 
+                    cartArray.push(item.id)
                 )
-                // item.product.map((product,index) =>{
-                //     return (
-                //         productArray.push(product.id),
-                //         sizeIdArray.push(item.sizeId[index].id),
-                //         colorIdArray.push(item.colorId[index].id),
-                //         stockIdArray.push(item.stockId[index].id), 
-                //         countArray.push(item.count[index].count)
-                //     )
-                // }); 
-                // const { data } = await addPaymentMutation(); 
-                // if(data) {
-                //     productArray = []; 
-                //     sizeIdArray = [];
-                //     colorIdArray = [];
-                //     stockIdArray = [];
-                //     countArray = [];
-                //     setTimeout(() => history.push('/payment'), 1000);
-                // }
             }
         })
         if(isChecked) {
@@ -191,6 +176,7 @@ export default ({history}) => {
                 colorIdArray = [];
                 stockIdArray = [];
                 countArray = [];
+                cartArray = [];
                 setTimeout(() => history.push('/payment'), 1000);
             }
         }
