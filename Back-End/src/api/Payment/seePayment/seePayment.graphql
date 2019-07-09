@@ -1,3 +1,7 @@
 type Query {
     seePayment: [Payment!]!
 }
+
+type Mutation {
+    seePayment: [Payment!]!
+}

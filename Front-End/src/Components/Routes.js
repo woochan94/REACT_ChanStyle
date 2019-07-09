@@ -8,21 +8,31 @@ import Store from "../Routes/Store";
 import Product from "../Routes/Product";
 import Payment from "../Routes/Payment";
 import Admin from "../Routes/Admin/Admin";
-import { useQuery, useMutation } from "react-apollo-hooks";
-import { SEE_PAYMENT } from './../Routes/Payment/PaymentQueries';
-import { DELETE_PAYMENT } from "./SharedQueries";
+import { useMutation } from "react-apollo-hooks";
+import { DELETE_PAYMENT, SEE_PAYMENT2 } from "./SharedQueries";
 
 const AppRouter = withRouter(({ isLoggedIn, isAdmin, location }) => {
     let idArrayTemp = []; 
-    const { loading, data } = useQuery(SEE_PAYMENT); 
+
     const deletePaymentMutation = useMutation(DELETE_PAYMENT, { variables: {
         id:idArrayTemp
     }})
 
+    const seePaymentMutation = useMutation(SEE_PAYMENT2);
+
+    const seePaymentFunction = async() => {
+        const { data } = await seePaymentMutation();
+        if(data) {
+            data.seePayment.map(item => (
+                idArrayTemp.push(item.id)
+            ))
+            deletePaymentFunction();
+        }
+    }
+
     const deletePaymentFunction = async () => {
         const { data } = await deletePaymentMutation(); 
         if(data) {
-            //window.location.reload();
             idArrayTemp = [];
         }
     }
@@ -30,16 +40,7 @@ const AppRouter = withRouter(({ isLoggedIn, isAdmin, location }) => {
     // 다른 페이지로 이동할 때마다 payment필드에 값이 있으면 제거한다. 
     useEffect(() => {
         if(location.pathname !== "/payment") {
-            if (loading === false) {
-                if(data && data.seePayment.length !== 0) {
-                    data.seePayment.map(item => (
-                        idArrayTemp.push(item.id)
-                    ))
-                    if (idArrayTemp !== []) {
-                        deletePaymentFunction();
-                    }
-                }
-            }
+            seePaymentFunction();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[location])

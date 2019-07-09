@@ -19,3 +19,40 @@ export const DELETE_PAYMENT = gql`
         deletePayment(id: $id)
     }
 `; 
+
+export const SEE_PAYMENT2 = gql`
+    mutation seePayment {
+        seePayment {
+            id
+            product {
+                id 
+                name
+                price
+                numberOfSales
+                files {
+                    id 
+                    url
+                }
+            }
+            size {
+                id 
+                size 
+            }
+            color {
+                id 
+                color 
+            }
+            stock {
+                id 
+                stock 
+            }
+            count {
+                id 
+                count
+            }
+            cart {
+                id 
+            }
+        }
+    }
+`

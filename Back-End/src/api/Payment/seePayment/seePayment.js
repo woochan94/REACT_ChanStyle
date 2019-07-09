@@ -12,5 +12,17 @@ export default {
                 }
             })
         }
+    }, 
+    Mutation: {
+        seePayment: (_, __, { request}) => {
+            const { user } = request; 
+            return prisma.payments({
+                where: {
+                    user: {
+                        id: user.id 
+                    }
+                }
+            })
+        }
     }
 }
