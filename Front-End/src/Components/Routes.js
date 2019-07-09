@@ -49,7 +49,7 @@ const AppRouter = withRouter(({ isLoggedIn, isAdmin, location }) => {
             <Route exact path="/" component={Main} />
             <Route exact path="/store" component={Store} />
             <Route exact path="/payment" component={Payment} />
-            <Route path = "/product/:productid" component={Product} onUpdate={() => console.log(123)} />
+            <Route path = "/product/:productid" component={Product} />
             <Route path = "/:userId" component={ isLoggedIn ? (isAdmin ? Admin : MyPage) : Auth} /> 
         </Switch>
     )

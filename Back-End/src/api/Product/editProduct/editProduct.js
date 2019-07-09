@@ -51,7 +51,6 @@ export default {
 
         // 파일 수정 
         editFile: (_, args) => {
-            console.log(args);
             const { id, url } = args; 
             return prisma.updateFile({
                 data: {

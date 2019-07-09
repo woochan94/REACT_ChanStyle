@@ -157,7 +157,6 @@ export default ({
     // 로그아웃 
     logOut
 }) => {
-    console.log(buyData);
     return (
         <MyPage>
             <MyPageWrapper>

@@ -127,7 +127,6 @@ export default ({history}) => {
     const addBuyListFunction = async () => {
         const { data } = await addBuyListMutation();
         if (data) {
-            console.log("addBuyList");
             // payment 제거, 장바구니 제거 
             // => payment는 다른페이지로 이동하면 제거 됨 
             // => 장바구니 에서 아이템 제거하고 구매완료페이지로 이동 
@@ -152,7 +151,6 @@ export default ({history}) => {
     const editNumberFunction = async () => {
         const { data } = await editNumberOfSalesMutation(); 
         if (data) {
-            console.log("editNumber"); 
             addBuyListFunction();
         }
     }
@@ -162,7 +160,6 @@ export default ({history}) => {
     const editStockFunction = async () => {
         const { data } = await editStockMutation();
         if (data) { 
-            console.log("editStock");
             editNumberFunction();
         }
     }

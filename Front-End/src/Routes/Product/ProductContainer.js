@@ -222,10 +222,6 @@ export default ({ match, history }) => {
         const aaa = selected.filter(item => item !== selected[index]);
         setSelected([...aaa]);
 
-        // console.log("현재 count : " + count); 
-        // console.log("현재 totalarr : " + totalarr); 
-        // console.log("현재 total 값 : " + total);
-
         if (selected.length === 1) {
             // 선택한 옵션이 한개 뿐일때  
             // 모든 옵션관련 state값을 초기값으로 초기화 해준다 (count, totalarr, total)

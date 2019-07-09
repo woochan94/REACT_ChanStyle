@@ -10,7 +10,7 @@ export default () => {
         speed: 800,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3500,
         responsive: [
             {
