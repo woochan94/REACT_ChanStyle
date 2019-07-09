@@ -1,7 +1,6 @@
 import React from "react";
-import Slider from "react-slick";
 import styled from "styled-components";
-import ItemBox from "../../Components/ItemBox";
+import StoreContent from './../../Components/StoreContent';
 import Loader from "../../Components/Loader";
 
 const Store = styled.div`
@@ -84,54 +83,6 @@ const ContentWrapper = styled.div`
     }
 `;
 
-const ContentTitleDiv = styled.div`
-    border-bottom: ${props => props.theme.borderBottom};
-    padding: 20px 0 10px;
-`;
-
-const H2 = styled.h2`
-    font-size: ${props => props.theme.titleFontSize};
-    font-weight: 600;
-`;
-
-const H3 = styled.h3`
-    font-size: 24px; 
-    font-weight: 600;
-    margin-bottom: 30px;
-`;
-
-const Best = styled.article`
-    padding: 15px 0 30px;
-`;
-
-const CustomSlider = styled(Slider)`
-    .slick-slide {
-        display: grid; 
-        grid-template-columns: repeat(4, 1fr);
-    }
-    @media(max-width: 1024px) {
-        .slick-slide {
-            grid-template-columns: 1fr;
-            margin-bottom: 30px;
-        }
-        .slick-dots>li>button:before {
-            color: black;
-        }
-    }
-`;
-
-const AllItem = styled.article`
-    border-top: ${props => props.theme.borderBottom};
-`;
-
-const AllItemGrid = styled.div`
-    display: grid; 
-    grid-template-columns: repeat(4, 1fr); 
-    grid-template-rows: repeat(2,1fr);
-    padding: 50px 0; 
-    grid-row-gap: 50px;
-`;
-
 export default ({
     topToggle,
     bottomToggle,
@@ -140,7 +91,8 @@ export default ({
     menuClick,
     best,
     all,
-    settings
+    settings,
+    clickMore
 }) => {
     return (
         <Store>
@@ -166,42 +118,17 @@ export default ({
             </Menubar>
             <ContentSection>
                 <ContentWrapper>
-                    {title === "ALL" && all.length === 0 && <Loader />}
-                    {title === "ALL" && best.length !== 0 && all.length !== 0 && (
-                        <>
-                            <ContentTitleDiv>
-                                <H2>{title}</H2>
-                            </ContentTitleDiv>
-                            <Best>
-                                <H3><span role="img" aria-label="">🔥Best Item🔥</span></H3>
-                                <CustomSlider {...settings}>
-                                    {best.length !== 0 && best.seeProductBest.map(item => (
-                                        <ItemBox
-                                            key={item.id}
-                                            imgSrc={item.files[0].url}
-                                            title={item.name}
-                                            price={item.price}
-                                            id={item.id}
-                                        />
-                                    ))}
-                                </CustomSlider>
-                            </Best>
-                            <AllItem>
-                                <AllItemGrid>
-                                    {all.length !== 0 && all.seeProductAll.map(item => (
-                                        <ItemBox
-                                            key={item.id}
-                                            imgSrc={item.files[0].url}
-                                            title={item.name}
-                                            price={item.price}
-                                            id={item.id}
-                                        />
-                                    ))}
-                                </AllItemGrid>
-                            </AllItem>
-                        </>
+                    {all.length === 0 && <Loader />}
+                    {best.length !== 0 && all.length !== 0 && (
+                        <StoreContent
+                            title={title}
+                            all={all}
+                            best={best}
+                            settings={settings}
+                        />
                     )}
                 </ContentWrapper>
+                <button onClick={() => clickMore()}>더보기</button>
             </ContentSection>
         </Store>
     )

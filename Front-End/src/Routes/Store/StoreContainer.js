@@ -112,23 +112,50 @@ export default () => {
     }
 
 
+    const first = 4;
+    const [skip, setSkip] = useState(0); 
+
+    // 페이징 
+    const clickMore = () => {
+        setSkip(skip+first); 
+    }
+
+    useEffect(() => {
+        if(skip !== 0) {
+            seeAllItemFunction();
+        }
+    },[skip])
+
+
+
+
+    const [sort, setSort] = useState("");
+    const [mainCategory, setMaincategory] = useState();
+    const [subCategory, setSubCategory] = useState();
+
     // ALL 
     const seeAllBestItemMutation = useMutation(SEE_ALL_BESTITEM, {
         variables: {
-            sort: "all"
+            sort,
+            mainCategory,
+            subCategory
         }
     })
 
     const seeAllItemMutation = useMutation(SEE_PRODUCT, {
         variables: {
-            sort: "all"
+            sort,
+            mainCategory,
+            subCategory,
+            first,
+            skip
         }
     })
 
     const seeAllItemFunction = async() => {
         const { data } = await seeAllItemMutation(); 
         if (data) {
-            setAll(data);
+            setAll([...all, ...data.seeProductAll]);
         }
     }
 
@@ -141,11 +168,46 @@ export default () => {
     }
 
     useEffect(() => {
+        setBest([]); 
+        setAll([]);
         if(title === "ALL") {
-            seeAllBestItemFunction();
+            setSort("all");   
+            setMaincategory("");
+            setSubCategory("");
+        } else if(title === "Top ALL") {
+            setSort("all"); 
+            setMaincategory("상의");
+            setSubCategory("");
+        } else if (title === "BOTTOM ALL") {
+            setSort("all"); 
+            setMaincategory("하의");
+            setSubCategory("");
+        } else if (title === "T-Shirt") {
+            setSort("all"); 
+            setMaincategory("상의"); 
+            setSubCategory("티셔츠");
+        } else if (title === "Shirt") {
+            setSort("all"); 
+            setMaincategory("상의"); 
+            setSubCategory("셔츠");
+        } else if (title === "Jean") {
+            setSort("all"); 
+            setMaincategory("하의"); 
+            setSubCategory("청바지");
+        } else if (title === "Slacks") {
+            setSort("all"); 
+            setMaincategory("하의"); 
+            setSubCategory("슬랙스");
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[title])
+
+    useEffect(() => {
+        if(title !== "" && sort !== "") {
+            seeAllBestItemFunction();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[mainCategory, subCategory])
 
     return (
         <StorePresenter  
@@ -157,6 +219,7 @@ export default () => {
             best={best} 
             all={all}
             settings={settings}
+            clickMore={clickMore}
         />
     )
 }

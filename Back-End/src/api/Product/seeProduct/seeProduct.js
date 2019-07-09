@@ -81,18 +81,58 @@ export default {
     },
     Mutation : {
         seeProductBest: (_, args) => {
-            const { sort } = args; 
-            if(sort === "all") {
+            const { sort, mainCategory, subCategory } = args; 
+            if(sort === "all" && mainCategory === "" && subCategory === "") {
                 return prisma.products({
                     orderBy: "numberOfSales_DESC", 
                     first: 4
                 })
             }
+
+            if(sort === "all" && mainCategory !== "" && subCategory === "") {
+                return prisma.products({
+                    where: {
+                        mainCategory
+                    },
+                    orderBy: "numberOfSales_DESC"
+                })
+            }
+
+            if(sort === "all" && mainCategory !== "" && subCategory !== "") {
+                return prisma.products({
+                    where: {
+                        subCategory
+                    }, 
+                    orderBy: "numberOfSales_DESC"
+                })
+            }
         },
         seeProductAll: (_, args) => {
-            const { sort } = args; 
-            if(sort === "all") {
+            const { sort, mainCategory, subCategory, first, skip } = args; 
+
+            // 전체상품보기 
+            if(sort === "all" && mainCategory === "") {
                 return prisma.products({
+                    orderBy: "createdAt_DESC",
+                    first, 
+                    skip
+                })
+            }
+            // 대분류 상품 전체 보기 
+            if(sort === "all" && mainCategory !== "" && subCategory === "") {
+                return prisma.products({
+                    where: {
+                        mainCategory
+                    }, 
+                    orderBy: "createdAt_DESC"
+                })
+            }
+            // 소분류 상품 전체 보기 
+            if(sort === "all" && mainCategory !== "" && subCategory !== "") {
+                return prisma.products({
+                    where: {
+                        subCategory
+                    }, 
                     orderBy: "createdAt_DESC"
                 })
             }

@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost"; 
 
 export const SEE_ALL_BESTITEM = gql`
-    mutation seeProductBest($sort: String!) {
-        seeProductBest(sort: $sort) {
+    mutation seeProductBest($sort: String!, $mainCategory: String, $subCategory: String) {
+        seeProductBest(sort: $sort, mainCategory: $mainCategory, subCategory: $subCategory) {
             id 
             name 
             price 
@@ -15,8 +15,8 @@ export const SEE_ALL_BESTITEM = gql`
 `;
 
 export const SEE_PRODUCT = gql`
-    mutation seeProductAll($id: String, $sort: String!, $mainCategory: String, $subCategory: String) {
-        seeProductAll(id:$id, sort:$sort, mainCategory:$mainCategory, subCategory:$subCategory) {
+    mutation seeProductAll($id: String, $sort: String!, $mainCategory: String, $subCategory: String, $first: Int, $skip: Int) {
+        seeProductAll(id:$id, sort:$sort, mainCategory:$mainCategory, subCategory:$subCategory, first:$first, skip:$skip) {
             id 
             name 
             price
