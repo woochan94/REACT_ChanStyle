@@ -49,6 +49,12 @@ const AllItemGrid = styled.div`
     grid-template-columns: repeat(4, 1fr); 
     padding: 50px 0; 
     grid-row-gap: 50px;
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 `;
 
 const StoreContent = ({

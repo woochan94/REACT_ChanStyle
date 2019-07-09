@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import StoreContent from './../../Components/StoreContent';
 import Loader from "../../Components/Loader";
+import { DownIcon } from "../../Components/Icons";
 
 const Store = styled.div`
     min-height: 79vh;
@@ -23,12 +24,24 @@ const Menubar = styled.aside`
 `;
 
 const CategoryTitle = styled.div`
+    display: flex; 
+    justify-content: center;
+    align-items: center;
     font-size: 22px; 
     font-weight: 600; 
     text-align: center; 
     line-height: 50px; 
     color: white;
     background-color: #23282e;
+    div {
+        height: 38px;
+        @media (min-width: 600px) {
+            display:none;
+        }
+    }
+    @media (max-width: 600px) {
+        cursor: pointer;
+    }
 `;
 
 const MenuList = styled.div`
@@ -121,7 +134,9 @@ export default ({
     return (
         <Store>
             <Menubar>
-                <CategoryTitle onClick={() => menuListToggle()}> Category </CategoryTitle>
+                <CategoryTitle onClick={() => menuListToggle()}>
+                    <span>Category</span> <div><DownIcon/></div>
+                </CategoryTitle>
                 <MenuList id={"menuList"}>
                     <MenuUl>
                         <MenuLi onClick={() => menuClick("ALL")}>ALL</MenuLi>
