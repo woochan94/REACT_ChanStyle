@@ -111,12 +111,14 @@ export default () => {
         setTitle(name);
     }
 
-
     const first = 4;
     const [skip, setSkip] = useState(0); 
+    const [pLoading, setPloading] = useState(false);
+    const [dataTemp, setDataTemp] = useState([]);
 
     // 페이징 
     const clickMore = () => {
+        setPloading(true);
         setSkip(skip+first); 
     }
 
@@ -124,6 +126,7 @@ export default () => {
         if(skip !== 0) {
             seeAllItemFunction();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[skip])
 
 
@@ -155,7 +158,9 @@ export default () => {
     const seeAllItemFunction = async() => {
         const { data } = await seeAllItemMutation(); 
         if (data) {
+            setDataTemp(data);
             setAll([...all, ...data.seeProductAll]);
+            setPloading(false);
         }
     }
 
@@ -174,30 +179,37 @@ export default () => {
             setSort("all");   
             setMaincategory("");
             setSubCategory("");
+            setSkip(0);
         } else if(title === "Top ALL") {
             setSort("all"); 
             setMaincategory("상의");
             setSubCategory("");
+            setSkip(0);
         } else if (title === "BOTTOM ALL") {
             setSort("all"); 
             setMaincategory("하의");
             setSubCategory("");
+            setSkip(0);
         } else if (title === "T-Shirt") {
             setSort("all"); 
             setMaincategory("상의"); 
             setSubCategory("티셔츠");
+            setSkip(0);
         } else if (title === "Shirt") {
             setSort("all"); 
             setMaincategory("상의"); 
             setSubCategory("셔츠");
+            setSkip(0);
         } else if (title === "Jean") {
             setSort("all"); 
             setMaincategory("하의"); 
             setSubCategory("청바지");
+            setSkip(0);
         } else if (title === "Slacks") {
             setSort("all"); 
             setMaincategory("하의"); 
             setSubCategory("슬랙스");
+            setSkip(0);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[title])
@@ -220,6 +232,8 @@ export default () => {
             all={all}
             settings={settings}
             clickMore={clickMore}
+            pLoading={pLoading}
+            dataTemp={dataTemp}
         />
     )
 }

@@ -8,6 +8,9 @@ import Button from "../../Components/Button";
 
 const Payment = styled.section`
     min-height: 79vh; 
+    max-width: ${props => props.theme.maxWidth};
+    margin: 0 auto;
+    width: 100%; 
 `;
 
 const PaymentWrapper = styled.div`

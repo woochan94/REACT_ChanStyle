@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Loader from "./Loader";
 import Slider from "react-slick";
 import ItemBox from "./ItemBox";
 

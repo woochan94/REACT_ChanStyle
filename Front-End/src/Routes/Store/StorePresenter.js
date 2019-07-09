@@ -83,6 +83,28 @@ const ContentWrapper = styled.div`
     }
 `;
 
+const MoreDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100px;
+    div {
+        min-height: 0 !important;
+    }
+`;
+
+const MoreBtn = styled.button`
+    border: none; 
+    font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 30px; 
+    background-color: ${props => props.theme.confirmColor}; 
+    color: #fff; 
+    cursor: pointer;
+    outline-style: none;
+`;
+
+
 export default ({
     topToggle,
     bottomToggle,
@@ -92,7 +114,9 @@ export default ({
     best,
     all,
     settings,
-    clickMore
+    clickMore,
+    pLoading,
+    dataTemp
 }) => {
     return (
         <Store>
@@ -128,7 +152,16 @@ export default ({
                         />
                     )}
                 </ContentWrapper>
-                <button onClick={() => clickMore()}>더보기</button>
+                {pLoading && (
+                    <MoreDiv>
+                        <Loader />
+                    </MoreDiv>
+                )}
+                {all.length >= 4 && best.length !== 0 && all.length !== 0 && !pLoading && dataTemp.seeProductAll.length !== 0 && (
+                    <MoreDiv>
+                        <MoreBtn onClick={() => clickMore()}>더 보기</MoreBtn> 
+                    </MoreDiv>
+                )}
             </ContentSection>
         </Store>
     )

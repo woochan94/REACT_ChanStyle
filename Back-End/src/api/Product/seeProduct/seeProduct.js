@@ -124,7 +124,9 @@ export default {
                     where: {
                         mainCategory
                     }, 
-                    orderBy: "createdAt_DESC"
+                    orderBy: "createdAt_DESC",
+                    first,
+                    skip
                 })
             }
             // 소분류 상품 전체 보기 
@@ -133,7 +135,9 @@ export default {
                     where: {
                         subCategory
                     }, 
-                    orderBy: "createdAt_DESC"
+                    orderBy: "createdAt_DESC",
+                    first,
+                    skip
                 })
             }
         }
