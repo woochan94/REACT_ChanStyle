@@ -14,10 +14,9 @@ import { QUERY, MEMUTATION } from './SharedQueries';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-
-
 export default () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(false);
  
   const {
     data: { isLoggedIn }
@@ -29,6 +28,7 @@ export default () => {
     if (data.me.email === process.env.REACT_APP_ADMIN) {
       setIsAdmin(true);
     }
+    setLoading(true);
   }
 
   useEffect(() => {
@@ -44,6 +44,7 @@ export default () => {
       <>
         <GlobalStyles />
         <Router>
+          {isLoggedIn && loading && (
             <>
               <Header />
               <Navigator isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
@@ -51,6 +52,16 @@ export default () => {
               <Footer />
               <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
             </>
+          )}
+          {!isLoggedIn && (
+            <>
+            <Header />
+            <Navigator isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+            <Routes isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+            <Footer />
+            <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
+          </>
+          )}
         </Router>
       </>
     </ThemeProvider>
