@@ -62,7 +62,13 @@ export default ({ isLoggedIn, isAdmin }) => {
                         <LI><Link to="/auth">MyPage</Link></LI>
                     </UL>
                 )}
-                {!isLoggedIn && <LI><Link to="/auth">LOGIN</Link></LI>}
+                {!isLoggedIn && (
+                    <UL>
+                        <LI><Link to="/">HOME</Link></LI>
+                        <LI><Link to="/store">STORE</Link></LI>
+                        <LI><Link to="/auth">LOGIN</Link></LI>
+                    </UL>   
+                )}
             </NavigatorWrapper>
         </Navigator>
     )

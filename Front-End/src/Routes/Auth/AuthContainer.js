@@ -116,7 +116,7 @@ export default () => {
                         // token값을 얻어오고 main화면으로 이동 
                         // setTimeout을 하지 않을 경우 성공적으로 createAccountMutation된 값을 
                         // loginFunction에서 읽지 못하므로 setTimeout으로 약간의 시간을 줌 
-                        setTimeout(() => loginFunction(), 500);
+                        setTimeout(() => loginFunction(), 1000);
                         
                         // 값 초기화  
                         name.setValue("");

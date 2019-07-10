@@ -12,14 +12,13 @@ import Footer from './Footer';
 import Navigator from './Navigator';
 import { QUERY, MEMUTATION } from './SharedQueries';
 import { useState } from 'react';
-import Loader from './Loader';
+import { useEffect } from 'react';
 
 
 
 export default () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+ 
   const {
     data: { isLoggedIn }
   } = useQuery(QUERY);
@@ -30,12 +29,14 @@ export default () => {
     if (data.me.email === process.env.REACT_APP_ADMIN) {
       setIsAdmin(true);
     }
-    setLoading(true);
   }
 
-  if (isLoggedIn) {
-    meFunction();
-  }
+  useEffect(() => {
+     if(isLoggedIn) {
+       meFunction();
+     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn])
 
 
   return (
@@ -43,8 +44,6 @@ export default () => {
       <>
         <GlobalStyles />
         <Router>
-          {!loading && <Loader />}
-          {loading && (
             <>
               <Header />
               <Navigator isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
@@ -52,8 +51,6 @@ export default () => {
               <Footer />
               <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
             </>
-
-          )}
         </Router>
       </>
     </ThemeProvider>

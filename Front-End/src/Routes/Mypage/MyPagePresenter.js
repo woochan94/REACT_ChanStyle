@@ -8,7 +8,7 @@ import Loader from "../../Components/Loader";
 import { Pagination } from "semantic-ui-react";
 import ProductTable from "../../Components/ProductTable";
 
-const MyPage = styled.section`
+export const MyPage = styled.section`
     min-height: 79vh;
     overflow: hidden;
     max-width: ${props => props.theme.maxWidth};
@@ -45,7 +45,7 @@ const MyPageWrapper = styled.div`
 
 const MyPageHeader = styled.header``;
 
-const MyTitleDiv = styled(TitleDiv)`
+export const MyTitleDiv = styled(TitleDiv)`
     display: flex; 
     justify-content: space-between;
     button {
