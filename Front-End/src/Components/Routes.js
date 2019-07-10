@@ -7,7 +7,7 @@ import Auth from "../Routes/Auth";
 import Store from "../Routes/Store";
 import Product from "../Routes/Product";
 import Payment from "../Routes/Payment";
-import Admin from "../Routes/Admin/Admin";
+import Admin from "../Routes/Admin";
 import { useMutation } from "react-apollo-hooks";
 import { DELETE_PAYMENT, SEE_PAYMENT2 } from "./SharedQueries";
 
