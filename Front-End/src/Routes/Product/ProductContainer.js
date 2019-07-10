@@ -3,9 +3,13 @@ import ProductPresenter from "./ProductPresenter";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { SEEITEM, ADD_CART, ADD_PAYMENT } from "./ProductQueries";
 import _ from "underscore";
+import { QUERY } from "../../Components/SharedQueries";
 
 // react-router에서 match를 통해 url에 관한 정보(params, url ...)가 object로 넘어옴 
 export default ({ match, history }) => {
+    const {
+        data: { isLoggedIn } 
+    }= useQuery(QUERY);
     const productId = match.params.productid;
 
     const selectSize = document.getElementById("selectSize");
@@ -279,24 +283,28 @@ export default ({ match, history }) => {
     const [success, setSuccess] = useState(false);
 
     const addCart = async (selected, product, count) => {
-        if(selected.length !== 0) {
-            selected.map((item,index) => {
-                return (
-                    productArray.push(product.id),
-                    sizeIdArray.push(item.sizeId),
-                    colorIdArray.push(item.colorId),
-                    stockIdArray.push(item.stockId), 
-                    countArray.push(count[index])
-                )
-            }); 
-            const { data } = await addCartMutation();
-            if(data) {
-                setSuccess(true);
-                productArray = []; 
-                sizeIdArray = [];
-                colorIdArray = [];
-                stockIdArray = [];
-                countArray = [];
+        if(!isLoggedIn) {
+            alert("로그인이 필요합니다.");
+        } else {
+            if(selected.length !== 0) {
+                selected.map((item,index) => {
+                    return (
+                        productArray.push(product.id),
+                        sizeIdArray.push(item.sizeId),
+                        colorIdArray.push(item.colorId),
+                        stockIdArray.push(item.stockId), 
+                        countArray.push(count[index])
+                    )
+                }); 
+                const { data } = await addCartMutation();
+                if(data) {
+                    setSuccess(true);
+                    productArray = []; 
+                    sizeIdArray = [];
+                    colorIdArray = [];
+                    stockIdArray = [];
+                    countArray = [];
+                }
             }
         }
     }
@@ -324,27 +332,31 @@ export default ({ match, history }) => {
     })
 
     const addPayment = async (selected, product, count) => {
-        if(selected.length !== 0) {
-            selected.map((item,index) => {
-                return (
-                    productArray.push(product.id),
-                    sizeIdArray.push(item.sizeId),
-                    colorIdArray.push(item.colorId),
-                    stockIdArray.push(item.stockId), 
-                    countArray.push(count[index])
-                )
-            }); 
-            const { data } = await addPaymentMutation();
-            if(data) {
-                productArray = []; 
-                sizeIdArray = [];
-                colorIdArray = [];
-                stockIdArray = [];
-                countArray = [];
-                setTimeout(() => history.push('/payment'), 500); 
-            }
+        if(!isLoggedIn) {
+            alert("로그인이 필요합니다.");
         } else {
-            alert("상품의 옵션을 선택해 주세요");
+            if(selected.length !== 0) {
+                selected.map((item,index) => {
+                    return (
+                        productArray.push(product.id),
+                        sizeIdArray.push(item.sizeId),
+                        colorIdArray.push(item.colorId),
+                        stockIdArray.push(item.stockId), 
+                        countArray.push(count[index])
+                    )
+                }); 
+                const { data } = await addPaymentMutation();
+                if(data) {
+                    productArray = []; 
+                    sizeIdArray = [];
+                    colorIdArray = [];
+                    stockIdArray = [];
+                    countArray = [];
+                    setTimeout(() => history.push('/payment'), 500); 
+                }
+            } else {
+                alert("상품의 옵션을 선택해 주세요");
+            }
         }
     }
 

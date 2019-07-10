@@ -36,9 +36,9 @@ const LI = styled.li`
     padding: 10px 0; 
 `; 
 
-export default ({ isLoggedIn }) => {
+export default ({ isLoggedIn, isAdmin }) => {
 
-    let Data;
+    let Data = [];
     if( isLoggedIn){
         const { data } = useQuery(ME); 
         Data = data;
@@ -47,16 +47,22 @@ export default ({ isLoggedIn }) => {
     return (
         <Navigator>
             <NavigatorWrapper>
-                <UL>
-                    <LI><Link to="/">HOME</Link></LI>
-                    <LI><Link to="/store">STORE</Link></LI>
-                    {isLoggedIn ? 
-                    (Data.me ?
-                    <LI><Link id={"myPage"} to={`/${Data.me.id}`}>MyPage</Link></LI> : 
-                    <LI><Link to="/auth">MyPage</Link></LI>
-                    ) : 
-                    <LI><Link to="/auth">LOGIN</Link></LI>}            
-                </UL>
+                {isLoggedIn && Data.me &&(
+                    <UL>
+                        <LI><Link to="/">HOME</Link></LI>
+                        <LI><Link to="/store">STORE</Link></LI>
+                        {isAdmin && <LI><Link id={"myPage"} to={`/${Data.me.id}`}>Admin</Link></LI>}
+                        {!isAdmin && <LI><Link id={"myPage"} to={`/${Data.me.id}`}>MyPage</Link></LI>}
+                    </UL>
+                )}
+                {isLoggedIn && !Data.me &&(
+                    <UL>
+                        <LI><Link to="/">HOME</Link></LI>
+                        <LI><Link to="/store">STORE</Link></LI>
+                        <LI><Link to="/auth">MyPage</Link></LI>
+                    </UL>
+                )}
+                {!isLoggedIn && <LI><Link to="/auth">LOGIN</Link></LI>}
             </NavigatorWrapper>
         </Navigator>
     )

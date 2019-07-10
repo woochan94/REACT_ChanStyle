@@ -1,7 +1,27 @@
 import { gql } from "apollo-boost"; 
 
+export const QUERY = gql`
+  {
+    isLoggedIn @client 
+  }
+`; 
+
 export const ME = gql`
     {
+        me {
+            id
+            name
+            email 
+            zipCode 
+            address 
+            addressDetail 
+            phone 
+        }
+    }
+`;
+
+export const MEMUTATION = gql`
+    mutation me {
         me {
             id
             name

@@ -39,7 +39,7 @@ const AppRouter = withRouter(({ isLoggedIn, isAdmin, location }) => {
 
     // 다른 페이지로 이동할 때마다 payment필드에 값이 있으면 제거한다. 
     useEffect(() => {
-        if(location.pathname !== "/payment") {
+        if(isLoggedIn && location.pathname !== "/payment") {
             seePaymentFunction();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
