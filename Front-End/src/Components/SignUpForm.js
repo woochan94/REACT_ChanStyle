@@ -19,7 +19,7 @@ const ZipCodeBox = styled.div`
     }
 `;
 
-const Select = styled.select`
+export const Select = styled.select`
     border: 0;
     border: ${props => props.theme.boxBorder}; 
     border-radius: ${props => props.theme.borderRadius}; 
