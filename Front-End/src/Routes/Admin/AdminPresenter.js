@@ -186,7 +186,10 @@ const EnrollmentButton = styled.button`
 
 export default ({
     logOut,
-    customFileBtn
+    customFileBtn,
+    selectChange,
+    smallClassification,
+    addTable
 }) => {
     return (
         <Admin>
@@ -215,11 +218,16 @@ export default ({
                                 <Input placeholder={"Name"}/>
                                 <Input placeholder={"Price"}/>
                                 <SortDiv>
-                                    <Select>
-                                        <option>1</option>
+                                    <Select onChange={(e) => selectChange(e)}>
+                                        <option value="0">대분류</option>
+                                        <option value="상의">상의</option>
+                                        <option value="하의">하의</option>
                                     </Select>
                                     <Select>
-                                        <option>1</option>
+                                        <option>소분류</option>
+                                        {smallClassification.map((item,index) => (
+                                            <option key={index} value={item}>{item}</option>
+                                        ))}
                                     </Select>
                                 </SortDiv>
                             </BasicDiv>
@@ -236,7 +244,7 @@ export default ({
                                         <th>재고량</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody">
                                     <tr>
                                         <td><input type="text"/></td>
                                         <td><input type="text"/></td>
@@ -265,7 +273,7 @@ export default ({
                                 </tbody>
                             </table>
                         </OptionDiv>
-                        <PlusDiv>
+                        <PlusDiv onClick={() => addTable()}>
                             <Plus/>
                         </PlusDiv>
                         <EnrollmentButton> 등록 </EnrollmentButton>
