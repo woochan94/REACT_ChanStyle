@@ -188,8 +188,11 @@ export default ({
     logOut,
     customFileBtn,
     selectChange,
+    subSelectChange,
     smallClassification,
-    addTable
+    addTable,
+    onSubmit,
+    previewImg
 }) => {
     return (
         <Admin>
@@ -202,11 +205,11 @@ export default ({
                     <h3>상품 등록</h3>
                 </EnrollmentTitle>
                 <Article>
-                    <Form>
+                    <Form onSubmit={(e) =>onSubmit(e)}>
                         <ProductBasicDiv>
                             <ImageDiv>
                                 <Preview>
-                                    <PreviewImage id={"previewImg"} src="https://i.pinimg.com/originals/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.png"/>
+                                    <PreviewImage id={"previewImg"} ref={previewImg} src="https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif"/>
                                 </Preview>
                                 <input type="file" id={"fileInput"} accept={"image/*"} hidden={true}/>
                                 <ImageButton onClick={() => customFileBtn()}>
@@ -215,16 +218,16 @@ export default ({
                                 </ImageButton>
                             </ImageDiv>
                             <BasicDiv>
-                                <Input placeholder={"Name"}/>
-                                <Input placeholder={"Price"}/>
+                                <Input placeholder={"Name"} id={"Name"}/>
+                                <Input placeholder={"Price"} id={"Price"}/>
                                 <SortDiv>
                                     <Select onChange={(e) => selectChange(e)}>
                                         <option value="0">대분류</option>
                                         <option value="상의">상의</option>
                                         <option value="하의">하의</option>
                                     </Select>
-                                    <Select>
-                                        <option>소분류</option>
+                                    <Select onChange={(e) => subSelectChange(e)}>
+                                        <option value="0">소분류</option>
                                         {smallClassification.map((item,index) => (
                                             <option key={index} value={item}>{item}</option>
                                         ))}
@@ -246,29 +249,29 @@ export default ({
                                 </thead>
                                 <tbody id="tbody">
                                     <tr>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
+                                        <td><input type="text" className={"color"}/></td>
+                                        <td><input type="text" className={"size"}/></td>
+                                        <td><input type="text" className={"stock"} /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
+                                        <td><input type="text" className={"color"}/></td>
+                                        <td><input type="text" className={"size"} /></td>
+                                        <td><input type="text" className={"stock"} /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
+                                        <td><input type="text" className={"color"}/></td>
+                                        <td><input type="text" className={"size"} /></td>
+                                        <td><input type="text" className={"stock"} /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
+                                        <td><input type="text" className={"color"}/></td>
+                                        <td><input type="text" className={"size"} /></td>
+                                        <td><input type="text" className={"stock"} /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
-                                        <td><input type="text"/></td>
+                                        <td><input type="text" className={"color"}/></td>
+                                        <td><input type="text" className={"size"} /></td>
+                                        <td><input type="text" className={"stock"} /></td>
                                     </tr>
                                 </tbody>
                             </table>
