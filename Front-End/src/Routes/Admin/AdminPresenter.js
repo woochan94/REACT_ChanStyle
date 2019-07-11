@@ -185,7 +185,8 @@ const EnrollmentButton = styled.button`
 `;
 
 export default ({
-    logOut
+    logOut,
+    customFileBtn
 }) => {
     return (
         <Admin>
@@ -202,10 +203,10 @@ export default ({
                         <ProductBasicDiv>
                             <ImageDiv>
                                 <Preview>
-                                    <PreviewImage src="https://i.pinimg.com/originals/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.png"/>
+                                    <PreviewImage id={"previewImg"} src="https://i.pinimg.com/originals/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.png"/>
                                 </Preview>
                                 <input type="file" id={"fileInput"} accept={"image/*"} hidden={true}/>
-                                <ImageButton>
+                                <ImageButton onClick={() => customFileBtn()}>
                                     <span><Image /></span>
                                     <span>이미지 선택</span>
                                 </ImageButton>
