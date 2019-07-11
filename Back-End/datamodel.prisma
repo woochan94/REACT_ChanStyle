@@ -48,7 +48,7 @@ type ProductDetailFile {
 
 type ProductSizeFile {
   id: ID! @id 
-  productSizeFile: String! 
+  productSizeFile: String @default(value: "https://mblogthumb-phinf.pstatic.net/MjAxNzExMDdfMTQ3/MDAxNTEwMDQxODYyMjY1.kAvpXchJkjzWlDqtAQgYS7MLR9PFVIIe4vcBfUR6jOQg.FHU59tAPCbw6YolyoEnnpALAKzu9-01K41e8-Nj3vlQg.JPEG.siyeonzzz/171106061107.jpg?type=w800")
   product: Product! @relation(name: "FileOfSize")
 }
 

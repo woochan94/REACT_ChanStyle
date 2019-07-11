@@ -5,8 +5,8 @@ type Mutation {
         mainCategory: String! 
         subCategory: String!
         files: [String!]!
-        productDetailFiles: [String!]!
-        productSizeFiles: [String!]!
+        productDetailFiles: [String!]
+        productSizeFiles: [String!]
         sizes: [String!]! 
         colors: [String!]! 
         stocks: [Int!]!
