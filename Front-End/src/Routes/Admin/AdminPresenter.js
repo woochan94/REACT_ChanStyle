@@ -1,6 +1,6 @@
-import React from "react"; 
-import styled from "styled-components"; 
-import { MyPage, MyTitleDiv } from "../Mypage/MyPagePresenter";
+import React from "react";
+import styled from "styled-components";
+import { MyPage, MyTitleDiv, MyNavDiv } from "../Mypage/MyPagePresenter";
 import { H2 } from "../Product/ProductPresenter";
 import Button from './../../Components/Button';
 import Input from "../../Components/Input";
@@ -178,10 +178,14 @@ const EnrollmentButton = styled.button`
     border: none; 
     border-radius: 5px; 
     padding: 8px 0;
-    background-color: ${props=> props.theme.confirmColor}; 
+    background-color: ${props => props.theme.confirmColor}; 
     color: #fff;
     cursor: pointer;
     margin: 50px 0 20px;
+`;
+
+const NavDiv = styled(MyNavDiv)`
+    grid-template-columns: repeat(2, 1fr);
 `;
 
 export default ({
@@ -192,7 +196,9 @@ export default ({
     smallClassification,
     addTable,
     onSubmit,
-    previewImg
+    previewImg,
+    tab,
+    clickTab
 }) => {
     return (
         <Admin>
@@ -201,87 +207,100 @@ export default ({
                     <H2>Admin</H2>
                     <Button text={"LogOut"} onClick={() => logOut()} />
                 </MyTitleDiv>
-                <EnrollmentTitle>
-                    <h3>상품 등록</h3>
-                </EnrollmentTitle>
-                <Article>
-                    <Form onSubmit={(e) =>onSubmit(e)}>
-                        <ProductBasicDiv>
-                            <ImageDiv>
-                                <Preview>
-                                    <PreviewImage id={"previewImg"} ref={previewImg} src="https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif"/>
-                                </Preview>
-                                <input type="file" id={"fileInput"} accept={"image/*"} hidden={true}/>
-                                <ImageButton onClick={() => customFileBtn()}>
-                                    <span><Image /></span>
-                                    <span>이미지 선택</span>
-                                </ImageButton>
-                            </ImageDiv>
-                            <BasicDiv>
-                                <Input placeholder={"Name"} id={"Name"}/>
-                                <Input placeholder={"Price"} id={"Price"}/>
-                                <SortDiv>
-                                    <Select onChange={(e) => selectChange(e)}>
-                                        <option value="0">대분류</option>
-                                        <option value="상의">상의</option>
-                                        <option value="하의">하의</option>
-                                    </Select>
-                                    <Select onChange={(e) => subSelectChange(e)}>
-                                        <option value="0">소분류</option>
-                                        {smallClassification.map((item,index) => (
-                                            <option key={index} value={item}>{item}</option>
-                                        ))}
-                                    </Select>
-                                </SortDiv>
-                            </BasicDiv>
-                        </ProductBasicDiv>
-                        <OptionTitleDiv>
-                            <h4>옵션</h4>
-                        </OptionTitleDiv>
-                        <OptionDiv>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>색상</th>
-                                        <th>사이즈</th>
-                                        <th>재고량</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    <tr>
-                                        <td><input type="text" className={"color"}/></td>
-                                        <td><input type="text" className={"size"}/></td>
-                                        <td><input type="text" className={"stock"} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" className={"color"}/></td>
-                                        <td><input type="text" className={"size"} /></td>
-                                        <td><input type="text" className={"stock"} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" className={"color"}/></td>
-                                        <td><input type="text" className={"size"} /></td>
-                                        <td><input type="text" className={"stock"} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" className={"color"}/></td>
-                                        <td><input type="text" className={"size"} /></td>
-                                        <td><input type="text" className={"stock"} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" className={"color"}/></td>
-                                        <td><input type="text" className={"size"} /></td>
-                                        <td><input type="text" className={"stock"} /></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </OptionDiv>
-                        <PlusDiv onClick={() => addTable()}>
-                            <Plus/>
-                        </PlusDiv>
-                        <EnrollmentButton> 등록 </EnrollmentButton>
-                    </Form>
-                </Article>
+                <NavDiv>
+                    <button onClick={() => clickTab("enrollment")}
+                        style={tab === "enrollment" ?
+                            { borderColor: "#ccc", borderBottom: "1px solid #fff", marginBottom: "-1px" } :
+                            { borderColor: "transparent" }} >
+                        상품 등록
+                        </button>
+                    <button onClick={() => clickTab("edit")}
+                        style={tab === "edit" ?
+                            { borderColor: "#ccc", borderBottom: "1px solid #fff", marginBottom: "-1px" } :
+                            { borderColor: "transparent" }} >
+                        상품 수정
+                        </button>
+                </NavDiv>
+                {tab === "enrollment" && (
+                    <Article>
+                        <Form onSubmit={(e) => onSubmit(e)}>
+                            <ProductBasicDiv>
+                                <ImageDiv>
+                                    <Preview>
+                                        <PreviewImage id={"previewImg"} ref={previewImg} src="https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif" />
+                                    </Preview>
+                                    <input type="file" id={"fileInput"} accept={"image/*"} hidden={true} />
+                                    <ImageButton onClick={() => customFileBtn()}>
+                                        <span><Image /></span>
+                                        <span>이미지 선택</span>
+                                    </ImageButton>
+                                </ImageDiv>
+                                <BasicDiv>
+                                    <Input placeholder={"Name"} id={"Name"} />
+                                    <Input placeholder={"Price"} id={"Price"} />
+                                    <SortDiv>
+                                        <Select onChange={(e) => selectChange(e)}>
+                                            <option value="0">대분류</option>
+                                            <option value="상의">상의</option>
+                                            <option value="하의">하의</option>
+                                        </Select>
+                                        <Select onChange={(e) => subSelectChange(e)}>
+                                            <option value="0">소분류</option>
+                                            {smallClassification.map((item, index) => (
+                                                <option key={index} value={item}>{item}</option>
+                                            ))}
+                                        </Select>
+                                    </SortDiv>
+                                </BasicDiv>
+                            </ProductBasicDiv>
+                            <OptionTitleDiv>
+                                <h4>옵션</h4>
+                            </OptionTitleDiv>
+                            <OptionDiv>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>색상</th>
+                                            <th>사이즈</th>
+                                            <th>재고량</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        <tr>
+                                            <td><input type="text" className={"color"} /></td>
+                                            <td><input type="text" className={"size"} /></td>
+                                            <td><input type="text" className={"stock"} /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" className={"color"} /></td>
+                                            <td><input type="text" className={"size"} /></td>
+                                            <td><input type="text" className={"stock"} /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" className={"color"} /></td>
+                                            <td><input type="text" className={"size"} /></td>
+                                            <td><input type="text" className={"stock"} /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" className={"color"} /></td>
+                                            <td><input type="text" className={"size"} /></td>
+                                            <td><input type="text" className={"stock"} /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" className={"color"} /></td>
+                                            <td><input type="text" className={"size"} /></td>
+                                            <td><input type="text" className={"stock"} /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </OptionDiv>
+                            <PlusDiv onClick={() => addTable()}>
+                                <Plus />
+                            </PlusDiv>
+                            <EnrollmentButton> 등록 </EnrollmentButton>
+                        </Form>
+                    </Article>
+                )}
             </AdminWrapper>
         </Admin>
     )

@@ -6,6 +6,11 @@ import { storage } from "../../Firebase";
 import { UPLOAD } from "./AdminQueries";
 
 export default () => {
+    const [tab, setTab] = useState("enrollment");
+    const clickTab = (tabString) => {
+        setTab(tabString);
+    }
+
     const [smallClassification, setSmall] = useState([]);
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
@@ -244,6 +249,8 @@ export default () => {
             addTable={addTable}
             onSubmit={onSubmit}
             previewImg={previewImg}
+            tab={tab}
+            clickTab={clickTab}
         />
     )
 }

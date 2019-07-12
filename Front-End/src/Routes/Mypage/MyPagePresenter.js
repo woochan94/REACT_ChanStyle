@@ -53,7 +53,7 @@ export const MyTitleDiv = styled(TitleDiv)`
     }
 `;
 
-const MyNavDiv = styled.div`
+export const MyNavDiv = styled.div`
     display: grid; 
     grid-template-columns: repeat(3, 1fr);
     padding: 30px 0 0; 
