@@ -209,7 +209,8 @@ export default ({
     previewImg,
     tab,
     clickTab,
-    editData
+    editData,
+    editClick
 }) => {
     return (
         <Admin>
@@ -327,6 +328,8 @@ export default ({
                                     sizes={item.sizes}
                                     colors={item.colors}
                                     stocks={item.stocks}
+                                    editClick={editClick}
+                                    id={item.id}
                                 />
                             ))}
                         </EditGrid>

@@ -40,6 +40,10 @@ export default () => {
         }
     }
 
+    const editClick = (id) => {
+        console.log(id);
+    }
+
     // productDetailFiles와 sizeFile은 고정값을 넣어줬음 (file업로드와 같은 작업이기때문에)
     const uploadMutation = useMutation(UPLOAD, {
         variables: {
@@ -272,6 +276,7 @@ export default () => {
             tab={tab}
             clickTab={clickTab}
             editData={editData}
+            editClick={editClick}
         />
     )
 }

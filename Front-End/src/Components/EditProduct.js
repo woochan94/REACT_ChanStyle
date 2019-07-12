@@ -90,7 +90,9 @@ const EditProduct = ({
     img,
     sizes,
     colors,
-    stocks
+    stocks,
+    editClick,
+    id
 }) => {
     return (
         <ProductDiv>
@@ -121,7 +123,7 @@ const EditProduct = ({
                 </ProductOption>
             </ProductInfo>
             <ButtonDiv>
-                <EditButton>수정</EditButton>
+                <EditButton onClick={()=>editClick(id)}>수정</EditButton>
                 <DeleteButton>삭제</DeleteButton>
             </ButtonDiv>
         </ProductDiv>
