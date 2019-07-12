@@ -3,7 +3,7 @@ import AdminPresenter from "./AdminPresenter"
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "../Mypage/MyPageQueries";
 import { storage } from "../../Firebase";
-import { UPLOAD } from "./AdminQueries";
+import { UPLOAD, EDIT_SEE_PRODUCT } from "./AdminQueries";
 
 export default () => {
     const [tab, setTab] = useState("edit");
@@ -24,6 +24,21 @@ export default () => {
     const [fileUrl, setFileUrl] = useState([]);
 
     const previewImg = useRef();
+
+    const [editData, setEditData] = useState();
+
+    const seeProductMutation = useMutation(EDIT_SEE_PRODUCT, {
+        variables: {
+            sort: "all"
+        }
+    });
+
+    const seeProductFunction = async () => {
+        const { data } = await seeProductMutation(); 
+        if(data) {
+            setEditData(data);
+        }
+    }
 
     // productDetailFiles와 sizeFile은 고정값을 넣어줬음 (file업로드와 같은 작업이기때문에)
     const uploadMutation = useMutation(UPLOAD, {
@@ -93,7 +108,10 @@ export default () => {
     useEffect(() => {
         if(tab === "enrollment") {
             document.getElementById("fileInput").addEventListener("change", preview);
+        } else if(tab === "edit") {
+            seeProductFunction();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[tab])
 
     
@@ -237,7 +255,7 @@ export default () => {
         if(name !== "" && price !== "" && fileUrl.length !== 0 && color.lnegth !== 0) {
             uploadFunction();
         } 
-         // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[fileUrl])
 
 
@@ -253,6 +271,7 @@ export default () => {
             previewImg={previewImg}
             tab={tab}
             clickTab={clickTab}
+            editData={editData}
         />
     )
 }

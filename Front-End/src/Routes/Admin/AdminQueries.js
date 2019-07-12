@@ -28,3 +28,31 @@ export const UPLOAD = gql`
             }
         }
 `; 
+
+export const EDIT_SEE_PRODUCT = gql`
+        mutation seeProductAll($id: String, $sort: String!, $first: Int, $skip: Int) {
+        seeProductAll(id:$id, sort:$sort, first:$first, skip:$skip) {
+            id
+            name
+            price 
+            mainCategory
+            subCategory
+            files {
+            id 
+            url 
+            }
+            colors {
+            id 
+            color 
+            }
+            sizes {
+            id 
+            size
+            }
+            stocks {
+            id 
+            stock
+            }
+        }
+    }
+`;

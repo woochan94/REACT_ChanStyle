@@ -8,6 +8,7 @@ import { Select } from "../../Components/SignUpForm";
 import { Plus } from "../../Components/Icons";
 import { Image } from './../../Components/Icons';
 import EditProduct from "../../Components/EditProduct";
+import Loader from "../../Components/Loader";
 
 const Admin = styled(MyPage)``;
 
@@ -207,7 +208,8 @@ export default ({
     onSubmit,
     previewImg,
     tab,
-    clickTab
+    clickTab,
+    editData
 }) => {
     return (
         <Admin>
@@ -310,16 +312,23 @@ export default ({
                         </Form>
                     </Article>
                 )}
-                {tab === "edit" && (
+                {tab === "edit" && editData === undefined && <Loader />}
+                {tab === "edit" && editData && (
                     <EditBox>
                         <EditGrid>
-                            <EditProduct />
-                            <EditProduct />
-                            <EditProduct />
-                            <EditProduct />
-                            <EditProduct />
-                            <EditProduct />
-                            <EditProduct />
+                            {editData.seeProductAll.map(item => (
+                                <EditProduct
+                                    key={item.id}
+                                    img={item.files[0].url}
+                                    name={item.name}
+                                    mainCategory={item.mainCategory}
+                                    subCategory={item.subCategory}
+                                    price={item.price}
+                                    sizes={item.sizes}
+                                    colors={item.colors}
+                                    stocks={item.stocks}
+                                />
+                            ))}
                         </EditGrid>
                     </EditBox>
                 )}
