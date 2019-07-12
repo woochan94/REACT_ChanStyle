@@ -7,6 +7,7 @@ import Input from "../../Components/Input";
 import { Select } from "../../Components/SignUpForm";
 import { Plus } from "../../Components/Icons";
 import { Image } from './../../Components/Icons';
+import EditProduct from "../../Components/EditProduct";
 
 const Admin = styled(MyPage)``;
 
@@ -19,16 +20,6 @@ const AdminWrapper = styled.div`
     }
     @media (max-width: 350px) {
         padding: 0 10px;
-    }
-`;
-
-const EnrollmentTitle = styled.div`
-    margin-top: 50px; 
-    border-bottom: 1px solid #ccc;
-    h3 {
-        font-size: 18px;
-        padding-bottom: 15px;
-        font-weight: 600;
     }
 `;
 
@@ -188,6 +179,24 @@ const NavDiv = styled(MyNavDiv)`
     grid-template-columns: repeat(2, 1fr);
 `;
 
+const EditBox = styled.article`
+    padding: 30px 0;
+`;
+
+const EditGrid = styled.div`
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 15px;
+    grid-row-gap: 25px;
+    position: relative;
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+`;
+
 export default ({
     logOut,
     customFileBtn,
@@ -300,6 +309,19 @@ export default ({
                             <EnrollmentButton> 등록 </EnrollmentButton>
                         </Form>
                     </Article>
+                )}
+                {tab === "edit" && (
+                    <EditBox>
+                        <EditGrid>
+                            <EditProduct />
+                            <EditProduct />
+                            <EditProduct />
+                            <EditProduct />
+                            <EditProduct />
+                            <EditProduct />
+                            <EditProduct />
+                        </EditGrid>
+                    </EditBox>
                 )}
             </AdminWrapper>
         </Admin>

@@ -6,7 +6,7 @@ import { storage } from "../../Firebase";
 import { UPLOAD } from "./AdminQueries";
 
 export default () => {
-    const [tab, setTab] = useState("enrollment");
+    const [tab, setTab] = useState("edit");
     const clickTab = (tabString) => {
         setTab(tabString);
     }
@@ -91,8 +91,10 @@ export default () => {
     }
 
     useEffect(() => {
-        document.getElementById("fileInput").addEventListener("change", preview);
-    },[])
+        if(tab === "enrollment") {
+            document.getElementById("fileInput").addEventListener("change", preview);
+        }
+    },[tab])
 
     
     const customFileBtn = () => {
