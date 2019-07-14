@@ -210,7 +210,8 @@ export default ({
     tab,
     clickTab,
     editData,
-    editClick
+    editClick,
+    deleteClick
 }) => {
     return (
         <Admin>
@@ -330,6 +331,7 @@ export default ({
                                     stocks={item.stocks}
                                     editClick={editClick}
                                     id={item.id}
+                                    deleteClick={deleteClick}
                                 />
                             ))}
                         </EditGrid>

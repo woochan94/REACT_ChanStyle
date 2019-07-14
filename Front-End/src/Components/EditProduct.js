@@ -92,7 +92,8 @@ const EditProduct = ({
     colors,
     stocks,
     editClick,
-    id
+    id,
+    deleteClick
 }) => {
     return (
         <ProductDiv>
@@ -124,7 +125,7 @@ const EditProduct = ({
             </ProductInfo>
             <ButtonDiv>
                 <EditButton onClick={()=>editClick(id)}>수정</EditButton>
-                <DeleteButton>삭제</DeleteButton>
+                <DeleteButton onClick={() => deleteClick(id)}>삭제</DeleteButton>
             </ButtonDiv>
         </ProductDiv>
     )
