@@ -74,6 +74,15 @@ const ModalContent = styled.div`
         font-weight: bold;
         cursor: pointer;
     } 
+    @media(max-width: 768px) {
+        margin: 30% auto;
+    }
+    @media(max-width: 600px) {
+        margin: 40% auto;
+    }
+    @media(max-width: 486px) {
+        margin: 60% auto;
+    }
 `;
 
 export default ({
