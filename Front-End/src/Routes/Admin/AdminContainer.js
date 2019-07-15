@@ -3,7 +3,7 @@ import AdminPresenter from "./AdminPresenter"
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "../Mypage/MyPageQueries";
 import { storage } from "../../Firebase";
-import { UPLOAD, EDIT_SEE_PRODUCT } from "./AdminQueries";
+import { UPLOAD, EDIT_SEE_PRODUCT, DELETE_PRODUCT } from "./AdminQueries";
 
 export default () => {
     const [tab, setTab] = useState("edit");
@@ -32,6 +32,7 @@ export default () => {
             sort: "all"
         }
     });
+    const deleteProductMutation = useMutation(DELETE_PRODUCT); 
 
     const seeProductFunction = async () => {
         const { data } = await seeProductMutation(); 
@@ -40,12 +41,25 @@ export default () => {
         }
     }
 
+    
     const editClick = (id) => {
         console.log(id);
     }
+    
+    const deleteClick = async(id) => { 
+        let result = window.confirm("해당 상품을 삭제하시겠습니까?"); 
 
-    const deleteClick = (id) => {
-        console.log(id);
+        if(result) {     
+            const { data } = await deleteProductMutation({variables : {
+                id: id 
+            }}); 
+            if(data) {
+                seeProductFunction();
+            }
+        } else {
+
+        }
+
     }
 
     // productDetailFiles와 sizeFile은 고정값을 넣어줬음 (file업로드와 같은 작업이기때문에)
