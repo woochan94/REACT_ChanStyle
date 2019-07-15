@@ -15,7 +15,8 @@ const Input = ({
     value, 
     onChange, 
     type = "text",
-    id
+    id,
+    defaultValue
 }) => (<Container 
     placeholder={placeholder}
     required={required}
@@ -23,6 +24,7 @@ const Input = ({
     onChange={onChange}
     type={type}
     id={id}
+    defaultValue={defaultValue}
 />)
 
 Input.propTypes = {

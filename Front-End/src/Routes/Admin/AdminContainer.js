@@ -24,8 +24,11 @@ export default () => {
     const [fileUrl, setFileUrl] = useState([]);
 
     const previewImg = useRef();
+    const previewEditImg = useRef();
 
     const [editData, setEditData] = useState();
+
+    const [editData2, setEditData2] = useState();
 
     const seeProductMutation = useMutation(EDIT_SEE_PRODUCT, {
         variables: {
@@ -42,9 +45,63 @@ export default () => {
     }
 
     
-    const editClick = (id) => {
-        console.log(id);
+    const editClick = async (id) => {
+        const modal = document.getElementById("modal");
+        const close = document.getElementById("close");
+
+        if(modal.style.display === "block") {
+            modal.style.display = "none";
+        } else {
+            modal.style.display = "block";
+        }
+
+        close.onclick = () => {
+            modal.style.display = "none";
+            setEditData2();
+        }
+
+        if(modal.style.display === "block") {
+            window.onclick = (event) => {
+                if(event.target === modal) {
+                    modal.style.display = "none";
+                    setEditData2();
+                }
+            }
+        }
+
+        const { data } = await seeProductMutation({
+            variables: {
+                id, 
+                sort: "all"
+            }
+        })
+        if(data) {
+            
+            //document.getElementById("editFileInput").addEventListener("change", editPreview);
+            
+            setEditData2(data);
+            document.getElementById("editFileInput").addEventListener("change", editPreview);
+            for(let i ,j = 0; i = document.getElementById("mainSelect").options[j]; j++) {
+                if(i.value === data.seeProductAll[0].mainCategory) {
+                    document.getElementById("mainSelect").selectedIndex = j; 
+                    if(document.getElementById("mainSelect").selectedIndex === 1) {
+                        setSmall(["티셔츠", "셔츠"]);
+                    } else if(document.getElementById("mainSelect").selectedIndex === 2) {
+                        setSmall(["청바지", "슬랙스"]);
+                    }
+                    break;
+                }
+            }
+            for(let i ,j = 0; i = document.getElementById("subSelect").options[j]; j++) {
+                if(i.value === data.seeProductAll[0].subCategory) {
+                    document.getElementById("subSelect").selectedIndex = j; 
+                    break;
+                }
+            }
+            
+        }
     }
+
     
     const deleteClick = async(id) => { 
         let result = window.confirm("해당 상품을 삭제하시겠습니까?"); 
@@ -127,6 +184,20 @@ export default () => {
         }
     }
 
+    const editPreview = (e) => {
+        const getFile = e.target.files;
+        const reader = new FileReader(); 
+
+        reader.onload = () => {
+            previewEditImg.current.src = reader.result;            
+        }
+
+        if(getFile) {
+            reader.readAsDataURL(getFile[0]);
+            setFile(getFile[0]);
+        }
+    }
+
     useEffect(() => {
         if(tab === "enrollment") {
             document.getElementById("fileInput").addEventListener("change", preview);
@@ -139,6 +210,10 @@ export default () => {
     
     const customFileBtn = () => {
         document.getElementById("fileInput").click();
+    }
+
+    const customEditFileBtn = () => {
+        document.getElementById("editFileInput").click();
     }
     
     // 로그아웃 
@@ -271,6 +346,12 @@ export default () => {
         } 
     }
 
+    const onEdit = (e) => {
+        e.preventDefault();
+
+        console.log(123);
+    }
+
   
 
     useEffect(() => {
@@ -296,6 +377,11 @@ export default () => {
             editData={editData}
             editClick={editClick}
             deleteClick={deleteClick}
+            editData2={editData2}
+            onEdit={onEdit}
+            previewEditImg={previewEditImg}
+            customEditFileBtn={customEditFileBtn}
+            editPreview={editPreview}
         />
     )
 }

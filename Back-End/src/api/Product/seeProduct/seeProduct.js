@@ -108,7 +108,13 @@ export default {
             }
         },
         seeProductAll: (_, args) => {
-            const { sort, mainCategory, subCategory, first, skip } = args; 
+            const { id, sort, mainCategory, subCategory, first, skip } = args; 
+
+            if(id !== undefined) {
+                return prisma.products({ where: {
+                    id
+                }});
+            }
 
             // 전체상품보기 
             if(sort === "all" && mainCategory === "") {
