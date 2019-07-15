@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react"; 
+import React, { useEffect, useState, useRef } from "react";
 import AdminPresenter from "./AdminPresenter"
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "../Mypage/MyPageQueries";
 import { storage } from "../../Firebase";
-import { UPLOAD, EDIT_SEE_PRODUCT, DELETE_PRODUCT } from "./AdminQueries";
+import { UPLOAD, EDIT_SEE_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT } from "./AdminQueries";
 
 export default () => {
     const [tab, setTab] = useState("edit");
@@ -14,8 +14,8 @@ export default () => {
     const [smallClassification, setSmall] = useState([]);
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
-    const [mainCategory, setMainCategory] = useState(""); 
-    const [subCategory, setSubCategory] = useState(""); 
+    const [mainCategory, setMainCategory] = useState("");
+    const [subCategory, setSubCategory] = useState("");
     const [color, setColor] = useState([]);
     const [size, setSize] = useState([]);
     const [stock, setStock] = useState([]);
@@ -29,27 +29,30 @@ export default () => {
     const [editData, setEditData] = useState();
 
     const [editData2, setEditData2] = useState();
+    const [sizeId, setSizeId] = useState([]);
+    const [colorId, setColorId] = useState([]);
+    const [stockId, setStockId] = useState([]);
 
     const seeProductMutation = useMutation(EDIT_SEE_PRODUCT, {
         variables: {
             sort: "all"
         }
     });
-    const deleteProductMutation = useMutation(DELETE_PRODUCT); 
+    const deleteProductMutation = useMutation(DELETE_PRODUCT);
 
     const seeProductFunction = async () => {
-        const { data } = await seeProductMutation(); 
-        if(data) {
+        const { data } = await seeProductMutation();
+        if (data) {
             setEditData(data);
         }
     }
 
-    
+
     const editClick = async (id) => {
         const modal = document.getElementById("modal");
         const close = document.getElementById("close");
 
-        if(modal.style.display === "block") {
+        if (modal.style.display === "block") {
             modal.style.display = "none";
         } else {
             modal.style.display = "block";
@@ -60,9 +63,9 @@ export default () => {
             setEditData2();
         }
 
-        if(modal.style.display === "block") {
+        if (modal.style.display === "block") {
             window.onclick = (event) => {
-                if(event.target === modal) {
+                if (event.target === modal) {
                     modal.style.display = "none";
                     setEditData2();
                 }
@@ -71,46 +74,73 @@ export default () => {
 
         const { data } = await seeProductMutation({
             variables: {
-                id, 
+                id,
                 sort: "all"
             }
         })
-        if(data) {
-            
-            //document.getElementById("editFileInput").addEventListener("change", editPreview);
-            
+        if (data) {
             setEditData2(data);
+            setFile(data.seeProductAll[0].files[0].url);
+            setName(data.seeProductAll[0].name);
+            setPrice(data.seeProductAll[0].price); 
+            
+            let sizeIdArray = [];
+            let colorIdArray = [];
+            let stockIdArray = [];
+            for(let i = 0; i < data.seeProductAll[0].sizes.length; i++) {
+                sizeIdArray.push(data.seeProductAll[0].sizes[i].id); 
+                colorIdArray.push(data.seeProductAll[0].colors[i].id);
+                stockIdArray.push(data.seeProductAll[0].stocks[i].id);
+            }
+            setSizeId(sizeIdArray);
+            setColorId(colorIdArray);
+            setStockId(stockIdArray);
+
             document.getElementById("editFileInput").addEventListener("change", editPreview);
-            for(let i ,j = 0; i = document.getElementById("mainSelect").options[j]; j++) {
-                if(i.value === data.seeProductAll[0].mainCategory) {
-                    document.getElementById("mainSelect").selectedIndex = j; 
-                    if(document.getElementById("mainSelect").selectedIndex === 1) {
+            // eslint-disable-next-line
+            for (let i, j = 0; i = document.getElementById("mainSelect").options[j]; j++) {
+                if (i.value === data.seeProductAll[0].mainCategory) {
+                    document.getElementById("mainSelect").selectedIndex = j;
+                    if (document.getElementById("mainSelect").selectedIndex === 1) {
+                        setMainCategory("상의");
                         setSmall(["티셔츠", "셔츠"]);
-                    } else if(document.getElementById("mainSelect").selectedIndex === 2) {
+                    } else if (document.getElementById("mainSelect").selectedIndex === 2) {
+                        setMainCategory("하의");
                         setSmall(["청바지", "슬랙스"]);
                     }
                     break;
                 }
             }
-            for(let i ,j = 0; i = document.getElementById("subSelect").options[j]; j++) {
-                if(i.value === data.seeProductAll[0].subCategory) {
-                    document.getElementById("subSelect").selectedIndex = j; 
+
+            // eslint-disable-next-line
+            for (let i, j = 0; i = document.getElementById("subSelect").options[j]; j++) {
+                if (i.value === data.seeProductAll[0].subCategory) {
+                    document.getElementById("subSelect").selectedIndex = j;
+                    if (document.getElementById("mainSelect").selectedIndex === 1 && document.getElementById("subSelect").selectedIndex === 1) {
+                        setSubCategory("티셔츠");
+                    } else if (document.getElementById("mainSelect").selectedIndex === 1 && document.getElementById("subSelect").selectedIndex === 2) {
+                        setSubCategory("셔츠");
+                    } else if (document.getElementById("mainSelect").selectedIndex === 2 && document.getElementById("subSelect").selectedIndex === 1) {
+                        setSubCategory("청바지");
+                    } else if (document.getElementById("mainSelect").selectedIndex === 2 && document.getElementById("subSelect").selectedIndex === 2) {
+                        setSubCategory("슬랙스");
+                    }
                     break;
                 }
             }
-            
         }
     }
 
-    
-    const deleteClick = async(id) => { 
-        let result = window.confirm("해당 상품을 삭제하시겠습니까?"); 
+    const deleteClick = async (id) => {
+        let result = window.confirm("해당 상품을 삭제하시겠습니까?");
 
-        if(result) {     
-            const { data } = await deleteProductMutation({variables : {
-                id: id 
-            }}); 
-            if(data) {
+        if (result) {
+            const { data } = await deleteProductMutation({
+                variables: {
+                    id: id
+                }
+            });
+            if (data) {
                 seeProductFunction();
             }
         } else {
@@ -122,31 +152,33 @@ export default () => {
     // productDetailFiles와 sizeFile은 고정값을 넣어줬음 (file업로드와 같은 작업이기때문에)
     const uploadMutation = useMutation(UPLOAD, {
         variables: {
-            name, 
-            price, 
-            mainCategory, 
-            subCategory, 
-            files: fileUrl, 
-            sizes: size, 
-            colors: color, 
+            name,
+            price,
+            mainCategory,
+            subCategory,
+            files: fileUrl,
+            sizes: size,
+            colors: color,
             stocks: stock,
             productDetailFiles: [""],
             productSizeFiles: ["https://mblogthumb-phinf.pstatic.net/MjAxNzExMDdfMTQ3/MDAxNTEwMDQxODYyMjY1.kAvpXchJkjzWlDqtAQgYS7MLR9PFVIIe4vcBfUR6jOQg.FHU59tAPCbw6YolyoEnnpALAKzu9-01K41e8-Nj3vlQg.JPEG.siyeonzzz/171106061107.jpg?type=w800"]
         }
-    }); 
+    });
+
+    const editMutation = useMutation(EDIT_PRODUCT);
 
     const uploadFunction = async () => {
         const { data } = await uploadMutation();
-        if(data) {
+        if (data) {
             //초기화
-            setName(""); 
-            setPrice(0); 
-            setMainCategory(""); 
+            setName("");
+            setPrice(0);
+            setMainCategory("");
             setSubCategory("");
-            setFileUrl([]); 
-            setFile(""); 
+            setFileUrl([]);
+            setFile("");
             setColor([]);
-            setSize([]); 
+            setSize([]);
             setStock([]);
 
             alert("업로드가 완료되었습니다");
@@ -155,30 +187,68 @@ export default () => {
             document.getElementById("Price").value = "";
             setMainCategory("");
             setSubCategory("");
-            previewImg.current.src = "https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif"; 
-            
-            let colorClass = document.getElementsByClassName("color"); 
-            let sizeClass = document.getElementsByClassName("size"); 
-            let stockClass = document.getElementsByClassName("stock"); 
+            previewImg.current.src = "https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif";
 
-            for(let i = 0; i < colorClass.length; i++) {
+            let colorClass = document.getElementsByClassName("color");
+            let sizeClass = document.getElementsByClassName("size");
+            let stockClass = document.getElementsByClassName("stock");
+
+            for (let i = 0; i < colorClass.length; i++) {
                 colorClass[i].value = "";
                 sizeClass[i].value = "";
                 stockClass[i].value = "";
             }
         }
     }
-    
+
+    const editFunction = async() => {
+        const { data } = await editMutation({variables: {
+            id:editData2.seeProductAll[0].id,
+            name,
+            price,
+            mainCategory, 
+            subCategory,
+            fileId: editData2.seeProductAll[0].files[0].id, 
+            file: fileUrl, 
+            sizeId, 
+            sizeValue: size, 
+            colorId, 
+            colorValue: color, 
+            stockId, 
+            stockValue: stock,
+            productId: editData2.seeProductAll[0].id
+        }});
+        if(data) {
+            setName("");
+            setPrice(0);
+            setMainCategory("");
+            setSubCategory("");
+            setFileUrl([]);
+            setFile("");
+            setColor([]);
+            setSize([]);
+            setStock([]);
+            setEditData2();
+            setTest(false);
+            setSizeId([]);
+            setColorId([]);
+            setStockId([]);
+
+            seeProductFunction();
+            document.getElementById("modal").style.display = "none";
+        }
+    }
+
     // 이미지 미리보기 기능 
     const preview = (e) => {
         const getFile = e.target.files;
-        const reader = new FileReader(); 
+        const reader = new FileReader();
 
         reader.onload = () => {
-            previewImg.current.src = reader.result;            
+            previewImg.current.src = reader.result;
         }
 
-        if(getFile) {
+        if (getFile) {
             reader.readAsDataURL(getFile[0]);
             setFile(getFile[0]);
         }
@@ -186,28 +256,28 @@ export default () => {
 
     const editPreview = (e) => {
         const getFile = e.target.files;
-        const reader = new FileReader(); 
+        const reader = new FileReader();
 
         reader.onload = () => {
-            previewEditImg.current.src = reader.result;            
+            previewEditImg.current.src = reader.result;
         }
 
-        if(getFile) {
+        if (getFile) {
             reader.readAsDataURL(getFile[0]);
             setFile(getFile[0]);
         }
     }
 
     useEffect(() => {
-        if(tab === "enrollment") {
+        if (tab === "enrollment") {
             document.getElementById("fileInput").addEventListener("change", preview);
-        } else if(tab === "edit") {
+        } else if (tab === "edit") {
             seeProductFunction();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[tab])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tab])
 
-    
+
     const customFileBtn = () => {
         document.getElementById("fileInput").click();
     }
@@ -215,14 +285,14 @@ export default () => {
     const customEditFileBtn = () => {
         document.getElementById("editFileInput").click();
     }
-    
+
     // 로그아웃 
     const logOut = useMutation(LOG_OUT);
 
     // 소분류 option값 변경 
     const selectChange = (e) => {
-        if(e.target.value === "상의") {
-            setSmall(["티셔츠", "셔츠"]); 
+        if (e.target.value === "상의") {
+            setSmall(["티셔츠", "셔츠"]);
             setMainCategory("상의");
         } else if (e.target.value === "하의") {
             setSmall(["청바지", "슬랙스"]);
@@ -234,16 +304,16 @@ export default () => {
     }
 
     const subSelectChange = (e) => {
-        if(e.target.value === "청바지") {
-            setSubCategory("청바지"); 
-        } else if(e.target.value === "슬랙스") {
-            setSubCategory("슬랙스"); 
-        } else if(e.target.value === "셔츠") {
+        if (e.target.value === "청바지") {
+            setSubCategory("청바지");
+        } else if (e.target.value === "슬랙스") {
+            setSubCategory("슬랙스");
+        } else if (e.target.value === "셔츠") {
             setSubCategory("셔츠");
-        } else if(e.target.value === "티셔츠") {
+        } else if (e.target.value === "티셔츠") {
             setSubCategory("티셔츠");
         }
-        
+
         else {
             setSubCategory("");
         }
@@ -260,110 +330,139 @@ export default () => {
         let input2 = document.createElement("input");
         let input3 = document.createElement("input");
         input.className = "color";
-        input2.className = "size"; 
+        input2.className = "size";
         input3.className = "stock";
         cell1.appendChild(input);
         cell2.appendChild(input2);
         cell3.appendChild(input3);
     }
 
+    const [test, setTest] = useState(false);
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        let colorClass = document.getElementsByClassName("color"); 
-        let sizeClass = document.getElementsByClassName("size"); 
-        let stockClass = document.getElementsByClassName("stock"); 
-        const nameValue = document.getElementById("Name").value; 
+        let colorClass = document.getElementsByClassName("color");
+        let sizeClass = document.getElementsByClassName("size");
+        let stockClass = document.getElementsByClassName("stock");
+        const nameValue = document.getElementById("Name").value;
         const priceValue = document.getElementById("Price").value
 
-        let colorArray = []; 
+        let colorArray = [];
         let sizeArray = [];
         let stockArray = [];
 
         // 값 검사 
-        if(nameValue === "" || nameValue === null || nameValue === undefined) {
-            alert("상품명을 입력해주세요"); 
-            return false; 
+        if (nameValue === "" || nameValue === null || nameValue === undefined) {
+            alert("상품명을 입력해주세요");
+            return false;
         } else if (priceValue === "" || priceValue === null || priceValue === undefined) {
-            alert("상품 가격을 입력해주세요"); 
-            return false; 
+            alert("상품 가격을 입력해주세요");
+            return false;
         } else if (mainCategory === "" || mainCategory === 0) {
-            alert("대분류를 선택해주세요"); 
-            return false; 
+            alert("대분류를 선택해주세요");
+            return false;
         } else if (subCategory === "" || subCategory === 0) {
-            alert("소분류를 선택해주세요"); 
-            return false; 
+            alert("소분류를 선택해주세요");
+            return false;
         } else if (file === "") {
-            alert("상품 이미지를 선택해주세요"); 
-            return false; 
+            alert("상품 이미지를 선택해주세요");
+            return false;
         } else {
             setName(nameValue);
             setPrice(Number(priceValue));
-            
-            for(let i = 0; i < colorClass.length; i++) {
-                if(colorClass[i].value !== "") {
-                    if(sizeClass[i].value === "" || stockClass.value === "") {
-                        alert("색상, 사이즈, 재고량의 입력 개수가 같아야 합니다."); 
+
+            for (let i = 0; i < colorClass.length; i++) {
+                if (colorClass[i].value !== "") {
+                    if (sizeClass[i].value === "" || stockClass.value === "") {
+                        alert("색상, 사이즈, 재고량의 입력 개수가 같아야 합니다.");
                         return false;
                     } else {
-                        colorArray.push(colorClass[i].value); 
-                        sizeArray.push(sizeClass[i].value); 
+                        colorArray.push(colorClass[i].value);
+                        sizeArray.push(sizeClass[i].value);
                         stockArray.push(Number(stockClass[i].value));
                     }
                 }
             }
 
-            if(colorArray.length === 0 || sizeArray.length === 0 || stockArray.length === 0) {
+            if (colorArray.length === 0 || sizeArray.length === 0 || stockArray.length === 0) {
                 alert("옵션 값을 입력해주세요");
                 return false;
             } else {
-                setColor(colorArray); 
-                setSize(sizeArray); 
+                setColor(colorArray);
+                setSize(sizeArray);
                 setStock(stockArray);
             }
-            
-            // 파일 업로드 
-            const uploadTask = await storage.ref(`images/${file.name}`).put(file);
-            await uploadTask.task.on('state_changed', 
-                snapshot => {
-                    // progress function 
-                    const progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes)*100); 
-                    console.log(progress);
-                }, 
-                error => {
-                    console.log(error);
-                }, 
-                async () => {
-                    // complete function
-                    await uploadTask.task.snapshot.ref.getDownloadURL()
-                    .then(url => {
-                        let urlArray = []; 
-                        urlArray.push(url);
-                        setFileUrl(urlArray);
-                    })
+
+            if (editData2 !== undefined) {
+                if (file !== editData2.seeProductAll[0].files[0].url) {
+                    // 파일 업로드 
+                    const uploadTask = await storage.ref(`images/${file.name}`).put(file);
+                    await uploadTask.task.on('state_changed',
+                        snapshot => {
+                            // progress function 
+                            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                            console.log(progress);
+                        },
+                        error => {
+                            console.log(error);
+                        },
+                        async () => {
+                            // complete function
+                            await uploadTask.task.snapshot.ref.getDownloadURL()
+                            .then(url => {
+                                let urlArray = [];
+                                urlArray.push(url);
+                                setFileUrl(urlArray);
+                                setTest(true);
+                            })
+                        }
+                    )
+                } else {
+                    setTest(true);
                 }
-            )
-        } 
+            } else {
+                // 파일 업로드 
+                const uploadTask = await storage.ref(`images/${file.name}`).put(file);
+                await uploadTask.task.on('state_changed',
+                    snapshot => {
+                        // progress function 
+                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                        console.log(progress);
+                    },
+                    error => {
+                        console.log(error);
+                    },
+                    async () => {
+                        // complete function
+                        await uploadTask.task.snapshot.ref.getDownloadURL()
+                        .then(url => {
+                            let urlArray = [];
+                            urlArray.push(url);
+                            setFileUrl(urlArray);
+                        })
+                    }
+                )
+            }
+        }
     }
-
-    const onEdit = (e) => {
-        e.preventDefault();
-
-        console.log(123);
-    }
-
-  
 
     useEffect(() => {
-        if(name !== "" && price !== "" && fileUrl.length !== 0 && color.lnegth !== 0) {
+        if (editData2 === undefined && name !== "" && price !== "" && fileUrl.length !== 0 && color.lnegth !== 0) {
             uploadFunction();
-        } 
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[fileUrl])
+    }, [fileUrl])
+
+    useEffect(() => {
+        if(test) {
+            editFunction();
+        }
+    }, [test])
 
 
     return (
-        <AdminPresenter 
+        <AdminPresenter
             logOut={logOut}
             customFileBtn={customFileBtn}
             selectChange={selectChange}
@@ -378,7 +477,6 @@ export default () => {
             editClick={editClick}
             deleteClick={deleteClick}
             editData2={editData2}
-            onEdit={onEdit}
             previewEditImg={previewEditImg}
             customEditFileBtn={customEditFileBtn}
             editPreview={editPreview}

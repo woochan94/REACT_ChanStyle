@@ -62,3 +62,32 @@ export const DELETE_PRODUCT = gql`
         deleteProduct(id:$id)
     }
 `;
+
+export const EDIT_PRODUCT = gql`
+    mutation editProduct(
+        $id: String!, 
+        $name: String, 
+        $price: Int, 
+        $mainCategory: String, 
+        $subCategory: String, 
+        $fileId:String, 
+        $file: [String],
+        $sizeId: [String],
+        $sizeValue: [String],
+        $colorId: [String], 
+        $colorValue: [String], 
+        $stockId: [String], 
+        $stockValue: [Int],
+        $productId: String) 
+        {
+        editProduct(id:$id, name:$name, price:$price, mainCategory:$mainCategory, subCategory:$subCategory) {
+            id,
+            name,
+            price
+        },
+        editFile(fileId:$fileId, file:$file),
+        editSize(productId:$productId, sizeId:$sizeId, sizeValue:$sizeValue),
+        editColor(productId:$productId, colorId:$colorId, colorValue:$colorValue),
+        editStock(productId:$productId, stockId:$stockId, stockValue:$stockValue),
+    }
+`;

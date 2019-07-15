@@ -169,7 +169,6 @@ const ProductEditForm = ({
     addTable,
     editData2
 }) => {
-    console.log(editData2)
     return (
         <>
             {editData2 === undefined ? (

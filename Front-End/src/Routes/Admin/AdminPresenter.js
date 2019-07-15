@@ -159,7 +159,7 @@ export default ({
                         {editData2 === undefined && <Loader />}
                         {editData2 !== undefined && (
                             <ProductEditForm 
-                                onSubmit={onEdit}
+                                onSubmit={onSubmit}
                                 previewImg={previewEditImg}
                                 customFileBtn={customEditFileBtn}
                                 selectChange={selectChange}
