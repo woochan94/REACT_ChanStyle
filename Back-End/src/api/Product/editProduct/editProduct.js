@@ -50,54 +50,104 @@ export default {
         },
 
         // 파일 수정 
-        editFile: (_, args) => {
-            const { id, url } = args; 
-            return prisma.updateFile({
-                data: {
-                    url
-                }, 
-                where: {
-                    id 
-                }
+        editFile: async (_, args) => {
+            const { fileId, file } = args; 
+            file.forEach(async url => {
+                await prisma.updateFile({
+                    where: {
+                        id: fileId
+                    }, 
+                    data: {
+                        url
+                    }
+                })
             })
+            return true;
         }, 
         // 사이즈 수정 
         editSize: (_, args) => {
-            const { id, size } = args;
-            return prisma.updateSize({
-                data: {
-                    size
-                },
-                where: {
-                    id
-                }
-            })
+            const { productId, sizeId, sizeValue } = args;
+            try {
+                sizeValue.map(async (item,index) => {
+                    if(sizeId.length > index) {
+                        await prisma.updateSize({
+                            where: {
+                                id: sizeId[index]
+                            }, 
+                            data: {
+                                size: item
+                            }
+                        })
+                    } else {
+                        await prisma.createSize({
+                            size: item, 
+                            product: {
+                                connect: {
+                                    id: productId
+                                }
+                            }
+                        })
+                    }
+                })
+                return true;
+            } catch {
+                return false;
+            }
         },
         // 색상 수정
         editColor: (_, args) => {
-            const { id, color } = args;
-            return prisma.updateColor({
-                data: {
-                    color
-                },
-                where: {
-                    id
-                }
-            })
+            const { productId, colorId, colorValue } = args;
+            try {
+                colorValue.map(async (item,index) => {
+                    if(colorId.length > index) {
+                        await prisma.updateColor({
+                            where: {
+                                id: colorId[index]
+                            }, 
+                            data: {
+                                color: item
+                            }
+                        })
+                    } else {
+                        await prisma.createColor({
+                            color: item, 
+                            product: {
+                                connect: {
+                                    id: productId
+                                }
+                            }
+                        })
+                    }
+                })
+                return true;
+            } catch {
+                return false;
+            }
         },
         // 재고 수정 
         editStock: (_, args) => {
-            const { id, stock } = args;
+            const { productId, stockId, stockValue } = args;
             try {
-                id.map(async(item, index) => {
-                    await prisma.updateStock({
-                        where: {
-                            id: item 
-                        }, 
-                        data: {
-                            stock: stock[index]
-                        }
-                    })
+                stockValue.map(async(item, index) => {
+                    if(stockId.length > index) {
+                        await prisma.updateStock({
+                            where: {
+                                id: stockId[index] 
+                            }, 
+                            data: {
+                                stock: item
+                            }
+                        })
+                    } else {
+                        await prisma.createStock({
+                            stock: item, 
+                            product: {
+                                connect: {
+                                    id: productId
+                                }
+                            }
+                        })
+                    }
                 })   
                 return true;
             } catch {

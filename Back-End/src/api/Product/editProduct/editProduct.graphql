@@ -17,29 +17,32 @@ type Mutation {
 
 type Mutation {
     editFile (
-        id: String! 
-        url: String! 
-    ): Product!
+        fileId: String 
+        file: [String] 
+    ): Boolean!
 }
 
 type Mutation {
     editSize (
-        id: String! 
-        size: String!
-    ): Product!
+        productId: String
+        sizeId: [String] 
+        sizeValue: [String]
+    ): Boolean!
 }
 
 type Mutation {
     editColor (
-        id: String! 
-        color: String! 
-    ): Product! 
+        productId: String
+        colorId: [String] 
+        colorValue: [String] 
+    ): Boolean! 
 }
 
 type Mutation {
     editStock (
-        id: [String!]! 
-        stock: [Int!]!
+        productId: String
+        stockId: [String] 
+        stockValue: [Int]
     ): Boolean! 
 }
 
