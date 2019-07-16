@@ -74,7 +74,7 @@ const ProductInfoDiv = styled.div`
 
 const ProductImg = styled.img`
     width: 100%; 
-    height: 35vh;
+    height: 45vh;
     ${props => props.theme.whiteBox};
 `;
 
@@ -174,6 +174,10 @@ const SelectedItem = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    div {
+        margin-bottom: 5px;
+    }
 `;
 
 export const SelectedCount = styled.div`
@@ -185,7 +189,7 @@ export const SelectedCount = styled.div`
 
 export const SelectedCountTextDiv = styled.div`
     background-color: white;
-    height: 100%;
+    height: 30px;
     width: 100%;
     display: flex; 
     text-align: center;
@@ -425,7 +429,7 @@ export default ({
                                                         <div>
                                                             {item.name}
                                                         </div>
-                                                        -{option.color}/{option.size}
+                                                        ({option.color}/{option.size})
                                                     </SelectedItem>
                                                     <SelectedCount>
                                                         <SelectedCountTextDiv>{count[index]}</SelectedCountTextDiv>

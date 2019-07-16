@@ -80,7 +80,9 @@ const DropLi = styled.li`
 `;
 
 const ContentSection = styled.section`
-    margin-left: 250px;
+    max-width: 1300px; 
+    margin: 0 auto;
+    margin-left:250px;
     @media (max-width: 768px) {
         margin-left: 200px;
     }

@@ -111,7 +111,7 @@ export default () => {
         setTitle(name);
     }
 
-    const first = 4;
+    const first = 8;
     const [skip, setSkip] = useState(0); 
     const [pLoading, setPloading] = useState(false);
     const [dataTemp, setDataTemp] = useState([]);
