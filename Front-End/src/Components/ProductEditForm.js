@@ -313,7 +313,14 @@ const ProductEditForm = ({
 }
 
 ProductEditForm.propTypes = {
-
+    onSubmit: PropTypes.func,
+    previewImg: PropTypes.object, 
+    customFileBtn: PropTypes.func, 
+    selectChange: PropTypes.func,
+    subSelectChange: PropTypes.func,
+    smallClassification: PropTypes.array, 
+    addTable: PropTypes.func, 
+    editData2: PropTypes.object
 }
 
 export default ProductEditForm;
