@@ -73,11 +73,11 @@ export default () => {
     const testData = [
         {
             id: 1,
-            url: "https://cdn.pixabay.com/photo/2015/07/27/19/47/turtle-863336__340.jpg"
+            url: process.env.REACT_APP_SLIDE1
         }, 
         {
             id: 2,
-            url: "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F24283C3858F778CA2E"
+            url: process.env.REACT_APP_SLIDE2
         }
     ]
 
