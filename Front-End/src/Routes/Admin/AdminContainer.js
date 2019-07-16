@@ -94,9 +94,9 @@ export default () => {
 
             document.getElementById("Name").value = "";
             document.getElementById("Price").value = "";
-            setMainCategory("");
-            setSubCategory("");
             previewImg.current.src = "https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif";
+            document.getElementById("mainCategorySelect").value  = "0";
+            document.getElementById("subCategorySelect").value = "0";
 
             for (let i = 0; i < colorClass.length; i++) {
                 colorClass[i].value = "";

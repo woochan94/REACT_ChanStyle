@@ -100,10 +100,8 @@ export default ({
     editClick,
     deleteClick,
     editData2,
-    onEdit,
     previewEditImg,
-    customEditFileBtn,
-    editPreview
+    customEditFileBtn
 }) => {
     return (
         <Admin>

@@ -188,12 +188,12 @@ const ProductEditForm = ({
                             <Input placeholder={"Name"} id={"Name"} />
                             <Input placeholder={"Price"} id={"Price"} />
                             <SortDiv>
-                                <Select onChange={(e) => selectChange(e)}>
+                                <Select onChange={(e) => selectChange(e)} id={"mainCategorySelect"}>
                                     <option value="0">대분류</option>
                                     <option value="상의">상의</option>
                                     <option value="하의">하의</option>
                                 </Select>
-                                <Select onChange={(e) => subSelectChange(e)}>
+                                <Select onChange={(e) => subSelectChange(e)} id={"subCategorySelect"}>
                                     <option value="0">소분류</option>
                                     {smallClassification.map((item, index) => (
                                         <option key={index} value={item}>{item}</option>
