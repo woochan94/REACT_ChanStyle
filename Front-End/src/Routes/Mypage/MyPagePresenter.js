@@ -7,6 +7,7 @@ import SignUpForm from "../../Components/SignUpForm";
 import Loader from "../../Components/Loader";
 import { Pagination } from "semantic-ui-react";
 import ProductTable from "../../Components/ProductTable";
+import { addComma } from "../../Components/SharedFunction";
 
 export const MyPage = styled.section`
     min-height: 79vh;
@@ -227,7 +228,7 @@ export default ({
                                                         {product.name}
                                                     </td>
                                                     <td>
-                                                        {product.price*item.quantity[index].quantity} 
+                                                        ￦{addComma(product.price*item.quantity[index].quantity)} 
                                                     </td>
                                                     <td>
                                                         {item.quantity[index].quantity}

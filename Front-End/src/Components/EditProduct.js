@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { addComma } from "./SharedFunction";
 
 const ProductDiv = styled.div`
         ${props => props.theme.whiteBox};
@@ -102,7 +103,7 @@ const EditProduct = ({
                 <ProductBasic>
                     <H4>{name}</H4>
                     <Category>{mainCategory} > {subCategory}</Category>
-                    <Price>￦{price}</Price>
+                    <Price>￦{addComma(price)}</Price>
                 </ProductBasic>
                 <ProductOption>
                     <H5>옵션</H5>

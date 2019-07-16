@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { addComma } from "./SharedFunction";
 
 export default ({ imgSrc, title, price, id }) => {
     const ItemDiv = styled.article`
@@ -14,6 +15,7 @@ export default ({ imgSrc, title, price, id }) => {
         ${props => props.theme.whiteBox};
         width: 100%;
         height: 30vh;
+        box-shadow: 0px 0px 0px rgba(0,0,0,0), 0px 0px 10px rgba(0,0,0,0.1);
     `;
 
     const TextDiv = styled.div`
@@ -26,7 +28,10 @@ export default ({ imgSrc, title, price, id }) => {
         padding-bottom: 5px;
         color: #555555;
         font-size: 14px;
+        font-weight: 600;
     `;
+
+
 
     return (
         <Link to={`/product/${id}`}>
@@ -34,7 +39,7 @@ export default ({ imgSrc, title, price, id }) => {
                 <Img src={imgSrc} />
                 <TextDiv>
                     <P>{title}</P>
-                    <P>{price}</P>
+                    <P>￦{addComma(price)}</P>
                 </TextDiv>
             </ItemDiv>
         </Link>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import Button from "../Components/Button";
 import { SelectedCount, SelectedCountTextDiv, SelectedCountBtnDiv } from "../Routes/Product/ProductPresenter";
+import { addComma } from "./SharedFunction";
 
 const Table = styled.table`
     width: 100%;
@@ -133,6 +134,10 @@ const Th = styled.th`
     vertical-align: middle;
 `;
 
+const BoldTd = styled.td`
+    font-weight: 600;
+`;
+
 const SelectedCount2 = styled(SelectedCount)`
     @media (max-width: 600px) {
         margin-left: 0;
@@ -147,11 +152,20 @@ const SelectedCountTextDiv2 = styled(SelectedCountTextDiv)`
     }
 `;
 
-const ResponsiveTotalDiv = styled.div``;
+const ResponsiveTotalDiv = styled.div`
+    font-weight: 600;
+`;
 
 const PaymentTd = styled.td`
     @media (min-width: 600px) {
         display: none;
+    }
+`;
+
+const ButtonDiv = styled.div`
+    button {
+        background-color: ${props => props.theme.confirmColor};
+        color: #fff;
     }
 `;
 
@@ -195,15 +209,15 @@ const ProductTable =({
                                             <img src={file.url} alt={file.id} />
                                         </Link>
                                     </td>
-                                    <td>
+                                    <BoldTd>
                                         <Link to={`/product/${product.id}`}>
                                             <div>
                                                 {product.name}
                                             </div>
                                             {item.sizeId[index2].size}/{item.colorId[index2].color}
                                         </Link>
-                                    </td>
-                                    <td>{product.price}</td>
+                                    </BoldTd>
+                                    <BoldTd>￦{addComma(product.price)}</BoldTd>
                                     <td>
                                         <SelectedCount2>
                                             <SelectedCountTextDiv2>{count[index]}</SelectedCountTextDiv2>
@@ -232,7 +246,7 @@ const ProductTable =({
                                     </div>
                                     {item.size[index2].size}/{item.color[index2].color}
                                 </td>
-                                <td>{product.price}</td>
+                                <td>￦{addComma(product.price)}</td>
                                 <td>
                                     {item.count[index2].count}
                                 </td>
@@ -244,26 +258,30 @@ const ProductTable =({
                 {!isNaN(total) && cartData && (
                     <tfoot>
                         <tr>
-                            <td colSpan="1">Total</td>
+                            <BoldTd colSpan="1">Total</BoldTd>
                             <td colSpan="4"></td>
-                            <td colSpan="1">{total}</td>
+                            <BoldTd colSpan="1">￦{addComma(total)}</BoldTd>
                         </tr>
                     </tfoot>
                 )}
                 {!isNaN(total) && paymentData && (
                     <tfoot>
                         <tr>
-                            <td colSpan="1">Total</td>
+                            <BoldTd colSpan="1">Total</BoldTd>
                             <td colSpan="2"></td>
-                            <td colSpan="1">{total}</td>
+                            <BoldTd colSpan="1">￦{addComma(total)}</BoldTd>
                         </tr>
                     </tfoot>
                 )}
             </Table>
             <ResponsiveTotalDiv id={"responsiveTotalDiv"}>
-                Total : {total}
+                Total : ￦{addComma(total)}
             </ResponsiveTotalDiv>
-            {cartData && <Button id={"cartOrderBtn"} text={"Order Now"} onClick={() => selectOrder()} />}
+            {cartData && 
+                <ButtonDiv>
+                    <Button id={"cartOrderBtn"} text={"Order Now"} onClick={() => selectOrder()} />
+                </ButtonDiv>
+            }
         </>
     )
 }

@@ -5,6 +5,7 @@ import Button from './../../Components/Button';
 import Scroll from "react-scroll"; 
 import { UpArrowIcon, CartIcon, CloseIcon } from './../../Components/Icons';
 import { Link } from "react-router-dom";
+import { addComma } from "../../Components/SharedFunction";
 
 const animationScroll = Scroll.animateScroll;
 
@@ -100,6 +101,9 @@ const ProductNameDiv = styled.div`
     grid-template-columns: 1fr 3fr;
     justify-content: center;
     align-items: center;
+    span {
+        font-weight: 600;
+    }
 `;
 
 const ProductPriceDiv = styled(ProductNameDiv)`
@@ -301,6 +305,7 @@ const ConfirmButtonDiv = styled.div`
             background-color: ${props => props.theme.confirmColor} !important;
             color: #fff;
 
+
         }
         @media (max-width: 400px) {
             font-size: 14px;
@@ -377,7 +382,7 @@ export default ({
                                     </ProductNameDiv>
                                     <ProductPriceDiv>
                                         <H3>Price</H3>
-                                        <span>{item.price}</span>
+                                        <span>￦{addComma(item.price)}</span>
                                     </ProductPriceDiv>
                                     < SelectOptionDiv>
                                         <H3>Select Option</H3>
@@ -430,7 +435,7 @@ export default ({
                                                         </SelectedCountBtnDiv>
                                                     </SelectedCount>
                                                     <SelectedPrice>
-                                                        {item.price*count[index]}
+                                                        {addComma(item.price*count[index])}
                                                         <DeleteButton onClick={() => deleteSelect(index, selected) }><span role="img" aria-label="">❌</span></DeleteButton>
                                                     </SelectedPrice>
                                                 </SelectedDiv>
@@ -439,7 +444,7 @@ export default ({
                                     }
                                     <TotalDiv>
                                         <H3>Total</H3>
-                                        <span>{total}</span>
+                                        <span>￦{addComma(total)}</span>
                                     </TotalDiv>
                                     <ButtonDiv>
                                         <Form>
