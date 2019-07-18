@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "nodemon": "^1.19.1"
   },
   "dependencies": {
@@ -12,7 +13,9 @@
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
+    "@babel/runtime": "^7.5.5",
     "bcrypt": "^3.0.6",
+    "copy": "^0.3.2",
     "dotenv": "^8.0.0",
     "graphql-tools": "^4.0.4",
     "graphql-yoga": "^1.17.4",
@@ -27,6 +30,9 @@
     "deploy": "prisma deploy",
     "generate": "prisma generate",
     "prisma": "yarn run deploy && yarn run generate",
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/server.js",
+    "build": "babel src -d build",
+    "postbuild": "cd src && npx copy ./api/**/*.graphql ../build/api/",
+    "start" : "node build/server.js"
   }
 }

@@ -89,3 +89,4 @@ typings/
 
 generated
 prisma.yml
+build
