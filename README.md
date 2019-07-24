@@ -1,8 +1,6 @@
 # REACT_ChanStyle 
 
-- [완성된 사이트]
-> Heroku의 Free 요금제로 deploy를 하였기 때문에 서버가 잠들어 있을 수 있습니다. 
-> <br> 서버가 잠들어 있을 시 초기 로딩 시간이 조금 오래 걸릴 수 있는 점 유의해 주세요🙂
+- [완성된 사이트 바로가기]
 
 <br> 
 
@@ -121,4 +119,4 @@ Password: 123qwe!@#
 
 
 
-[완성된 사이트]:https://chanstyle.netlify.com
+[완성된 사이트 바로가기]:https://chanstyle.netlify.com
