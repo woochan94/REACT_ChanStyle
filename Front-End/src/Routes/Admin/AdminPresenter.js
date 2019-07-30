@@ -13,7 +13,7 @@ const AdminWrapper = styled.div`
     @media (max-width: 1024px) {
         padding: 0 50px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         padding: 0 20px;
     }
     @media (max-width: 350px) {
@@ -40,7 +40,7 @@ const EditGrid = styled.div`
     @media (max-width: 900px) {
         grid-template-columns: repeat(3, 1fr);
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         grid-template-columns: repeat(2, 1fr);
     }
 `;

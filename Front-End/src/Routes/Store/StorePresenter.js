@@ -17,7 +17,7 @@ const Menubar = styled.aside`
     @media (max-width: 768px) {
         width: 200px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         width: 100%; 
         position: relative;
     }
@@ -39,13 +39,13 @@ const CategoryTitle = styled.div`
             display:none;
         }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         cursor: pointer;
     }
 `;
 
 const MenuList = styled.div`
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         display: none;
     }
 `;
@@ -86,7 +86,7 @@ const ContentSection = styled.section`
     @media (max-width: 768px) {
         margin-left: 200px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         margin-left: 0;
     }
 `;

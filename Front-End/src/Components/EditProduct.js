@@ -17,7 +17,6 @@ const ProductDiv = styled.div`
 
     const Img = styled.img`
         width: 100%;
-        height: 250px;
     `;
 
     const ProductBasic = styled.div`
