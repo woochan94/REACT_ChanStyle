@@ -25,7 +25,7 @@ const ProductWrapper = styled.div`
     @media (max-width: 1024px) {
         padding: 0 50px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         padding: 0 20px;
     }
 `;
@@ -47,6 +47,7 @@ export const H2 = styled.h2`
 const H3 = styled.h3`
     font-size: 20px;
     font-weight: 500;
+    margin-right: 10px;
 `;
 
 const ProductDiv = styled.div`
@@ -55,7 +56,7 @@ const ProductDiv = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 70px;
     padding: 40px 10px;
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         grid-template-columns: 1fr; 
         height: 100%; 
         grid-row-gap: 50px;
@@ -74,13 +75,12 @@ const ProductInfoDiv = styled.div`
 
 const ProductImg = styled.img`
     width: 100%; 
-    height: 45vh;
     ${props => props.theme.whiteBox};
 `;
 
 const SizeDiv = styled.div`
     margin-top: 10px;
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         display: none;
     }
 `;
@@ -93,7 +93,6 @@ const SizeTitleDiv = styled.div`
 
 const SizeImg = styled.img`
     width: 100%;
-    height: 20vh;
 `;
 
 const ProductNameDiv = styled.div`
@@ -126,12 +125,19 @@ const OptionBox = styled.div`
 
 const ColorDiv = styled(ProductNameDiv)`
     margin-bottom: 10px;
+    @media(max-width: 768px) {
+        grid-template-columns: 2.5fr 4fr;
+    }
 `;
 
-const SizeOptionDiv = styled(ProductNameDiv)``;
+const SizeOptionDiv = styled(ProductNameDiv)`
+    @media(max-width: 768px) {
+        grid-template-columns: 2.5fr 4fr;
+    }
+`;
 
 const Select = styled.select`
-    width: 70%;
+    width: 100%;
     height: 35px;
     ${props => props.theme.whiteBox};
     padding: 0 5px;
@@ -265,7 +271,7 @@ const ConfirmDiv = styled.div`
         width: 70%; 
         left: 20%;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         height: 35%;
         width: 75%;
         left: 12%;
@@ -319,6 +325,12 @@ const ConfirmButtonDiv = styled.div`
 
 const ConfirmIconDiv = styled.div`
     cursor: pointer;
+`;
+
+const Span = styled.span`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export default ({
@@ -382,7 +394,7 @@ export default ({
                                 <ProductInfoDiv key={item.id}>
                                     <ProductNameDiv>
                                         <H3>Name</H3>
-                                        <span>{item.name}</span>
+                                        <Span>{item.name}</Span>
                                     </ProductNameDiv>
                                     <ProductPriceDiv>
                                         <H3>Price</H3>
@@ -394,7 +406,7 @@ export default ({
                                             <ColorDiv>
                                                 <H3>Color</H3>
                                                 <Select onChange={(e) => colorSelectOnChange(e)}>
-                                                    <option value="">--- color ---</option>
+                                                    <option value=""> Color </option>
                                                     {uniqColor.map(color => (
                                                         <option key={color.colorId} value={color.colors}>{color.colors}</option>
                                                     ))}
@@ -408,7 +420,7 @@ export default ({
                                                     defaultValue={""}
                                                     onChange={(e) => sizeSelectOnChange(e)}
                                                 >
-                                                    <option value=""> --- size --- </option>
+                                                    <option value=""> Size </option>
                                                     {option.map(item => (
                                                         <option
                                                             key={item.sizeId} 
