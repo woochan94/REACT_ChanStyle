@@ -32,6 +32,15 @@ export default () => {
         swipe: false,
         responsive: [
             {
+                breakpoint: 900, 
+                settings: {
+                    dots: false, 
+                    infinite: false, 
+                    rows: 2,
+                    slidesToShow: 1
+                }
+            },
+            {
                 breakpoint: 600,
                 settings: {
                     dots: true,

@@ -45,13 +45,18 @@ const H4 = styled.h4`
 const CustomSlider = styled(Slider)`
     @media (min-width: 601px) {
         .slick-slide {
-        display: grid; 
-        grid-template-columns: repeat(4, 1fr);
-        margin-bottom: 30px;
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr);
+            margin-bottom: 30px;
         } 
         .slick-track {
             width: 0 !important;
         } 
+    }
+    @media (max-width: 900px) {
+        .slick-slide {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
     .slick-dots {
         position: relative; 

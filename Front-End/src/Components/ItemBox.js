@@ -14,7 +14,6 @@ export default ({ imgSrc, title, price, id }) => {
     const Img = styled.img`
         ${props => props.theme.whiteBox};
         width: 100%;
-        height: 30vh;
         box-shadow: 0px 0px 0px rgba(0,0,0,0), 0px 0px 10px rgba(0,0,0,0.1);
     `;
 
@@ -36,7 +35,7 @@ export default ({ imgSrc, title, price, id }) => {
     return (
         <Link to={`/product/${id}`}>
             <ItemDiv>
-                <Img src={imgSrc} />
+                <Img mode={"fit"} src={imgSrc} />
                 <TextDiv>
                     <P>{title}</P>
                     <P>￦{addComma(price)}</P>
