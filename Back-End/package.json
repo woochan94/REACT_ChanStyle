@@ -14,7 +14,7 @@
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/runtime": "^7.5.5",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "copy": "^0.3.2",
     "dotenv": "^8.0.0",
     "graphql-tools": "^4.0.4",
