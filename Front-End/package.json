@@ -20,7 +20,7 @@
     "semantic-ui-react": "^0.87.2",
     "styled-components": "^4.3.1",
     "styled-reset": "^2.0.15",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "scripts": {
     "start": "react-scripts start",
